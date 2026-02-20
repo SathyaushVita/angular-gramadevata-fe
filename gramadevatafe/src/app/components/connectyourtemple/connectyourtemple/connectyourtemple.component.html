@@ -1,0 +1,77 @@
+<form nz-form [formGroup]="validatorForm" class="connect-your-village-form" >
+	<div class="container p-4">
+		<div class="row">
+			<div class="col-md-6">
+				<nz-form-item>
+					<nz-form-control nzErrorTip="Please select a state">
+						<label>State</label>
+						<nz-select formControlName="state" nzPlaceHolder="Select state" [nzShowSearch]="true" nzNotFoundContent="No data found"
+							>
+							<nz-option *ngFor="let option of StateOptions" [nzValue]="option.value" [nzKey] = "option.id"
+								[nzLabel]="option.label"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+			<div class="col-md-6">
+				<nz-form-item>
+					<nz-form-control nzErrorTip="Please select a district">
+						<label>District/City</label>
+						<nz-select formControlName="district" nzPlaceHolder="Select district" [nzShowSearch]="true" nzNotFoundContent="No data found"
+							>
+							<nz-option *ngFor="let option of DistrictOptions" [nzValue]="option.value" [nzKey] = "option.id"
+								[nzLabel]="option.label"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<nz-form-item>
+					<nz-form-control nzErrorTip="Please select a mandal">
+						<label>Block/Mandal/Town</label>
+						<nz-select formControlName="mandal" nzPlaceHolder="Select mandal" [nzShowSearch]="true" nzNotFoundContent="No data found"
+							>
+							<nz-option *ngFor="let option of MandalOptions" [nzValue]="option.value" [nzKey] = "option.id"
+								[nzLabel]="option.label"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+
+
+			<div class="col-md-6">
+				<nz-form-item>
+					<nz-form-control nzErrorTip="Please select a village">
+						<label>Village/Area</label>
+						<nz-select formControlName="village" nzPlaceHolder="Select village" [nzShowSearch]="true" nzNotFoundContent="No data found">
+							<nz-option *ngFor="let option of VillageOptions" [nzValue]="option.value" [nzKey] = "option.id"
+								[nzLabel]="option.label"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+
+
+		</div>
+
+
+		<div class="text-center">
+			<button (click)="OnSubmit()" nz-button class="login-form-button login-form-margin btn-primary"
+				[nzType]="'primary'" style="background-color: orange; border-color: orange;">Submit</button>
+		</div>
+
+		<div class="row pt-3">
+			<div class="col-md-8 text-end">
+				<a>Don't find a village you're looking for ?</a>
+			</div>
+			<div class="col-md-4">
+				<button (click)="navigate()"><i class="fa-solid fa-house"></i>Add your village</button>
+			</div>
+
+		</div>
+	</div>
+</form>
+<ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff" type="ball-spin-clockwise">
+</ngx-spinner>

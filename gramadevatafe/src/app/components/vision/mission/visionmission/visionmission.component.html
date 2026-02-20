@@ -1,0 +1,300 @@
+<section class="header-m" >
+    <div class="container col-xxl-8 px-3 py-2">
+ 
+
+   <div class="row justify-content-center align-items-center g-5 py-4">
+    
+
+
+  <div class="col-10 col-sm-8 col-lg-6 position-relative">
+    <!-- <video #videoPlayer
+           [src]="ads[currentIndex].videoUrl"
+           class="responsive-video w-100 rounded shadow"
+           muted
+           loop
+           (click)="togglePlay(videoPlayer)"
+           (ended)="videoPlayer.currentTime = 0; videoPlayer.pause()"
+           (timeupdate)="updateProgress(videoPlayer)">
+    </video>
+  
+    <button (click)="togglePlay(videoPlayer)"
+            *ngIf="videoPlayer.paused"
+            class="btn btn-primary position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center"
+            style="font-size: 2rem; border: none; background: rgba(0, 0, 0, 0.5); color: white; width: 3rem; height: 3rem; border-radius: 50%;">
+        <i class="fas fa-play"></i>
+    </button>
+  
+    <input type="range"
+           min="0"
+           max="100"
+           value="0"
+           class="progress-bar w-100"
+           (input)="seekVideo(videoPlayer, $event)"
+           #progressBar>
+  
+    <div class="d-flex justify-content-between">
+        <span>{{ formatTime(videoPlayer.currentTime) }}</span>
+    </div> -->
+  
+  
+   <img src="../../../assets/icon.jpg" class="responsive-video w-75 rounded shadow" alt="">
+  
+  
+  </div>
+  
+<!-- Trigger Buttons -->
+<div class="col-lg-6">
+  <h4 class="fw-bold lh-1 mb-3 text-orange">Our Village - Our Temple - Our Deity</h4>
+
+  <p class="lead description-text" style="text-align: justify;">
+    Gramadevata Foundation is a pioneering organization dedicated to the revival, preservation, and promotion of Sanatana Dharma and Hindu cultural heritage. Rooted in the ancient Indian principle of "Vasudhaiva Kutumbakam" (The World is One Family), the foundation's core philosophy revolves around creating a unified global Hindu community that is deeply connected to its spiritual roots. The foundation’s efforts span across multiple domains, including temple preservation, community engagement, cultural education, and rural upliftment, all designed to foster a strong, vibrant, interconnected, and empowered Hindu society.
+  </p>
+
+  <div class="d-flex gap-2 justify-content-md-start">
+    <button class="btn btn-primary px-4 text-white"
+    style="background-color: orange; border-color: orange;" 
+    data-bs-toggle="modal" data-bs-target="#aboutUsModal">
+Read More
+  </button>
+
+    <button (click)="downloadDocument()" class="btn btn-primary px-4 text-white"
+      style="background-color: orange; border-color: orange;">
+      Download Brochure
+    </button>
+  </div>
+</div>
+
+
+
+<div class="container my-3">
+  <div class="row align-items-center text-center text-md-start">
+
+    <!-- Logo: first on mobile, left on desktop -->
+    <div class="col-12 col-md-4 order-1 text-center">
+      <img
+        src="../../../assets/logo.webp"
+        class="img-fluid mb-3 mb-md-0"
+        style="width: 180px;"
+        alt="Logo"
+      >
+    </div>
+
+    <!-- Paragraph: second on mobile, right on desktop -->
+    <div class="col-12 col-md-8 order-2">
+      <p class="fw-bold fs-5 px-2 mb-0">
+        International Satvik and Sanatana Foundation pledges to serve Sanatan Bharat
+      </p>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<div class="modal fade " id="aboutUsModal" tabindex="-1" aria-labelledby="aboutUsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-orange fw-bold" id="aboutUsModalLabel">About Us – Grammadevata Foundation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+       <div class="modal-body" style="text-align: justify;">
+        <p>
+          <strong style="color: rgb(240, 22, 47);">Grammadevata Foundation</strong> - 
+          <span style="color: orangered;">"Connect, Communicate, and Coordinate"</span> with your roots.
+        </p>
+        
+        <!-- <p style="color: orange;"><strong>Grammadevata Foundation</strong> - "Connect, Communicate, and Coordinate" with your roots.</p> -->
+        <p>At the heart of India's cultural and spiritual identity lie its temples, traditions, and timeless
+          values. Grammadevata Foundation is a visionary initiative that bridges the ancient and the
+          modern, connecting the global Hindu community and the global Sanatana community
+          through the revival and preservation of our sacred heritage.</p>
+
+        <p>Rooted in the spirit of<em> Vasudhaiva Kutumbakam</em> — “The World is One Family” — the
+          foundation brings together a wide spectrum of cultural, religious, and educational
+          initiatives. Our focus spans from creating and maintaining temple digital transformation
+          web and app application for ancient iconic temples, famous temples, area temples, and
+          village temples to documenting temple history, rituals, events and community stories.</p>
+
+        <p>We honor the legacy of Vishnu, Shiva, Devi temples and the sanctity of temple towns and large temples across India. Whether its town temples tucked in urban spaces or remote Sanatana temples in the heart of, we believe every temple has a story worth sharing.</p>
+
+        <p>Explore our curated list of renowned temples featured on this site, offering spiritual
+          insights and historical details. From ancient shrines to iconic spiritual landmark, we cover
+          it all<strong> Hindu Deities</strong> – here’s the following temple list:</p>
+        <ol>
+          <li>Jyotirlingas</li>
+          <li>Chardham</li>
+          <li>Shakthi Peethas</li>
+          <li>Divya Desams – Vishnu Temples</li>
+          <li>Ashta Vinayaka – Ganapathi – Ganesh – Lakshmi</li>
+          <li>Pancha Bhutha temples - Pancha Prayag - Pancha Rama Temples – Pancha Kedar</li>
+          <li>Subramanya Swamy – Murugan Temples</li>
+          <li>Kali Mata – Chandi Mata – Durga Mata</li>
+          <li>Gayatri Devi – Saraswati Devi – Danteshwari Devi</li>
+          <li>Hanuman – Anjaneya Temples</li>
+          <li>Lakshmi Narasimha Temples</li>
+          <li>Jagannath Temples</li>
+          <li>ISKCON, Swaminarayan Temples & Mutts</li>
+          <li>Ayyappa Swamy Temples</li>
+          <li>Brahma Temples</li>
+          <li>Venkateshwara Swamy</li>
+          <li>Radhe Krishna Temples</li>
+          <li>Veera Bhadra Temples</li>
+          <li>Mathas</li>
+          <li>Shani Temples</li>
+          <li>Ram – Balaram – Janaki – Sita Temples</li>
+        </ol>
+
+       <p>Our commitment also embraces the interconnectedness of various spiritual traditions,
+        including Sikh gurudwaras, Buddha temples, and the architectural grace of Jain temples
+        reflecting India’s pluralistic spiritual fabric. Additionally, we support gaushalas, preserving
+        the cow&#39;s revered status in Hinduism.</p>
+
+        <p>Our resources include updated temple address listings, temple timings, and guides for
+          temple tours. We also offer information on puja stores, puja shops, and essential puja tools
+          for all your devotional needs.</p>
+
+          <p>Through interactive features, we promote religious activities, such as chanting, yajnas, and
+            observances related to the Navagraha’s and all other Hindu deities. While acknowledging
+            evolving practices, we sensitively address topics like animal sacrifices, aiming to bring
+            awareness and responsible discourse.</p>
+
+            <p>Our digital spiritual library is a treasure trove of scriptures, commentaries, and spiritual
+              texts. To preserve traditional rituals &amp; practices, we provide dedicated platform for various
+              spiritual activities and events across the world through OmSanatana.com website or
+              application. Our platform is to bring every Sanatani together by offering a space to connect,
+              participate and grow spiritually. Through our website and app users can discover a wide
+              range of rituals, temple information and community events. Oue platform offers a unique
+              and accessible gateway to explore the rich heritage of Sanatan Dharma.</p>
+
+              <p>Grammadevata encourages community engagements, fostering community interaction and
+                inclusive participation. Our platform supports cultural exchange programs that reflect the
+                richness of Hindu cultural news and showcase vibrant Hindu cultural events throughout
+                the year worldwide.</p>
+
+                <p>By covering the depth of cultural &amp; traditional practices, we aim to keep our heritage alive
+                  in modern society. Our comprehensive platform shares event updates, provides transport
+                  information, and embraces both rural empowerment and urban empowerment by giving
+                  voice to temples from every corner.</p>
+
+                 <p>Our website and app also provide valuable information about destroyed temples as well as
+                  reconstructed temples, preserving their history and significance. We empower common
+                  people to access this data and even contribute by adding information about events,
+                  temples, Goshalas and all spiritual and cultural programs across the world. Addtionally, we
+                  offer detailed insights and updates on temples reconstruction efforts.</p>
+
+                  <p>We believe in the digital transformation of Sanatana Dharma, using informative
+                    applications like our web &amp; mobile app to ensure that temple culture and community
+                    values evolve while staying rooted. Grammadevata is a multi-dimensional platform
+                    connecting devotees, pujaris, sanatani volunteers and cultural enthusiasts across the globe.
+                    It is to celebrate the harmony of modern life &amp; Indian traditions, reminding us that temples
+                    are not just stone structures—they are living centers of identity, faith, and continuity.</p>
+
+        <p><strong>Our connected Platforms –</strong></p>
+        <ul>
+          <li>HinduPulse.com — serves as official news portal, delivering updates on Cultural,
+            political and trade news across the global.</li>
+          <li>TheHindusWorld.com — connect various Sanatani organizations across the globe,
+            fostering unity and collaborations for empowering Hindu society.</li>
+          <li>OmSanatana.com — Bridging Ancient Wisdom and Modern Academia</li>
+        </ul>
+        <p>Join us. Let’s rediscover, reconnect, and revive our roots—our temple, our community, our
+          soul at a time as a family “Vasudhaika Kutumbam”.</p>
+ 
+      </div> 
+
+
+
+
+
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+ 
+  </div>
+  
+      <div class="row justify-content-center align-items-center mt-2">
+        <h4 class="fw-bold lh-1 " style="color: orange;">Vision</h4>
+        <p class="lead">The vision of Gramadevata Foundation is to "Connect, Communicate, and
+          Coordinate" with the spiritual and cultural roots of Sanatana Dharma. The
+          foundation aims to cultivate a sense of family and unity among Hindus
+          worldwide by bridging the gap between modern life and ancient traditions. By
+          leveraging technology and community-driven initiatives, the foundation
+          envisions a world where every Hindu remains connected to their heritage,
+          actively participates in spiritual and cultural activities, and contributes to the
+          global Hindu community.</p>
+      </div>
+  
+      <div class="row justify-content-center align-items-center mt-2">
+        <h4 class="fw-bold lh-1 " style="color: orange;">Mission</h4>
+        <div class="container">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row">
+                <p class="mb-0">Gramadevata Foundation’s mission is multifaceted, focusing on empowering
+                  Hindutva through various platforms that cater to different aspects of Hindu life.</p>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <p class="mb-0">Protecting and revitalizing sacred
+                  temples across India, ensuring they
+                  remain active centers of spiritual
+                  practice and community engagement</p>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <p class="mb-0">Encouraging the practice of traditional
+                  rituals and customs in villages and
+                  urban areas alike, helping to sustain
+                  these practices for future generations.
+                </p>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <p class="mb-0">Building a global network of Sanatana
+                  Dharma organizations to collaborate on
+                  cultural, trade, and political initiatives,
+                  thus amplifying the impact of Hindu
+                  values on the world stage.</p>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <p class="mb-0">Providing access to knowledge and
+                  resources on Hinduism, including
+                  scriptures, rituals, cultural arts, and
+                  traditional crafts, to educate and
+                  empower individuals.</p>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <p class="mb-0">Supporting rural artisans and
+                  small-scale producers by providing
+                  them with platforms to sell their
+                  products, thereby preserving
+                  traditional crafts and improving
+                  livelihoods.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+  
+    </div>
+  </section> 
+  
+
+
+
+  
+  

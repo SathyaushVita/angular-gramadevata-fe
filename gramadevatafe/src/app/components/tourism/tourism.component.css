@@ -1,0 +1,28 @@
+
+  .navbar-nav .active-link {
+    color: white !important;
+  }
+  
+  .toggle-header {
+    transition: color 0.3s;
+  }
+  
+  .toggle-header:hover {
+    color: #007bff;
+    text-decoration: underline;
+  }
+  .navbar .dropdown-menu {
+  position: absolute;
+  z-index: 999;
+}
+
+.navbar .nav-item.dropdown {
+  position: relative;
+}
+
+.three-line-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;   /* 👈 number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

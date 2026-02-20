@@ -1,0 +1,133 @@
+/* .diamond-list li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.diamond-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  background-color: #ffc107;
+  transform: rotate(45deg);
+}
+
+
+.col-md-4{
+  margin-bottom: 0px;
+} */
+
+
+
+/* Banner */
+.footer-banner {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+/* Main Footer */
+.footer-main {
+  background-image: url('../../../assets/footerbackground1.webp');
+  background-size: cover;
+  background-position: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Titles */
+.footer-title {
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 6px #ffc107;
+}
+
+/* Links */
+footer a {
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+footer a:hover {
+  color: #ffc107;
+  padding-left: 4px;
+}
+
+/* Diamond List */
+.diamond-list li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.diamond-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #ffc107;
+  transform: rotate(45deg);
+}
+
+/* Registration Items */
+.footer-link {
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.footer-link:hover {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+}
+
+/* Social Icons */
+.footer-social a {
+  width: 40px;
+  height: 40px;
+  background: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-social i {
+  font-size: 18px;
+  color: #fff;
+}
+
+.footer-social a:hover {
+  background: #ffc107;
+}
+
+.footer-social a:hover i {
+  color: #000;
+}
+
+/* Bottom Bar */
+.footer-bottom {
+  background: linear-gradient(to bottom, #bf360c, #ff6f00);
+  color: #000;
+  font-size: 0.9rem;
+}
+
+.footer-bottom a {
+  color: #000;
+}
+
+/* Large Screens */
+@media (min-width: 1600px) {
+  footer {
+    font-size: 1.05rem;
+  }
+
+  .footer-main {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+}

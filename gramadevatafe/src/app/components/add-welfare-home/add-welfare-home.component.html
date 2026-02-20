@@ -1,0 +1,478 @@
+
+
+                    <div class=""
+     style="max-height: calc(80vh - 10px);
+            overflow-y: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;">
+
+<form [formGroup]="goshalaForm" class="container mt-3 p-4 " >
+                <!-- <div class=" text-center mb-5">
+                <h5 class="mb-3 text-center mt-4">
+  {{ isEditMode ? 'Update Welfare Home' : 'Add Welfare Home' }}
+</h5>
+              </div> -->
+                                      <div class="row align-items-center">
+            <div class="col-10">
+<h5 class="mb-3 text-center">
+  {{ isEditMode ? 'Update Welfare Home' : 'Add Welfare Home' }}
+</h5>            </div>
+            <div class="col-2 text-end">
+                <button type="button" (click)="dialogRef.close()"style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+  <div class="row g-3">
+
+ <div class="col-md-4">
+    <label class="form-label">Name <span class="text-danger">*</span></label>
+    <input type="text" formControlName="name" class="form-control" placeholder="Enter Welfare name" [class.is-invalid]="goshalaForm.get('name')?.touched && goshalaForm.get('name')?.invalid" (keydown)="preventLeadingSpace($event)" />
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Registration Number</label>
+    <input type="text" formControlName="reg_num" class="form-control" placeholder="Enter Registration Number"(keydown)="preventLeadingSpace($event)" />
+
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Welfare Category <span class="text-danger">*</span></label>
+    <select class="form-control form-select" formControlName="category" [class.is-invalid]="goshalaForm.get('category')?.touched && goshalaForm.get('category')?.invalid">
+      <option value="" disabled selected hidden>Select Welfare Category</option>
+      <option *ngFor="let option of goshalaCategoryoptions" [value]="option.value">
+        {{ option.label }}
+      </option>
+    </select>
+
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Contact Name <span class="text-danger"></span></label>
+    <input type="text" formControlName="contact_name" class="form-control" placeholder="Enter contact person name" (keydown)="preventLeadingSpace($event)"/>
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Contact Phone <span class="text-danger">*</span></label>
+    <!-- <input type="tel" formControlName="contact_number" class="form-control" placeholder="10-digit phone" [class.is-invalid]="goshalaForm.get('contact_number')?.touched && goshalaForm.get('contact_number')?.invalid" (keydown)="preventLeadingSpace($event)"/> -->
+    <input type="text" formControlName="contact_number" class="form-control" placeholder="10-digit phone" maxlength="10" inputmode="numeric" (input)="onlyNumbers($event)" (keydown)="preventLeadingSpace($event)" [class.is-invalid]="goshalaForm.get('contact_number')?.touched && goshalaForm.get('contact_number')?.invalid" />                      
+    <div
+                        *ngIf="
+                          contactNumber?.invalid &&
+                          (contactNumber?.dirty || contactNumber?.touched)
+                        "
+                        class="text-danger"
+                      >
+
+                        <div *ngIf="contactNumber?.errors?.['pattern']">
+                          Contact Number must be a 10-digit number
+                        </div>
+                      </div>
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Email</label>
+    <input type="email" formControlName="email" class="form-control" placeholder="user@example.com" [class.is-invalid]="goshalaForm.get('email')?.touched && goshalaForm.get('email')?.invalid"(keydown)="preventLeadingSpace($event)"/>
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Website</label>
+    <input type="text" formControlName="website" class="form-control" placeholder="https://example.com" (keydown)="preventLeadingSpace($event)"/>
+  </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Is Government?</label>
+      <select formControlName="is_government" class="form-select">
+        <option value="YES">YES</option>
+        <option value="NO">NO</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Established Year</label>
+      <input
+  type="text"
+  formControlName="established_year"
+  class="form-control"
+  placeholder="e.g. 1998"
+  maxlength="4"
+  inputmode="numeric"
+  (input)="onlyYearNumbers($event)"
+  (keydown)="preventLeadingSpace($event)"
+/>
+
+
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Description</label>
+      <textarea formControlName="desc" class="form-control" rows="3" placeholder="About the Home..." (keydown)="preventLeadingSpace($event)"></textarea>
+    </div>
+
+    <div class="col-md-12">
+      <label class="form-label">Address</label>
+      <input type="text" formControlName="address" class="form-control" placeholder="Full address" (keydown)="preventLeadingSpace($event)"/>
+    </div>
+
+                  <div class="row" *ngIf="!InVillage && !isEditMode">
+  <div class="col-md-4">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please select a country">
+        <label for="country">Country <span class="text-danger">*</span></label>
+        <nz-select 
+          formControlName="country" 
+          nzPlaceHolder="Select country" 
+          [nzShowSearch]="true"
+          nzNotFoundContent="No data found"
+          (ngModelChange)="onCountryChange($event)">
+          <nz-option *ngFor="let option of CountryOptions" 
+                     [nzValue]="option.value" 
+                     [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="col-md-4">
+    <nz-form-item>
+      <nz-form-control >
+        <label for="state">State</label>
+        <nz-select formControlName="state" nzPlaceHolder="Select state" 
+                   [nzShowSearch]="true" nzNotFoundContent="No data found"
+                   (ngModelChange)="onStateChange($event)">
+          <nz-option *ngFor="let option of StateOptions" 
+                     [nzValue]="option.value" 
+                     [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="col-md-4">
+    <nz-form-item>
+      <nz-form-control >
+        <label for="district">District</label>
+        <nz-select formControlName="district" nzPlaceHolder="Select district" 
+                   [nzShowSearch]="true" nzNotFoundContent="No data found"
+                   (ngModelChange)="onDistrictChange($event)">
+          <nz-option *ngFor="let option of DistrictOptions" 
+                     [nzValue]="option.value" 
+                     [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="col-md-4">
+    <nz-form-item>
+      <nz-form-control >
+        <label for="mandal">Town/Mandal</label>
+        <nz-select formControlName="mandal" nzPlaceHolder="Select mandal" 
+                   [nzShowSearch]="true" nzNotFoundContent="No data found"
+                   (ngModelChange)="onMandalChange($event)">
+          <nz-option *ngFor="let option of MandalOptions" 
+                     [nzValue]="option.value" 
+                     [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="col-md-4">
+    <nz-form-item>
+      <nz-form-control >
+        <label for="village">Area/Village</label>
+        <nz-select formControlName="village_id" nzPlaceHolder="Select village" 
+                   [nzShowSearch]="true" nzNotFoundContent="No data found"
+                   (ngModelChange)="onVillageChange($event)">
+          <nz-option *ngFor="let option of VillageOptions" 
+                     [nzValue]="option.value" 
+                     [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="map_location">Welfare Map Location (URL) <span class="text-danger">*</span></label>
+                    <div class="input-group d-flex align-items-center gap-2">
+                      <input
+                        type="url"
+                        class="form-control"
+                        id="map_location"
+                        formControlName="map_location"
+                        placeholder="https://example.com/map" (keydown)="preventLeadingSpace($event)"
+                      />
+                      <div class="input-group-append">
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          (click)="getCurrentLocation()"
+                          title="Fetch Current Location"
+                        >
+                          📍 Get Location
+                        </button>
+                      </div>
+                    </div>
+                    <small class="form-text text-muted">
+                      Please provide a valid URL for the Welfare's map location.
+                    </small>
+                    <!-- <div
+                      *ngIf="goshalaForm.get('map_location')?.invalid && (goshalaForm.get('map_location')?.dirty || goshalaForm.get('map_location')?.touched)"
+                      class="text-danger"
+                    >
+                      Please enter a valid URL for the Welfare Map Location.
+                    </div> -->
+                                  <div
+  *ngIf="goshalaForm.get('map_location')?.invalid 
+         && (goshalaForm.get('map_location')?.dirty 
+         || goshalaForm.get('map_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="goshalaForm.get('map_location')?.errors?.['required']">
+    Welfare Map Location is required.
+  </div>
+
+  <div *ngIf="goshalaForm.get('map_location')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+<h5 class="fw-semibold mb-3">🏥 Services Offered</h5>
+<div class="row row-cols-2 row-cols-md-3 g-3">
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="medical_care" id="medical_care" />
+      <label class="form-check-label" for="medical_care" style="cursor: pointer;">Medical Care</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="food_and_shelter" id="food_and_shelter" />
+      <label class="form-check-label" for="food_and_shelter" style="cursor: pointer;">Food and Shelter</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="counseling_services" id="counseling_services" />
+      <label class="form-check-label" for="counseling_services" style="cursor: pointer;">Counseling Services</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="rehabilitation_programs" id="rehabilitation_programs" />
+      <label class="form-check-label" for="rehabilitation_programs" style="cursor: pointer;">Rehabilitation Programs</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="skill_training" id="skill_training" />
+      <label class="form-check-label" for="skill_training" style="cursor: pointer;">Skill Training</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="mental_health_support" id="mental_health_support" />
+      <label class="form-check-label" for="mental_health_support" style="cursor: pointer;">Mental Health Support</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="legal_aid" id="legal_aid" />
+      <label class="form-check-label" for="legal_aid" style="cursor: pointer;">Legal Aid</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="is_24_7_support" id="is_24_7_support" />
+      <label class="form-check-label" for="is_24_7_support" style="cursor: pointer;">24/7 Support</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="security" id="security" />
+      <label class="form-check-label" for="security" style="cursor: pointer;">Security</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="education" id="education" />
+      <label class="form-check-label" for="education" style="cursor: pointer;">Education</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="physiotherapy" id="physiotherapy" />
+      <label class="form-check-label" for="physiotherapy" style="cursor: pointer;">Physiotherapy</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="play_area" id="play_area" />
+      <label class="form-check-label" for="play_area" style="cursor: pointer;">Play Area</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="recreational_activities" id="recreational_activities" />
+      <label class="form-check-label" for="recreational_activities" style="cursor: pointer;">Recreational Activities</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="adoption_services" id="adoption_services" />
+      <label class="form-check-label" for="adoption_services" style="cursor: pointer;">Adoption Services</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="family_counseling" id="family_counseling" />
+      <label class="form-check-label" for="family_counseling" style="cursor: pointer;">Family Counseling</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="emergency_response" id="emergency_response" />
+      <label class="form-check-label" for="emergency_response" style="cursor: pointer;">Emergency Response</label>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="form-check" style="cursor: pointer;">
+      <input class="form-check-input" type="checkbox" formControlName="special_needs_support" id="special_needs_support" />
+      <label class="form-check-label" for="special_needs_support" style="cursor: pointer;">Special Needs Support</label>
+    </div>
+  </div>
+</div>
+
+
+                  <div class="row">
+                    <!-- <div class="col-12"> -->
+                      <label>Welfare image <span class="text-danger">*</span></label>
+
+                <nz-upload
+                class="horizontal-upload"
+                nzListType="picture-card"
+                [(nzFileList)]="bannerFileList"
+                [nzMultiple]="true"
+                [nzShowButton]="bannerFileList.length < 10"
+                (nzChange)="handleBannerFileChange($event)"  (nzRemove)="handleBannerFileRemove($event)" [nzPreview]="handlePreview"
+>
+                <div >
+                  <i nz-icon nzType="plus"></i>
+                 Upload Welfare Image
+                </div>
+              </nz-upload>
+                      <div *ngIf="!bannerFileList.length" class="text-danger">
+                        Image is required.
+                      </div>
+                  
+                    <!-- </div> -->
+                  </div>
+
+<nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+
+
+
+                  <div class="row mt-3 mb-3">
+                    <div class="col-md-12">
+                      
+
+                        <!-- <div class="text-center">
+                                 <button
+  type="button"
+  (click)="onSubmit()"
+  style="border-width: 0px;background-color: rgb(241, 124, 15);
+  border-radius:20px;color: white; padding: 10px;">
+
+  {{ isEditMode ? 'Update Welfare' : 'Add Welfare' }}
+</button>
+                         
+                         
+                        </div> -->
+
+<div class="row mt-3 pb-4">
+  <div class="col-12">
+    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+
+      <!-- Cancel Button -->
+      <button
+        type="button"
+        (click)="dialogRef.close()"
+        class="btn btn-secondary px-4 py-2 rounded-pill"
+      >
+        Cancel
+      </button>
+
+      <!-- Submit Button -->
+      <button
+        type="button"
+        (click)="onSubmit()"
+        class="btn px-4 py-2 rounded-pill text-white"
+        style="background-color: rgb(241, 124, 15);"
+      >
+        {{ isEditMode ? 'Update Welfare' : 'Add Welfare' }}
+      </button>
+
+    </div>
+  </div>
+</div>
+
+                    </div>
+                  </div>
+  </div>
+</form>
+                    </div>

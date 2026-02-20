@@ -1,0 +1,265 @@
+<form [formGroup]="profileForm" (ngSubmit)="updateProfile()" style="max-height: 80vh; overflow-y: auto;" class="p-4">
+  <h4 class="text-center" style="color: orange;">Update Your Pujari Profile</h4>
+    <div>
+      <div class="row">
+      </div>
+      <div class="row mt-4">
+        <div class="col-12 d-flex align-items-center">
+          <div class="me-4">
+            <input type="radio" id="PUJARI" name="role" value="PUJARI" class="form-check-input"  formControlName="pujari_type">
+            <label for="PUJARI" class="form-check-label ms-2">Pujari</label>
+          </div>
+          <div class="me-4">
+            <input type="radio" id="PUROHITH" name="role" value="PUROHITH" class="form-check-input" formControlName="pujari_type">
+            <label for="PUROHITH" class="form-check-label ms-2">Purohit</label>
+          </div>
+          <div class="me-4">
+            <input type="radio" id="BOTH" name="role" value="BOTH" class="form-check-input" formControlName="pujari_type">
+            <label for="BOTH" class="form-check-label ms-2">Both</label>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="p-3 ">
+  
+
+  
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="pujari_certificate_type">Certificate Type*</label>
+                <select id="pujari_certificate_type" class="form-control form-select" formControlName="pujari_certificate_type">
+                  <option value="" disabled>Select Certificate Type</option>
+                  <option value="PRAVARA">Pravara</option>
+                  <option value="VARA">Vara</option>
+                  <option value="PRAVESA">Pravesa</option>
+                  <option value="GHANAM">Ghanam</option>
+                  <option value="KRAMAM">Kramam</option>
+                  <option value="PADAM">Padam</option>
+                  <option value="MULANTAM">Mulantam</option>
+                </select>
+                <div *ngIf="profileForm.get('pujari_certificate_type')?.invalid && profileForm.get('pujari_certificate_type')?.touched"
+                  class="text-danger">
+                  Certificate Type is required
+                </div>
+              </div>
+  
+              <div class="col-md-6">
+                <label for="issued_by">Certificate Issued By*</label>
+                <select id="issued_by" class="form-control form-select"
+                  formControlName="issued_by" (change)="onCertificateTypeChange($event)">
+                  <option value="" disabled>Select Certificate Issuer</option>
+                  <option value="ISSUED_BY_ENDOWNMENT">Issued By Endownment</option>
+                  <option value="ISSUED_BY_SANGHAM">Issued By Sangham</option>
+                </select>
+                <div
+                  *ngIf="profileForm.get('issued_by')?.invalid && profileForm.get('issued_by')?.touched"
+                  class="text-danger">
+                  Certificate Issuer is required
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="working_temple">Working Temple/Freelancer</label>
+                <input type="text" class="form-control" id="working_temple" formControlName="working_temple"
+                  placeholder="Enter working temple or freelancer">
+              </div>
+  
+              <div class="col-md-6">
+                <label for="pujari_designation">Pujari Designation</label>
+                <input type="text" class="form-control" id="pujari_designation" formControlName="pujari_designation"
+                  placeholder="Enter Pujari designation">
+              </div>
+            </div>
+  
+          </div>
+        </div>
+  
+        <div class="col-md-4 d-flex justify-content-start align-items-start mt-3">
+
+
+
+                          <div class="form-group">
+                       <label for="" class="m-2"> pujari certificate*</label>
+                <div class="profile-pic-container " formControlName="pujari_certificate" (click)="triggerFileInput()">
+                 
+                  <img  
+                      [src]="'data:image/jpg;base64,' + pujari_certificate"
+                      alt="Profile Picture"
+                      class="profile-pic"
+                      (error)="onImageError($event)"
+                      />
+             
+           
+           
+                 
+                  <ng-template #defaultPic>
+                    <div class="profile-pic-placeholder">
+                      <span class="plus-icon">+</span>
+                    </div>
+                  </ng-template>
+                 
+                  <div class="overlay">
+                    <span class="edit-icon">+</span>
+                  </div>
+                </div>
+             
+
+
+                <input
+                    id="pujari_certificate"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    (change)="onFileChange($event, 'pujari_certificate')"
+                    style="display: none;"
+                    #fileInput
+                  />
+
+             
+
+              </div>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+
+        <div class="form-group">
+            <div class="mt-0">
+              <label><strong>Select Expertise Categories</strong></label>
+              <div class="mt-2">
+                <span *ngFor="let sub of selectedSubcategories" class="badge bg-primary text-white me-2">
+                  {{ sub.name }}
+                  <button type="button" class="btn-close btn-close-white btn-sm ms-1"
+                          (click)="removeSelectedSubcategory(sub.categoryId, sub.id)"></button>
+                </span>
+              </div>
+              <div class="row mt-2 mb-2">
+                <div class="col-md-2" *ngFor="let category of categories">
+                  <div class="border p-2 rounded">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <strong>{{ category.label }}</strong>
+                      <button type="button" class="btn btn-sm" (click)="toggleSubcategories(category.id)">
+                        <span *ngIf="!expandedCategories.includes(category.id)">▼</span>
+                        <span *ngIf="expandedCategories.includes(category.id)">▲</span>
+                      </button>
+                    </div>
+                    <div *ngIf="expandedCategories.includes(category.id)">
+                      <div *ngFor="let sub of subcategoriesByCategoryId[category.id]">
+                        <label class="d-block">
+                          <input type="checkbox"
+                                [checked]="isSubcategorySelected(sub.id)"
+                                (change)="onSubCategoryChange(category.id, sub, $event)">
+                          {{ sub.label }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+              
+            </div>
+        </div>
+        
+
+ 
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="">Id Type</label>
+              <select class="form-control form-select" formControlName="pujari_id_type">
+                <option value="" disabled>Select ID Type</option>
+                 <option value="AADHAR_ID">Aadhaar</option>
+                <option value="VOTER_ID">Voter</option>
+                <option value="ENDOWMENT_ID">Endownment ID</option>
+       
+              </select>
+           
+            </div>
+          </div>
+          <div class="col-md-3">
+                          <div class="form-group">
+                       <label for="" class="m-2"> Id Proof</label>
+                <div class="profile-pic-container " formControlName="pujari_id_image" (click)="triggerFileInput1()">
+                 
+                  <img  
+                      [src]="'data:image/jpg;base64,' + pujari_id_image"
+                      alt="Profile Picture"
+                      class="profile-pic"
+                      (error)="onImageError($event)"
+                      />
+                  <ng-template #defaultPic>
+                    <div class="profile-pic-placeholder">
+                      <span class="plus-icon">+</span>
+                    </div>
+                  </ng-template>
+                 
+                  <div class="overlay">
+                    <span class="edit-icon">+</span>
+                  </div>
+                </div>
+             
+                <input
+                  id="pujari_id_image"
+                  type="file"
+                  accept="image/*"
+                  (change)="onFileChange($event ,'pujari_id_image')"
+                  style="display: none;"
+                  #fileInput
+                />
+              </div>
+          </div>  
+          
+          
+<div class="col-md-3">
+  <label for="pujari_video" class="form-label">Performance Video</label>
+
+  <div class="position-relative border rounded overflow-hidden" style="cursor: pointer;" (click)="triggerVideoInput()">
+    
+    <ng-container *ngIf="pujari_video; else noVideo">
+      <video width="100%" height="150" controls>
+        <source [src]="'data:video/mp4;base64,' + pujari_video" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </ng-container>
+
+    <ng-template #noVideo>
+      <div class="d-flex justify-content-center align-items-center" style="height: 150px;">
+        <span class="text-muted">Click to upload video</span>
+      </div>
+    </ng-template>
+
+    <div class="position-absolute bottom-0 start-50 translate-middle-x bg-light px-2 rounded-top">
+      <span class="fw-bold text-dark">+</span>
+    </div>
+  </div>
+
+  <input
+    type="file"
+    id="pujari_video"
+    accept="video/*"
+    (change)="onFileChange($event, 'pujari_video')"
+    style="display: none;"
+  />
+</div>
+
+
+        </div>      
+      </div>
+    </div>
+    
+  <div class="text-center mt-2">
+    <button type="submit" class="btn btn-primary" style="background-color: orange; border-color: orange;" >Update Profile</button>
+  </div>
+  </form>
+  
+  

@@ -1,0 +1,71 @@
+.large-textarea {
+    width: 1200px;
+    height: 100px; /* Adjust the height as needed */
+    font-size: 16px; /* Adjust the font size as needed */
+    padding: 10px; /* Adjust the padding as needed */
+    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+}
+
+
+/* .hide-scrollbar {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;  
+  } */
+
+ 
+
+.highlighted {
+  border: 3px solid #ff7b00;  /* Blue highlight (adjust color as needed) */
+  padding: 2px;
+  border-radius: 5px;
+}
+
+.truncated {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5; /* Limits text to two lines */
+  overflow: hidden;
+}
+
+.expanded {
+  display: block;
+}
+
+/* .sidebar-fixed-height {
+  max-height: calc(100vh - 500px);
+}
+
+@media (max-width: 1024px) {
+  .sidebar-fixed-height {
+    max-height: calc(100vh - 360px);
+  }
+}
+
+
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .sidebar-fixed-height {
+    max-height: calc(100vh - 360px);
+  }
+} */
+
+
+
+
+
+
+/* @media (max-width: 1440px) {
+  .sidebar-fixed-height {
+    max-height: calc(100vh - 360px);
+  }
+} */
+
+/* @media (max-width: 2560px) {
+  .sidebar-fixed-height {
+    max-height: calc(100vh - 1150px);
+  }
+} */
+

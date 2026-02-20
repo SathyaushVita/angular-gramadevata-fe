@@ -1,0 +1,240 @@
+/* navbar.component.css */
+.navbar {
+    /* background-image: url(./images/horizontal-yellow-and-orange-grunge-texture-cement-or-concrete-wall-banner-blank-background-free-photo.jpg); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.footer-icons {
+    color: white;
+}
+
+.bottom {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.navbar-brand {
+    color: white !important;
+}
+
+.navbar-brand .navbar-image {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+}
+button:hover{
+    transform: scale(1.05);
+}
+button{
+    width:200px;
+}
+.image1{
+    transform: scale(1.05); 
+}
+
+.image-container img {
+    height: 200px; /* Adjust the height as per your requirement */
+    width: 100%; /* Ensures the image takes up the full width of its container */
+    object-fit: cover; /* Maintains aspect ratio and covers the entire container */
+}
+
+
+.responsive-image {
+    width: 100%;
+}
+
+@media (min-width: 1200px) {
+    /* Large devices (large desktops, 1200px and up) */
+    .responsive-image {
+        height: 35vh;
+        /* margin-top: 30px; */
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    /* Medium devices (tablets, 768px and up) */
+    .responsive-image {
+        height: 25vh;
+        /* margin-top: 30px; */
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Small devices (landscape phones, less than 768px) */
+    .responsive-image {
+        height: 12vh;
+        /* margin-top: 15px; */
+    }
+}
+
+.image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gramadevatha-image {
+    border-radius: 31px;
+    width: 60%;
+    height: 70vh;
+}
+
+@media (max-width: 767.98px) {
+    /* For medium and smaller devices */
+    .gramadevatha-image {
+        width: 80%;
+        height: 30vh;
+        
+    }
+}
+
+@media (min-width: 768px) {
+    /* For larger devices */
+    .gramadevatha-image {
+        width: 60%;
+        height: 40vh;
+        text-align: center;
+        
+    }
+}
+
+
+.responsive-video {
+    width: 95%;
+}
+
+@media (min-width: 1200px) {
+    /* Large devices (large desktops, 1200px and up) */
+    .responsive-video {
+        height: 300px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    /* Medium devices (tablets, 768px and up) */
+    .responsive-video {
+        height: 200px;
+        
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Small devices (landscape phones, less than 768px) */
+    .responsive-gramadevata_image {
+        height: 200px;
+    }
+}
+
+
+.responsive-gramadevata_image {
+    width: 100%;
+    border-radius: 31px;
+    height: 300px;
+}
+
+@media (min-width: 1200px) {
+    /* Large devices (large desktops, 1200px and up) */
+    .responsive-video {
+        height: 300px;
+        border-radius: 31px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    /* Medium devices (tablets, 768px and up) */
+    .responsive-gramadevata_image {
+        height: 200px;
+        border-radius: 31px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    /* Small devices (landscape phones, less than 768px) */
+    .responsive-gramadevata_image {
+        height: 200px;
+        border-radius: 31px;
+    }
+}
+
+
+
+
+
+
+
+@media (max-width: 1024px) {
+    .carousel-control-prev {
+        margin-right: 20px;
+    }
+    .carousel-control-next {
+        margin-left: 20px;
+    }
+}
+@media (max-width: 1024px) {
+    #templeCarousel .carousel-control-prev {
+        left: -60px;
+    }
+    #templeCarousel .carousel-control-next {
+        right: -60px;
+    }
+}
+@media (max-width: 1024px) {
+    .carousel-control-prev {
+        margin-right: 20px;
+    }
+    .carousel-control-next {
+        margin-left: 20px;
+    }
+}
+@media (max-width: 1024px) {
+    #changallamaCarouselUnique .carousel-control-prev {
+        left: -60px;
+    }
+    #changallamaCarouselUnique .carousel-control-next {
+        right: -60px;
+    }
+}
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .hide-on-md {
+        display: none !important;
+    }
+}
+
+
+@media (min-width: 992px) {
+    .ml-lg-18p {
+      margin-left: 14%;
+    }
+  }
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .ml-lg-18p {
+      margin-left: 8%; /* Decreased margin for 1024px */
+    }
+  }
+  
+  /* Adjust margin specifically for 1440px screen width */
+  @media (min-width: 1440px) and (max-width: 1599px) {
+    .ml-lg-18p {
+      margin-left: 12%; /* Adjusted margin for 1440px */
+    }
+  }
+
+
+
+
+  .responsive-nav {
+    /* background-color: rgb(114, 45, 45); */
+    background-image: url('../../../assets/templebackgroundimage1.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+
+
+
+
+  

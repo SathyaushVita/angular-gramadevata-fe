@@ -1,0 +1,316 @@
+<!-- <div class="container  header-m" translate="no" >
+    <div class=" form-card"  >
+      <ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff"
+			type="ball-spin-clockwise">
+		</ngx-spinner>
+     <form [formGroup]="templeForm" class="p-5">
+        <div class="row ">
+          <h3 class="section-header-title text-center">Add Your Village</h3>
+        </div>
+        <div class="temple-form-heading">
+          <h3>Village details</h3>
+          <hr />
+          <div class="row">
+            
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="templeName">Village Name *</label>
+                <input type="text" class="form-control" id="templeName" formControlName="name" placeholder="Enter the Village's Name">
+                <div *ngIf="templeForm.get('name')?.invalid && (templeForm.get('name')?.dirty || templeForm.get('name')?.touched)" class="text-danger">
+                  Village name is required
+                </div>
+              </div>
+            </div>
+         <div class="col-md-4">
+            <div class="form-group">
+                <label for="templeName">Pincode *</label>
+                <input type="text" class="form-control" id="templeName" formControlName="pin_code" placeholder="Enter the Pincode">
+                <div *ngIf="templeForm.get('pin_code')?.invalid && (templeForm.get('pin_code')?.dirty || templeForm.get('pin_code')?.touched)" class="text-danger">
+                  Pincode is required
+                </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="templeType">Type *</label>
+              <select class="form-control" id="templeType" formControlName="type">
+                <option value="VILLAGE">VILLAGE</option>
+                <option value="AREA">AREA</option>
+              </select>
+            </div>
+          </div>
+          
+        </div>
+            
+
+
+ 
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="desc">About the Village</label>
+                <textarea class="form-control" id="desc" formControlName="desc" placeholder="Describe about the temple in less than 4500 words" rows="5"></textarea>
+                <div *ngIf="templeForm.get('desc')?.invalid && (templeForm.get('desc')?.dirty || templeForm.get('desc')?.touched)" class="text-danger">
+                  
+                  <div *ngIf="templeForm.get('desc')?.errors?.['maxlength']">Description cannot be more than 4500 words</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Please select a country">
+                  <label for="country">Country</label>
+                  <nz-select formControlName="country" nzPlaceHolder="Select Country" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeCountryOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="State is required">
+                  <label for="state">State</label>
+                  <nz-select formControlName="state" nzPlaceHolder="Select State" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeStateOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="District is required">
+                  <label for="district">District</label>
+                  <nz-select formControlName="district" nzPlaceHolder="Select District" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeDistrictOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Mandal is required">
+                  <label for="mandal">Mandal</label>
+                  <nz-select formControlName="block" nzPlaceHolder="Select Mandal" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeMandalOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <label>Banner image *</label>
+              <nz-upload
+                nzListType="picture-card"
+                [(nzFileList)]="bannerFileList"
+                [nzShowButton]="bannerFileList.length < 1"
+                (nzChange)="handleBannerFileChange($event)"
+                [nzAccept]="'image/*'"
+                (nzRemove)="handleBannerFileRemove()">
+                <div>
+                  <i nz-icon nzType="plus"></i>
+                  Upload banner
+                </div>
+              </nz-upload>
+              <div *ngIf="!bannerFileList.length" class="text-danger">
+                Image is required.
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center">
+            <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+          </div>
+        </div>
+      </form> 
+ 
+ 
+  
+  
+    </div>
+  </div> -->
+
+
+
+  <div class="container  header-m" translate="no" >
+    <div class=" form-card"  >
+      <ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff"
+			type="ball-spin-clockwise">
+		</ngx-spinner>
+     <form [formGroup]="templeForm" class="p-5">
+        <div class="row ">
+          <h3 class="section-header-title text-center">Add Your Village</h3>
+        </div>
+        <div class="temple-form-heading">
+          <h3>Village details</h3>
+          <hr />
+          <div class="row">
+            
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="templeName" class="required" >Village Name </label>
+                <input type="text" class="form-control" id="templeName" formControlName="name" placeholder="Enter village name" (keydown)="validateTempleName($event)"/>
+                <div *ngIf="templeForm.get('name')?.invalid && (templeForm.get('name')?.dirty || templeForm.get('name')?.touched)" class="text-danger">
+                  Village name is required
+                </div>
+              </div>
+            </div>
+         <div class="col-md-4">
+            <div class="form-group">
+                <label for="templeName" class="required">Pincode </label>
+                <input type="text" class="form-control" id="templeName" formControlName="pin_code" placeholder="Enter the Pincode"(keydown)="validateTempleName($event)">
+                <div *ngIf="templeForm.get('pin_code')?.invalid && (templeForm.get('pin_code')?.dirty || templeForm.get('pin_code')?.touched)" class="text-danger">
+                  Pincode is required
+                </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="templeType" class="required" >Type </label>
+              <select class="form-control clickable-select" id="templeType" formControlName="type">
+                <option value="VILLAGE">VILLAGE</option>
+                <option value="AREA">AREA</option>
+              </select>
+            </div>
+          </div>
+          
+        </div>
+            
+
+
+ 
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="desc">About the Village</label>
+                <textarea class="form-control" id="desc" formControlName="desc" placeholder="Describe about the Village in less than 4500 words" rows="5" (keydown)="preventLeadingSpace($event)"></textarea>
+                <div *ngIf="templeForm.get('desc')?.invalid && (templeForm.get('desc')?.dirty || templeForm.get('desc')?.touched)" class="text-danger">
+                  
+                  <div *ngIf="templeForm.get('desc')?.errors?.['maxlength']">Description cannot be more than 4500 words</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Please select a country">
+                  <label for="country">Country</label>
+                  <nz-select formControlName="country" nzPlaceHolder="Select Country" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeCountryOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="State is required">
+                  <label for="state" class="required">State</label>
+                  <nz-select formControlName="state" nzPlaceHolder="Select State" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeStateOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                  <div *ngIf="templeForm.get('state')?.invalid && (templeForm.get('state')?.dirty || templeForm.get('state')?.touched)" class="text-danger">
+                  State is required
+                </div>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="District is required">
+                  <label for="district" class="required">District</label>
+                  <nz-select formControlName="district" nzPlaceHolder="Select District" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeDistrictOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                  <div *ngIf="templeForm.get('district')?.invalid && (templeForm.get('district')?.dirty || templeForm.get('district')?.touched)" class="text-danger">
+                  District is required
+                </div>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            
+            <div class="col-md-4">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="Mandal is required">
+                  <label for="mandal" class="required">Mandal</label>
+                  <nz-select formControlName="block" nzPlaceHolder="Select Mandal" [nzShowSearch]="true">
+                    <nz-option *ngFor="let option of templeMandalOptions" [nzValue]="option.value" [nzLabel]="option.label"></nz-option>
+                  </nz-select>
+                  <div *ngIf="templeForm.get('block')?.invalid && (templeForm.get('block')?.dirty || templeForm.get('block')?.touched)" class="text-danger">
+                  Mandal is required
+                </div>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <label class="required">Banner image </label>
+              <nz-upload
+                nzListType="picture-card"
+                [(nzFileList)]="bannerFileList"
+                [nzMultiple]="true"
+                [nzShowButton]="bannerFileList.length < 1"
+                (nzChange)="handleBannerFileChange($event)"
+                [nzAccept]="'image/*'"
+                [nzPreview]="handlePreview"
+                (nzRemove)="handleBannerFileRemove()">
+                <div>
+                  <i nz-icon nzType="plus"></i>
+                  Upload banner
+                </div>
+              </nz-upload>
+              <div *ngIf="!bannerFileList.length" class="text-danger">
+                Image is required.
+              </div>
+              <div *ngIf="bannerFileList.length > 10" class="text-danger">
+                Maximum 10 images allowed.
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center">
+          <button 
+            type="button"
+            (click)="onCancel()"
+            style="border-width: 0px;
+                  background-color: #6c757d;
+                  border-radius:20px;
+                  color: white;
+                  padding: 10px 20px;
+                  margin-right: 10px;">
+            Cancel
+          </button>
+
+          <button 
+            type="button"
+            (click)="onSubmit()"
+            style="border-width: 0px;
+                  background-color: rgb(241, 124, 15);
+                  border-radius:20px;
+                  color: white;
+                  padding: 10px 20px;">
+            Submit
+          </button>
+       </div>
+
+        </div>
+      </form> 
+ 
+ 
+  
+  
+    </div>
+  </div>

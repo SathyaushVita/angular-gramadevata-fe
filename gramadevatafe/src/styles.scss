@@ -1,0 +1,94 @@
+$primary: #FF6800;
+$body-bg: #fff;
+$secondary: #807d7a;
+$light: #F6F6F6;
+
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "@fortawesome/fontawesome-free/css/all.css";
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans&display=swap');
+// @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+html, body { height: 100%;}
+body {font-family: "Kumbh Sans", sans-serif;}
+.section-header-title {
+    font-size: 45px;
+    font-weight: 600;
+}
+
+.grey-background{
+  background-color: #f9f9f9;
+}
+
+.global-container{
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  overflow: hidden;
+  max-width: 1550px;
+  text-align: center;
+}
+
+
+.famous-item-image-size {
+    height: 300px;
+}
+
+.form-container{
+  margin-left: auto;
+  margin-right: auto;
+
+  max-width: 1000px;
+
+}
+
+
+.form-input {
+  border-radius : 5px;
+}
+
+.fixed-size-image {
+  width: 250px; /* Set your desired width */
+  height: 350px; /* Set your desired height */
+  object-fit: cover; /* Maintain aspect ratio while covering container */
+}
+
+
+.form-card {
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(32,76,188,.2);
+  border-radius: 15px;
+}
+
+.form-card input {
+
+  border-radius: 9px !important;
+}
+
+
+.form-card nz-select {
+  border-radius: 9px !important;
+}
+
+.form-card textarea {
+    border-radius: 10px;
+    /* Add any other styles you want for the input boxes */
+}
+
+
+.temple-detail-image{
+  width: 150px;
+  height: 200px;
+}
+
+.header-m{
+  margin-top: 5em;
+}
+
+.image-gallery-scroll {
+  overflow-y: scroll;
+}
+
+
+

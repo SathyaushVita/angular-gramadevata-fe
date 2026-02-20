@@ -1,0 +1,78 @@
+/* CSS */
+.image-container {
+    margin-bottom: 20px;
+  }
+  
+  .temple-image {
+    height: 30vh; /* Adjust the height as needed */
+    width: 30vh; /* Ensures the image takes up the full width of its container */
+     /* Maintains aspect ratio and covers the entire container */
+  }
+
+  .image-container img {
+    height: 200px; /* Adjust the height as per your requirement */
+    width: 100%; /* Ensures the image takes up the full width of its container */
+    object-fit: cover; /* Maintains aspect ratio and covers the entire container */
+}
+
+.highlight {
+  color:orange; /* Adjust the highlight color as needed */
+  font-weight: bold; /* Optional: make the text bold */
+}
+
+/* Add this CSS in your styles */
+.side-slider {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Hide the slider off-screen */
+  width: 250px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.side-slider.open {
+  left: 0; /* Slide the panel into view */
+}
+
+.side-slider-content {
+  padding: 15px;
+}
+
+.toggle-button {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.toggle-button:focus {
+  outline: none;
+}
+
+/* Example styles */
+section {
+  padding: 20px;
+}
+
+.nz-input-group {
+  margin-bottom: 20px;
+}
+
+nz-tree {
+  margin-top: 20px;
+}
+
+*::-webkit-scrollbar {
+  width: 0px !important;
+  background-color: white !important;
+}

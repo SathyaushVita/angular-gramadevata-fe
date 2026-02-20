@@ -1,0 +1,49 @@
+<!-- locations.component.html -->
+<div>
+    <form [formGroup]="locationForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" [nzRequired]="true">State</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-select formControlName="state" (ngModelChange)="onStateChange($event)">
+            <nz-option *ngFor="let state of states" [nzValue]="state.key">
+              {{ state.title }}
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" [nzRequired]="true">District</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-select formControlName="district" (ngModelChange)="onDistrictChange($event)">
+            <nz-option *ngFor="let district of districts" [nzValue]="district.key">
+              {{ district.title }}
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" [nzRequired]="true">Block</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-select formControlName="block" (ngModelChange)="onBlockChange($event)">
+            <nz-option *ngFor="let block of blocks" [nzValue]="block.key">
+              {{ block.title }}
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" [nzRequired]="true">Village</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-select formControlName="village">
+            <nz-option *ngFor="let village of villages" [nzValue]="village.key">
+              {{ village.title }}
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  

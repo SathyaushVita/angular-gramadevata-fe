@@ -1,0 +1,33 @@
+.position-relative {
+  position: relative;
+}
+
+.overlay-icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease;
+  border-radius: 20px; /* Ensure the overlay matches the roundness of the image */
+}
+
+.icon-view-delete {
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.col-1:hover .overlay-icons {
+  opacity: 1; /* Show overlay when hovering */
+}
+
+button:disabled {
+  background-color: #cccccc !important;
+  cursor: not-allowed;
+}
+

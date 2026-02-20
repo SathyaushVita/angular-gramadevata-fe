@@ -1,0 +1,241 @@
+   <div class="container d-flex flex-column">
+    <ul class="nav nav-tabs mt-3">
+      <li class="nav-item">
+        <a class="nav-link active" id="village-tab" data-bs-toggle="tab" href="#village" role="tab">
+          <strong class="me-2" style="color: black;">Village Chats</strong> <i class="fas fa-users"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="temple-tab" data-bs-toggle="tab" href="#temple" role="tab">
+          <strong class="me-2" style="color: black;">Temple Chats</strong> <i class="fas fa-users"></i>
+        </a>
+      </li>
+    </ul>
+  
+    <div class="tab-content flex-grow-1 overflow-hidden ">
+      
+      <div class="tab-pane fade show active  " id="village" role="tabpanel">
+        <div class="row">
+  
+          <!-- <div  class="col-lg-3 col-md-4 col-12 border-end bg-light d-flex flex-column" style="height: 50vh; overflow: hidden;">
+            <h5 class=" text-white text-center p-3" style="background-color:  #28a745;">Connected Villages</h5>
+
+
+            <ul class="list-group">
+              <li *ngFor="let village of villageconnections"
+                  (click)="selectVillage(village.village)"
+                  class="list-group-item list-group-item-action d-flex align-items-center"
+                  style="cursor: pointer;">
+                
+                <img  src="../../../assets/farm_1825306.png"
+                     (error)="handleImageError($event)"
+                     alt="Village Logo"
+                     class="rounded-circle me-3"
+                     width="40" height="40">
+                
+                {{ village.village.name }}
+              </li>
+            </ul>
+          </div> -->
+          <div class="col-lg-3 col-md-4 col-12 border-end bg-light d-flex flex-column" style="height: 50vh; overflow: hidden;">
+  <h5 class="text-white text-center p-3" style="background-color: #28a745;">Connected Villages</h5>
+
+  <div class="flex-grow-1 overflow-auto">
+    <ul class="list-group">
+      <li *ngFor="let village of villageconnections"
+          (click)="selectVillage(village.village)"
+          class="list-group-item list-group-item-action d-flex align-items-center"
+          style="cursor: pointer;">
+        <img src="../../../assets/farm_1825306.png"
+             (error)="handleImageError($event)"
+             alt="Village Logo"
+             class="rounded-circle me-3"
+             width="40" height="40">
+        {{ village.village.name }}
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+          <div class="col-lg-9 col-md-8 col-12 d-flex flex-column">
+  
+            <div class=" text-white p-3 fw-bold" style="background-color:  #28a745;">
+              <h6 class="village-tab" *ngIf="selectedVillageName">
+                <img src="../../../assets/farm_1825306.png" class="rounded-circle me-2" width="40" height="40" alt="Village Icon">
+                 {{selectedVillageName}}
+              </h6>
+              <h6 class="village-tab" *ngIf="!selectedVillageName">
+                 Village Chat Room
+             </h6>
+            </div>
+
+            <div class="d-flex flex-column align-items-center justify-content-center h-100 bg-light mt-5" *ngIf="!selectedVillageName">
+              <img src="../../../assets/villagechatimage.jpg" class="img-fluid rounded shadow-lg" 
+                  alt="Default Chatroom Image" style="width: 350px; height: 250px; object-fit: cover;">
+
+              <p class="mt-4 text-center text-muted fw-bold fs-5">
+                <i class="fas fa-comments me-2 text-warning"></i>  
+                "Choose your village and connect with locals!"
+              </p>
+            </div>
+
+
+  
+            <div  class="chat-box p-3 bg-light overflow-auto" *ngIf="village" style="height: 400px;">
+  
+
+
+           
+           <div *ngFor="let msg of messages; trackBy: trackByMessageId" class="d-flex mb-3"
+     [ngClass]="{'justify-content-end': msg.user?._id === userId, 'justify-content-start': msg.user?._id !== userId}">
+  
+  <div *ngIf="msg.user?._id !== userId" class="d-flex align-items-center me-2">
+    <img [src]="msg.user?.profile_pic || 'assets/ohm.jpg'"
+         class="rounded-circle" width="40" height="40"
+         alt="User profile" (error)="handleImageError($event)">
+  </div>
+
+  <div class="p-2 rounded shadow-sm"
+       [ngClass]="{'bg-success text-white': msg.user?._id === userId, 'bg-white border': msg.user?._id !== userId}"
+       style="max-width: 75%;">
+    <div *ngIf="msg.user?.name" class="fw-bold">{{ msg.user.name }}</div>
+    <div>{{ msg.message }}</div>
+    <div *ngIf="msg.image && msg.image.length > 0" class="mt-2">
+      <img *ngFor="let img of msg.image"
+           [src]="img"
+           class="img-fluid rounded mb-1"
+           style="max-width: 100%; max-height: 200px;"
+           alt="Chat image"
+           (error)="handleImageError($event)">
+    </div>
+    <small class="text-muted">{{ msg.posted_time_ago }}</small>
+  </div>
+</div>
+            </div>
+            
+            <div class="d-flex p-2 bg-white border-top align-items-center" *ngIf="village">
+              <div class="me-2">
+                <input type="file" id="villageMediaUpload"  hidden />
+                <label for="villageMediaUpload" class="btn btn-outline-secondary d-flex align-items-center justify-content-center">
+                  <i class="fas fa-plus"></i>
+                </label>
+              </div>            
+              <input [(ngModel)]="newMessage" class="form-control me-2" placeholder="Type a message...."      (keydown.enter)="sendvillageMessage()"/>            
+              <button (click)="sendvillageMessage()" class="btn btn-warning">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+  
+      <div class="tab-pane fade" id="temple" role="tabpanel">
+        <div class="row">
+  
+          <!-- <div class="col-lg-3 col-md-4 col-12  border-end bg-light">
+            <h5 class="bg-warning text-white text-center p-3">Connected Temples</h5>
+
+
+            <ul class="list-group">
+              <li *ngFor="let village of templeconnections"
+              (click)="selectTemple(village.temple)"
+                  class="list-group-item list-group-item-action d-flex align-items-center"
+                  style="cursor: pointer;">
+                
+                <img  [src]="village.temple.image_location ? village.temple.image_location : 'assets/ohm.jpg'"
+                     (error)="handleImageError($event)"
+                     alt="Village Logo"
+                     class="rounded-circle me-3"
+                     width="40" height="40">
+                
+                     {{ village.temple.name }}
+              </li>
+            </ul>
+          </div> -->
+          <div class="col-lg-3 col-md-4 col-12 border-end bg-light d-flex flex-column" style="height: 50vh; overflow: hidden;">
+  <h5 class="bg-warning text-white text-center p-3 mb-0">Connected Temples</h5>
+
+  <div class="flex-grow-1 overflow-auto">
+    <ul class="list-group">
+      <li *ngFor="let village of templeconnections"
+          (click)="selectTemple(village.temple)"
+          class="list-group-item list-group-item-action d-flex align-items-center"
+          style="cursor: pointer;">
+        <img [src]="village.temple.image_location ? village.temple.image_location : 'assets/ohm.jpg'"
+             (error)="handleImageError($event)"
+             alt="Village Logo"
+             class="rounded-circle me-3"
+             width="40" height="40">
+        {{ village.temple.name }}
+      </li>
+    </ul>
+  </div>
+</div>
+
+  
+          <div class="col-lg-9 col-md-8 col-12 d-flex flex-column">
+  
+            <div class="bg-warning text-white p-2 fw-bold">
+              <h6 class="temple-tab" *ngIf="selectedTemplename">
+                <img [src]="selectedTempleImagelocation" class="rounded-circle" width="40" height="40" style="margin-right: 5px;" >
+                {{selectedTemplename}}
+              </h6>
+
+              <h6 class="temple-tab" *ngIf="!selectedTemplename">
+                Temple Chat Room
+            </h6>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center h-100 bg-light mt-5" *ngIf="!selectedTemplename">
+              <img src="../../../assets/templechatimage.jpg" class="img-fluid rounded shadow-lg" 
+                   alt="Default Chatroom Image" style="width: 350px; height: 250px; object-fit: cover;">
+            
+              <p class="mt-4 text-center text-muted fw-bold fs-5">
+                <i class="fas fa-comments me-2 text-warning"></i>  
+                "Select your Temple and start chatting with your Peoples!"
+              </p>
+            </div>
+           
+                <div #chatBox class="chat-box p-3 bg-light overflow-auto" *ngIf="temple" style="height: 400px;">
+
+              <div *ngFor="let msg of templemessages;trackBy: trackByMessageId" class="d-flex mb-3"
+                   [ngClass]="{'justify-content-end': msg.user._id === userId, 'justify-content-start': msg.user._id !== userId}">
+                
+                <div *ngIf="msg.user._id !== userId" class="d-flex align-items-center me-2">
+                  <img [src]="msg.user.profile_pic || 'assets/ohm.jpg'" 
+                       class="rounded-circle" width="40" height="40"
+                       alt="User profile" (error)="handleImageError($event)">
+                </div>
+  
+                <div class="p-2 rounded shadow-sm"
+                     [ngClass]="{'bg-success text-white': msg.user._id === userId, 'bg-white border': msg.user._id !== userId}"
+                     style="max-width: 75%;">
+                  <div *ngIf="msg.user._id !== userId" class="fw-bold">{{ msg.user.name }}</div>
+                  <div>{{ msg.message }}</div>
+                  <small class="text-muted">{{ msg.posted_time_ago }}</small>
+                </div>
+              </div>
+            </div> 
+  
+
+
+            <div class="d-flex p-2 bg-white border-top align-items-center" *ngIf="temple">
+              <div class="me-2">
+                <input type="file" id="mediaUpload"  hidden />
+                <label for="mediaUpload" class="btn btn-outline-secondary d-flex align-items-center justify-content-center">
+                  <i class="fas fa-plus"></i>
+                </label>
+              </div>
+              <input [(ngModel)]="templeMessage" class="form-control me-2" placeholder="Type a message...."    (keydown.enter)="sendTempleMessage()" />
+              <button (click)="sendTempleMessage()" class="btn btn-warning">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  </div>

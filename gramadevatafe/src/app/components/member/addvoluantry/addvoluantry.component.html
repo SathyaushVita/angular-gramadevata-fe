@@ -1,0 +1,215 @@
+
+
+ <div class="container p-4" *ngIf="!isMemberIn;" style="max-width: 700px; margin: 0 auto; max-height: 600px; border-radius: 300px;">
+    <form [formGroup]="memberform">
+        <div>
+            <div class="row">
+                <h3 class="text-center">Member Registration</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="full_name">Name*</label>
+                        <input type="text" class="form-control" formControlName="full_name" placeholder="Enter the name">
+                        <div *ngIf="memberform.get('full_name')?.invalid && (memberform.get('full_name')?.dirty || memberform.get('full_name')?.touched)" class="text-danger">
+                            name required
+                          </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="full_name">Surname*</label>
+                        <input type="text" class="form-control" formControlName="surname" placeholder="Enter the surname">
+                        <div *ngIf="memberform.get('surname')?.invalid && (memberform.get('surname')?.dirty || memberform.get('surname')?.touched)" class="text-danger">
+                            surname required
+                          </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="father_name">Father's Name*</label>
+                        <input type="text" class="form-control" formControlName="father_name" placeholder="Enter the father's name">
+                        <div *ngIf="memberform.get('father_name')?.invalid && (memberform.get('father_name')?.dirty || memberform.get('father_name')?.touched)" class="text-danger">
+                            Father's Name required
+                          </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="row mt-2">
+                
+              
+                <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="contact_number">Contact Number*</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="contact_number"
+                        placeholder="Enter the contact number"
+                      />
+                      <!-- Error messages for validation -->
+                      <div
+                        *ngIf="
+                          contactNumber?.invalid &&
+                          (contactNumber?.dirty || contactNumber?.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <div *ngIf="contactNumber?.errors?.['required']">
+                          Contact Number is required
+                        </div>
+                        <div *ngIf="contactNumber?.errors?.['pattern']">
+                          Contact Number must be a 10-digit number
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="gender">Gender*</label>
+                        <select class="form-control" formControlName="gender">
+                            <option value="" disabled selected>Select your gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                        <div *ngIf="memberform.get('gender')?.invalid && (memberform.get('gender')?.dirty || memberform.get('gender')?.touched)" class="text-danger">
+                            Gender required
+                        </div>
+                    </div>
+                </div>
+
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="gender"> Visibility*</label>
+                        <select class="form-control" formControlName="account_type">
+                            <option value="" disabled selected></option>
+                            <option value="PRIVATE">PRIVATE</option>
+                            <option value="PUBLIC">PUBLIC</option>
+                            
+                        </select>
+                        <div *ngIf="memberform.get('account_type')?.invalid && (memberform.get('account_type')?.dirty || memberform.get('account_type')?.touched)" class="text-danger">
+                            Gender required
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="contact_number">Email </label>
+                        <input type="text" class="form-control" formControlName="email" placeholder="Enter the email">
+                        <div *ngIf="memberform.get('email')?.invalid && (memberform.get('email')?.dirty || memberform.get('email')?.touched)" class="text-danger">
+                            Email required
+                          </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <label class="pb-1">Describe your view about your village</label>
+                            <textarea nz-input placeholder="" formControlName="description" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-12">
+                  <label class="pb-1">Profession</label>
+                  <div class="form-group d-flex flex-wrap">
+                    <div class="form-check me-4" *ngFor="let profession of ['Doctor', 'Teacher', 'Veterinary Doctor', 'Farmer']">
+                      <input class="form-check-input"
+                             type="checkbox"
+                             [value]="profession"
+                             (change)="onProfessionChange($event)">
+                      <label class="form-check-label">{{ profession }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
+
+
+
+
+            <div class="row d-flex mt-2">
+                <label class="pb-2">How do you belong to the village?</label>
+                <div *ngFor="let checkbox of checkboxes" class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input"  [value]="checkbox.value" [checked]="selectedCheckboxes.value.includes(checkbox.value)" />
+                    <label class="form-check-label">{{ checkbox.label }}</label>
+                </div>
+            </div>
+            <div class="row mt-3 ">
+                <div class="col-12 text-center mb-4">
+                    <!-- <button (click)="onSubmit()">Submit</button> -->
+                    <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container p-4" *ngIf="isMemberIn;" style="max-width: 600px; margin: 0 auto; max-height: 800px">
+    <form [formGroup]="ConnectForm">
+        <div>
+            <div class="row">
+                <h3 class="text-center">Member Registration</h3>
+            </div>
+
+
+
+            <div class="row mt-2">
+                <div class="col-md-12">
+                  <label class="pb-1">Profession</label>
+                  <div class="form-group d-flex flex-wrap">
+                    <div class="form-check me-4" *ngFor="let profession of ['Doctor', 'Teacher', 'Veterinary Doctor', 'Farmer']">
+                      <input class="form-check-input"
+                             type="checkbox"
+                             [value]="profession"
+                             (change)="onProfessionChange($event)">
+                      <label class="form-check-label">{{ profession }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <label class="pb-1">Describe your view about your village</label>
+                            <textarea nz-input placeholder="" formControlName="description" [nzAutosize]="{ minRows: 3, maxRows: 5 }" style="margin-right: 10px;"></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div class="row d-flex mt-2">
+                <label class="pb-2">How do you belong to the village?</label>
+                <div *ngFor="let checkbox of checkboxes" class="form-check form-check-inline">
+                    <input type="checkbox"  class="form-check-input" [value]="checkbox.value" [checked]="selectedCheckboxes.value.includes(checkbox.value)" />
+                    <label class="form-check-label">{{ checkbox.label }}</label>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <!-- <button (click)="onSubmit()">Submit</button> -->
+                    <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

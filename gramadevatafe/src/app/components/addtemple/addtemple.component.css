@@ -1,0 +1,13 @@
+.temple-video-card {
+  border-radius: 12px;
+  transition: 0.3s ease;
+}
+
+.temple-video-card:hover {
+  transform: translateY(-3px);
+}
+
+.upload-btn {
+  height: 45px;
+  border-radius: 8px;
+}

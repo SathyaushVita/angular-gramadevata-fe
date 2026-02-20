@@ -1,0 +1,53 @@
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+
+.btn-orange {
+  background-color: #f57c00; /* Orange color */
+  color: #fff; /* White text */
+  border: none; /* Remove border */
+  width: 220; /* Set a specific width */
+  height: auto; /* Set a specific height */
+}
+
+.btn-orange:hover {
+  background-color: #e64a19; /* Darker orange on hover */
+}
+
+.responsive-btn {
+  width: 200px;
+}
+
+/* For medium devices (768px and up) */
+@media (min-width: 768px) {
+  .responsive-btn {
+    width: 150px;
+  }
+}
+
+/* For large devices (992px and up) */
+@media (min-width: 992px) {
+  .responsive-btn {
+    width: 200px;
+  }
+}
+
+.custom-search {
+  width: 200px;  /* Adjust width */
+  height: 28px;  /* Adjust height */
+  font-size: 14px; /* Adjust text size */
+  padding: 4px 8px;
+}
+
+
+
+
+
+
+

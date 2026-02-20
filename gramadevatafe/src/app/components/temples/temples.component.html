@@ -1,0 +1,235 @@
+<div class="container" >
+    <div class="row mt-3 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="card mb-4">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-lg-8">
+                                <div class="card-header">
+                                    <h1 class="card-title fs-4 text-center"> Temples</h1>
+                                    <!-- <h1 class="card-title fs-4">{{ villagedata?.name }} </h1> -->
+                                    <!-- <h5 class="card-text mb-1">
+                                      <span class="fw-bold">Village:</span> {{ villagedata?.name }}
+                                    </h5> -->
+                                    <h5 class="card-text mb-1">
+                                      <span class="fw-bold">Village:</span>
+                                      <span class="text-primary" (click)="onVillageClick(villagedata._id)" style="cursor: pointer;">
+                                        {{ villagedata?.name }}
+                                      </span>
+                                    </h5>
+                                    
+                                    <p class="card-text mb-1">
+                                        <span class="fw-bold">Block/Mandal:</span> {{ villagedata?.block?.name }}
+                                    </p>
+
+
+                                    <!-- <p class="card-text mb-1">
+                                      <span class="fw-bold">Block/Mandal:</span>
+                                      <span 
+                                        class="text-primary"
+                                        style="cursor: pointer;"
+                                        (click)="onMandalClick(villagedata?.block)">
+                                        {{ villagedata?.block?.name }}
+                                      </span>
+                                    </p> -->
+                                    
+                                    
+                                    
+                                    <p class="card-text mb-1">
+                                        <span class="fw-bold">District:</span> {{ villagedata?.block?.district?.name }}
+                                    </p>
+                                    <p class="card-text mb-1">
+                                        <span class="fw-bold">State:</span> {{ villagedata?.block?.district?.state?.name }}
+                                    </p>
+                                    <p class="card-text mb-1">
+                                        <span class="fw-bold">Country:</span> {{ villagedata?.block?.district?.state?.country?.name }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <img src="../../../assets/village2.jpg" alt="Village Image" class="img-fluid rounded-end p-2" style="max-height: 20vh;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div>
+            <button (click)="addtemple()" nz-button class="login-form-button login-form-margin"
+                        style="background-color: orange; border-color: orange;">
+                  <i class="fas fa-gopuram faicon"></i> Add Temple
+                </button>
+          </div>
+          <button class="btn btn-light" (click)="sharegetbytemple(villagedata)" style="font-size: 20px;">
+            <i class="fas fa-share-alt"></i>
+          </button>
+        </div>
+        
+
+
+      
+        <hr>
+
+
+
+        <div class="container">
+            <div class="row">
+
+
+
+                <div class="col-md-2 d-none d-md-block">
+                    <div class="ad-space-container" style="margin-top: 25px;">
+                        <app-add-space></app-add-space>
+                    </div>
+                </div>
+        
+                <div class="col-md-8">
+                    <div class="temple-container" style="height: 500px; overflow-y: auto;">
+                      <ng-container *ngIf="templedata?.length > 0; else noData">
+                        <div *ngFor="let temple of templedata" class="col-md-12 mb-5">
+                          <div class="card shadow-sm">
+                            <div class="row no-gutters">
+                              <div class="col-md-6 text-center">
+                                <div class="image-container mb-4 mt-4">
+                                  <a (click)="navigateTempleDetail(temple._id)">
+                                    <img
+                                      [src]="temple.image_location[0] ? temple.image_location[0] : 'assets/ohm.jpg'"
+                                      alt="Temple Image"
+                                      class="img-fluid rounded"
+                                      style="height: 300px; width: 100%; max-width: 350px;"
+                                      (error)="handleImageError($event)"
+                                    />
+                                  </a>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="card-body">
+                                  <div class="details">
+                                    <div class="detail mb-2">
+                                      <span class="font-weight-bold"><b>Name:</b></span> {{ temple?.name }}
+                                    </div>
+                                    <div class="detail mb-2">
+                                      <span class="font-weight-bold"><b>Address:</b></span> {{ temple?.address }}
+                                    </div>
+                                    <div class="detail mb-2">
+                                      <span class="font-weight-bold"><b>Map Location:</b></span>
+                                      <a (click)="openMap(temple?.temple_map_location)" href="#">Temple Map Location</a>
+                                    </div>
+                  
+                                    <div
+                                      class="button-container d-flex justify-content-center mt-4"
+                                      *ngIf="!temple.isConnected"
+                                    >
+                                      <button
+                                        *ngIf="!userservice.isMemberIn"
+                                        (click)="OpenAddmemberDilog(temple._id)"
+                                        class="btn btn-outline-primary mx-2"
+                                        style="font-size: 0.7rem;"
+                                      >
+                                        Connect as Devote
+                                      </button>
+                                      <button
+                                        *ngIf="isMemberIn"
+                                        (click)="isMemberconnect(temple._id)"
+                                        class="btn btn-outline-primary mx-2"
+                                        style="font-size: 0.7rem;"
+                                      >
+                                        Connect as Devote
+                                      </button>
+                                      <button
+                                        *ngIf="!isPujariIn"
+                                        (click)="OpenPujariDilog(temple._id)"
+                                        class="btn btn-outline-primary mx-2"
+                                        style="font-size: 0.7rem;"
+                                      >
+                                        Connect as Pujari
+                                      </button>
+                                      <button
+                                        *ngIf="isPujariIn"
+                                        (click)="isPujariconnect(temple._id)"
+                                        class="btn btn-outline-primary mx-2"
+                                        style="font-size: 0.7rem;"
+                                      >
+                                        Connect as Pujari
+                                      </button>
+                                    </div>
+                  
+                                    <div class="row mt-3" *ngIf="temple.isConnected">
+                                      <div class="col-md-7">
+                                        <h6>Members/Pujaries</h6>
+                                        <div class="d-flex flex-wrap">
+                                          <div
+                                            *ngFor="let member of temple.Connections"
+                                            class="d-flex flex-column align-items-center mx-2"
+                                          >
+                                            <button
+                                              class="btn btn-outline-primary rounded-circle"
+                                              style="width: 35px; height: 35px; padding: 0;"
+                                            >
+                                              <i class="fas fa-user"></i>
+                                            </button>
+                                            <p class="text-center mt-2">{{ member?.user?.name }}</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-5 d-flex align-items-center">
+                                        <div class="text-center w-100">
+                                          <button
+                                            type="button"
+                                            (click)="NavigateToChatRoom(temple._id)"
+                                            class="btn btn-outline-primary"
+                                            style="font-size: 0.7rem;"
+                                          >
+                                            Chat With Members
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                  
+                      <ng-template #noData>
+                        <div class="row text-center">
+                          <div class="col">
+                            <img
+                              src="../../../assets/profiledata()"
+                              class="img-fluid"
+                              style="width: 30%;"
+                            />
+                          </div>
+                        </div>
+                        <div class="row text-center">
+                          <div class="col">
+                            <p>No Data Found</p>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                  
+
+                <div class="col-md-2 d-none d-md-block">
+                    <div class="ad-space-container" style="margin-top: 25px;">
+                        <app-add-space></app-add-space>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

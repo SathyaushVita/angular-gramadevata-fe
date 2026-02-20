@@ -1,0 +1,63 @@
+<div class="container " >
+  <!-- <div class="text-center mb-3 " style="color: black">
+    <img src="../../../assets/icon.jpg" style="height: 230px; width: 250px;" alt="">
+    
+  </div> -->
+
+  
+
+
+  <div class="mb-5">
+    <!-- <h4 class="fw-bold text-warning">Chairman</h4> -->
+    <div class="row"  *ngFor="let founder of founders">
+      <!-- <h4 class="fw-bold text-warning">{{founder.title}}</h4> -->
+      <div class="d-flex flex-column flex-md-row align-items-center p-2 mb-3"   style="border: 1px solid orange; border-radius: 15px;">        
+        <div class="author d-flex flex-column flex-md-row align-items-center">
+          <div class="author-image mb-3 mb-md-0">
+            <img [src]="founder.image" [alt]="founder.name" class="img-fluid rounded-circle">           
+          </div>         
+          <div class="author-description ms-0 ms-md-3">
+            <h6 >{{ founder.name }}</h6>
+            <p>{{ founder.bio }}</p>
+            <p>{{ founder.p1 }}</p>
+            <p>{{ founder.p2 }}</p>
+            <p>{{ founder.p3 }}</p>
+            <p>{{ founder.p4 }}</p>
+            <p>{{ founder.p5 }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+ 
+
+  <div class="mb-5">
+    <h3 class="fw-bold text-warning">Advisors</h3>
+    <div class="row">
+      <div class="d-flex flex-column flex-md-row align-items-center p-2 mb-3" *ngFor="let advisor of advisors"  style="border: 1px solid orange; border-radius: 15px;">
+        <div class="author d-flex flex-column flex-md-row align-items-center">
+          <div class="author-image mb-3 mb-md-0">
+            <img [src]="advisor.image" [alt]="advisor.name" class="img-fluid rounded-circle">
+          </div>
+          <div class="author-description ms-0 ms-md-3">
+            <h6 >{{ advisor.name }}</h6>
+            <p>{{ advisor.bio }}</p>
+            <!-- <p>{{ advisor.p1 }}</p>
+            <p>{{ advisor.p2 }}</p>
+            <p>{{ advisor.p3 }}</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mb-4" style="color: black">
+    <h5 class="fw-bold text-warning">Get in Touch</h5>
+    <p>
+      For more information or to get involved, please contact us at <a href="mailto:info&#64;sathayushtech.com">info&#64;sathayushtech.com</a>.
+    </p>
+  </div>
+</div>

@@ -1,0 +1,1054 @@
+
+<div class="container-fluid overflow-hidden px-0">
+    <ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff"
+      type="ball-spin-clockwise">
+    </ngx-spinner>
+
+
+
+      <div *ngFor="let temple of goshaladata" class="row mt-1">
+  <div class="col-12">
+    <div class="row gx-1">
+
+      <div class="col-lg-6 col-md-4 col-12 mb-1 order-1 order-md-2 position-relative">
+        <img [src]="temple.image_location?.[1] || temple.image_location?.[0] || 'assets/goshala-default.jpg'" 
+             class="img-fluid w-100" 
+             style="height: 300px; object-fit: cover;" 
+             (error)="handleImageError($event)" 
+             alt="Middle temple image">
+
+        <div class="position-absolute top-0 start-50 translate-middle-x text-danger fw-bold text-center py-2"
+                 style="  font-size: 2.0rem; white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis; max-width: 90%; text-shadow:    -1px -1px 0 #fff,  1px -1px 0 #fff,  -1px 1px 0 #fff, 1px 1px 0 #fff,  0 0 5px #000; ">
+          {{ temple.name }}
+        </div>
+
+        <div *ngIf="temple?.address && temple?.object_id?._id"
+     class="position-absolute bottom-0 start-50 translate-middle-x text-dark fw-semibold text-center py-2 px-3"
+     style="background-color: rgba(243, 239, 8, 0.9); font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+  
+  <a (click)="navigateToVillage(temple.object_id._id)" style="cursor: pointer; color: blue;">
+    {{ getVillageName(temple.address) }}
+  </a>{{ getRemainingAddress(temple.address) }}
+</div>
+
+<div *ngIf="!temple?.address || !temple?.object_id?._id"
+     class="position-absolute bottom-0 start-50 translate-middle-x text-dark fw-semibold text-center py-2 px-3"
+     style="background-color: rgba(243, 239, 8, 0.9); font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+  Address not available
+</div>
+
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-6 mb-1 order-2 order-md-1">
+        <img [src]="temple.image_location?.[0] || 'assets/goshala-default.jpg'" 
+             class="img-fluid w-100" 
+             style="height: 300px; object-fit: cover;" 
+             (error)="handleImageError($event)" 
+             alt="Left temple image">
+      </div>
+
+      <div class="col-lg-3 col-md-4 col-6 mb-1 order-3 order-md-3">
+        <img [src]="temple.image_location?.[2] || 'assets/goshala-default.jpg'" 
+             class="img-fluid w-100" 
+             style="height: 300px; object-fit: cover;" 
+             (error)="handleImageError($event)" 
+             alt="Right temple image">
+      </div>
+
+    </div>
+
+
+
+
+        <div class="py-1 mt-1" style="background-color: rgba(230, 69, 11, 0.925);">
+  <nav class="navbar navbar-dark">
+    <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
+
+      <ul class="navbar-nav flex-row flex-wrap gap-2 fw-bold" style="font-family: 'Times New Roman', Times, serif;">
+        <li class="nav-item dropdown me-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="templeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Goshala Information
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="templeDropdown">
+            <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Managed By</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Address</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('templeInfo')"> Timings</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Official Website</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Connected to Temple </a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Map location</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('VeterinaryHospital')">Veterinary Hospitals</a></li>
+
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown me-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="locationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Temples
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="locationDropdown">
+            <li><a class="dropdown-item" (click)="selectCategory('Iconic')">Iconic Temples</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Famous')">Famous Temples</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Gramadevata')">Gramadevata Temples</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Other')">Area Temples</a></li>
+
+          </ul>
+        </li>
+
+        <!-- <li class="nav-item dropdown me-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="galleryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Near By Goshalas
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
+            <li><a class="dropdown-item" (click)="selectCategory('Goshala')">All Goshalas</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Goshala')">Government Goshalas</a></li>
+             <li><a class="dropdown-item" (click)="selectCategory('Goshala')">Private Conservation Goshalas</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Goshala')">Private Goshalas</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Goshala')">Temples/Religious/Ashrams/Matt Goshalas</a></li>
+
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown me-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Events
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <li><a class="dropdown-item" (click)="selectCategory('Events')">past</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Events')">present</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Events')">Upcoming</a></li>
+
+          </ul>
+        </li> -->
+
+        <li class="nav-item dropdown me-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="galleryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Goshala Gallery
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
+            <li><a class="dropdown-item" (click)="selectCategory('gallery')">Images</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('video')">Videos</a></li>
+          </ul>
+        </li>
+
+             <li class="nav-item dropdown me-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="galleryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Facilities
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
+            <li><a class="dropdown-item" (click)="selectCategory('facilities')">Devotees Visiting</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('facilities')">Feeding Accessbility</a></li>
+             <li><a class="dropdown-item" (click)="selectCategory('facilities')">Inside Feeding Accessbility</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('facilities')">Outside Feeding Accessbility</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('facilities')">Adoption of Cow/Bull Inside</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('facilities')">Adoption of Cow/Bull Outside</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('facilities')">Festivals</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('facilities')">Prayers</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('facilities')">Social Activities</a></li>
+             <li><a class="dropdown-item" (click)="selectCategory('facilities')">Other Services</a></li>
+
+
+
+          </ul>
+        </li>
+     
+     
+        </ul>
+
+      <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+
+        <!-- <button *ngIf="!isFavorited()" (click)="toggleFavorite(temple)" class="btn btn-outline-light btn-sm">
+          <i class="bi bi-heart"></i> Favorite
+        </button>
+
+        <button *ngIf="isFavorited()" (click)="removeFromFavorites(getFavoriteId())" class="btn btn-danger btn-sm">
+          <i class="bi bi-heart-fill"></i> Remove
+        </button> -->
+
+        <ng-container *ngFor="let temple of goshaladata">
+          <button class="btn btn-light btn-sm" (click)="sharegetbytemple(temple)" style="background: transparent; color: white;">
+            <i class="fas fa-share-alt"></i>
+          </button>
+        </ng-container>
+
+      </div>
+    </div>
+  </nav>
+</div>
+  </div>
+
+
+
+ 
+<div class=" mt-2 mb-2">
+  <div class="row g-3">
+
+    <div class="col-12 col-md-6 d-flex flex-column gap-3">
+
+      <div class="d-flex flex-column h-100">
+
+        <!-- About Temple Card -->
+        <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+          <!-- <h4>About Temple</h4> -->
+          <div *ngFor="let temple of goshaladata">
+              <h5>About {{ temple?.name }} </h5>
+
+            <p class="text-wrap overflow-hidden"
+               style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; text-align: justify;">
+              {{ temple?.desc }}
+            </p>
+            <div class="text-end">
+              <button class="btn btn-link p-0 text-decoration-none text-primary"
+                      (click)="openModal(temple?.desc)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#descModal">
+                View More
+              </button>
+            </div>
+          </div>
+  <div class="d-flex justify-content-center mt-3">
+    <button 
+      type="submit" 
+      class="p-2 text-white"
+      style="border-width: 0; background-color: rgb(241, 124, 15); border-radius: 20px; margin-right: 10px;"
+      (click)="openAddMoreDetailsDialog()">
+      Add more details
+    </button>
+  </div>
+
+        </div>
+
+        <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+          <h4>Near By Goshalas</h4>
+          <ng-container *ngIf="nearbygoshalas && nearbygoshalas.length > 0; else nogoshalaData">
+            <div class="d-flex flex-nowrap overflow-auto">
+              <div *ngFor="let goshala of nearbygoshalas" class="me-3 text-center flex-shrink-0">
+                <a (click)="navigategoshaladata(goshala)">
+                  <img [src]="goshala.image_location[0] || 'assets/ohm.jpg'"
+                       class="img-thumbnail"
+                       style="height: 100px; width: 100px; object-fit: cover;"
+                       (error)="handleImageError($event)" />
+                </a>
+                <p>{{ goshala.name }}</p>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #nogoshalaData>
+            <p class="text-center">Your Goshala isn’t listed here? Add now!</p>
+
+          </ng-template>
+                      <div class="text-center mt-3">
+              <button (click)="navigateTo('addgoshala')" class="btn btn-warning rounded-pill text-white">
+                Add a Goshala
+              </button>
+            </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 d-flex flex-column gap-3">
+
+      <div class="d-flex flex-column h-100">
+
+        <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+          <h5>Temples</h5>
+          <div class="d-flex flex-nowrap overflow-auto">
+            <div *ngFor="let temple of allTemples" class="me-3 flex-shrink-0">
+              <div class="card mb-2" style="width: 12rem;">
+                <!-- <a (click)="navigatetemple(temple._id)"> -->
+                  <a (click)="navigateTotempleDetail(temple)">
+                  <img [src]="temple.image_location[0] || 'assets/ohm.jpg'"
+                       class="card-img-top"
+                       style="height: 150px; object-fit: cover;"
+                       (error)="handleImageError($event)" />
+                </a>
+                <div class="card-body text-center">
+                  <h6 class="card-title text-truncate">{{ temple?.name }}</h6>
+                  <p class="card-text text-truncate" title="{{ temple?.address }}">
+                    <b>{{ temple?.address }}</b>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="text-center mt-3">
+    <button class="btn btn-warning rounded-pill text-white"
+      type="button"
+      (click)="navigateTo('addtemple')"
+      >
+      Add a Temple
+    </button>
+  </div>
+        </div>
+
+
+
+           <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill">
+          <h4> Events</h4>
+          <ng-container *ngIf="eventsData && eventsData.length > 0; else noEventData">
+            <div class="d-flex flex-nowrap overflow-auto">
+              <div *ngFor="let event of eventsData" class="me-3 text-center flex-shrink-0">
+                <a (click)="navigateEventdata(event._id)">
+                  <img [src]="event.image_location || 'assets/ohm.jpg'"
+                       class="img-thumbnail"
+                       style="height: 100px; width: 100px; object-fit: cover;"
+                       (error)="handleImageError($event)" />
+                </a>
+                <p>{{ event.name }}</p>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #noEventData>
+            <p class="text-center">Your event isn’t listed here? Add now!</p>
+            <div class="text-center">
+              <button (click)="navigateTo('addevent')" class="btn btn-warning rounded-pill text-white">
+                Add an Event
+              </button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+     
+<div *ngIf="selectedCategory === 'templeInfo'" id="templeInfo" class="container-fluid px-4 py-3 " style="border: 2px solid #003366; background-color: #f8d6a9dc;margin-bottom: 10px;">
+        <h2 class="mb-4">Goshala Information</h2>
+      
+        <div *ngFor="let temple of goshaladata" class="bg-light p-4 mb-5 rounded shadow-sm">
+          <!-- Temple Basic Info -->
+          <div class="row mb-3">
+       
+            <div class="col-md-6 mb-2"><strong>Goshala Timings:</strong> {{ temple?.timings || '--' }}</div>
+<div class="col-md-6">
+  <span class="detail-label"><b>Official Website:</b></span>
+  <a *ngIf="temple?.official_website" 
+     [href]="temple.official_website" 
+     target="_blank" 
+     rel="noopener noreferrer">
+    Click Here
+  </a>
+  <span *ngIf="!temple?.official_website">Not Available</span>
+</div>
+
+            <div class="col-md-6 mb-2"><strong>Managed By:</strong> {{ temple?.managed_by }}</div>
+            <div class="col-md-6 mb-2"><strong>Festivals:</strong> {{ temple?.festivals }}</div>
+            <div class="col-md-6 mb-2"><strong>Address:</strong> {{ temple?.address }}</div>
+            <div class="col-md-6 mb-2"><strong>Contact Name:</strong> {{ temple?.contact_name }}</div>
+           <div class="col-md-6 mb-2"><strong>Contact Phone:</strong>  {{ temple?.contact_phone }}</div>
+            <div class="col-md-6 mb-2"><strong>Email:</strong> {{ temple?.email }}</div>
+              <div class="mb-0" *ngIf="temple?.map_location">
+            <p class="mb-0">
+              <strong>Map Location:</strong>
+              <a (click)="openMap(temple?.map_location)" href="javascript:void(0)" class="ms-2 text-decoration-underline text-primary" target="_blank">
+                View Map
+              </a>
+            </p>
+          </div>
+          </div>
+      
+         
+        </div>
+      </div>
+
+            <div *ngIf="selectedCategory === 'VeterinaryHospital'" id="VeterinaryHospital" class="container-fluid px-4 py-3"  style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+            <h4 class="mb-4 fw-bold">Near By Veterinary Hospital</h4>                    
+            <div *ngIf="vetarnaryhospital && vetarnaryhospital.length">
+              <div class="d-flex overflow-auto pb-3">
+                <div *ngFor="let option of vetarnaryhospital" 
+                     class="me-3 flex-shrink-0" 
+                     style="width: 250px; ">
+                     
+                  <div class="card h-100  border border-none  rounded-2">
+                    <div class="card-body text-center d-flex flex-column p-2 overflow-hidden">
+                      
+                      <h6 class="mb-2 text-truncate" title="{{ option.name }}">
+                        {{ option.name }}
+                      </h6>
+          
+                      <a>
+                        <img 
+                          [src]="option.image_location[0] ? option.image_location[0] : 'assets/ohm.jpg'"
+                          alt="image"
+                          class="img-fluid rounded mb-2"
+                          style="width: 100%; height: 120px; object-fit: cover;"
+                          (error)="handlevetarnaryhospitalImageError($event)">
+                      </a>
+          
+                      <p class="card-title small " title="{{ option.address }}">
+                        {{ option.address }}
+                      </p>
+          
+                      <p class="detail  text-truncate" *ngIf="option.map_location">
+                        <span class="detail-label"><b>Map:</b></span>
+                        <a [href]="option.map_location" target="_blank" rel="noopener noreferrer">
+                          Click Here
+                        </a> 
+                      </p>
+          
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+             <div class="text-center">
+              <button
+                type="button"
+                
+                class="p-2 mt-2"
+                style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;" (click)="openaddvectinarynearbyhospitals()"
+              >
+                Register
+              </button>
+              </div> 
+          
+          <!-- </div> -->
+          
+
+          
+          <ng-template #nearbyhospitalsDialog>
+            <h5 class="mb-3 text-center mt-4">Add Near By Veterinary Hospital</h5>        
+            <form [formGroup]="hospitalform"  class="px-4">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="name">Hospital Name</label>
+                  <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter the Hospital Name" />
+                </div>
+              </div>
+            </div>
+              <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="name">Doctor Name</label>
+                  <input type="text" class="form-control" id="name" formControlName="doctor_name" placeholder="Enter the Hospital Name" />
+                </div>
+              </div>
+            </div>
+
+                   <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="contact_number">Contact Number</label>
+            <input type="text" class="form-control" id="contact_number" formControlName="contact_number" placeholder="Enter the Owner Name" />
+          </div>
+        </div>
+      </div>
+
+                          <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="name">Description</label>
+                  <textarea type="text" class="form-control" id="name" formControlName="desc" placeholder="Enter the Hospital Name" ></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter the  Address" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="map_location"> Map Location (URL) </label>
+                  <div class="input-group">
+                    <input
+                    type="url"
+                    class="form-control"
+                    id="map_location"
+                    formControlName="map_location"
+                    placeholder="https://example.com/map"
+                  />
+                  
+                    <div class="input-group-append">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        (click)="gethospitalLocation()"
+                        title="Fetch Current Location"
+                      >
+                        📍 Get Location
+                      </button>
+                    </div>
+                  </div>
+                  <small class="form-text text-muted">
+                    Please provide a valid URL for the temple's map location.
+                  </small>
+            
+                </div>
+              </div>
+            </div>
+            
+            <!-- <div >
+              <div class="row mt-2" >
+                <label>Hospital Image</label>
+                <div>
+                  <nz-upload
+                    nzListType="picture-card"
+                    [(nzFileList)]="bannerFileList"
+                    [nzMultiple]="true"
+                    [nzShowButton]="bannerFileList.length < 10"
+                    (nzChange)="Uploadhospitalimage($event)"
+                    [nzAccept]="'image/*'"
+                    (nzRemove)="handleimageRemove()"
+                  >
+                    <div >
+                      <i nz-icon nzType="plus"></i>
+                      Add Hospital Images
+                    </div>
+                  </nz-upload>                  
+                </div>
+              </div>
+            </div> -->
+            
+                       <div class="row mt-2">
+  <!-- 🏥 Hospital Image Upload -->
+  <div class="col-md-6 col-12">
+    <label>🏥 Hospital Image</label>
+    <nz-upload
+      nzListType="picture-card"
+      [(nzFileList)]="bannerFileList"
+      [nzMultiple]="true"
+      [nzShowButton]="bannerFileList.length < 10"
+      (nzChange)="Uploadhospitalimage($event)"
+      [nzAccept]="'image/*'"
+      (nzRemove)="handleimageRemove()"
+    >
+      <div>
+        <i nz-icon nzType="plus"></i>
+        Add Hospital Images
+      </div>
+    </nz-upload>
+  </div>
+
+  <!-- 📄 License Copy Image Upload -->
+  <div class="col-md-6 col-12">
+    <label>📄 License Copy</label>
+    <nz-upload
+      nzListType="picture-card"
+      [(nzFileList)]="licenseFileList"
+      [nzMultiple]="true"
+      [nzShowButton]="licenseFileList.length < 10"
+      (nzChange)="Uploadlicensecopy($event)"
+      [nzAccept]="'image/*'"
+      (nzRemove)="handleLicenseRemove()"
+    >
+      <div>
+        <i nz-icon nzType="plus"></i>
+        Add License Images
+      </div>
+    </nz-upload>
+  </div>
+</div>
+            
+            <div class="text-center mb-3">
+              <button type="button" (click)="Addhospital()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+            </div>
+            </form>         
+            </ng-template> 
+      </div>
+      
+
+ 
+ <div *ngIf="selectedCategory === 'Iconic'" id="Iconic" class="container-fluid px-4 py-3" style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+  <h1 class="text-justify text-center">Iconic Temples</h1>
+ 
+  <ng-container *ngIf="nearbytemples.iconic_temples?.length > 0; else iconictemple">
+
+    <div class="row py-1">
+      <hr class="mt-2">
+
+      <div class="container-fluid">
+        <div class="d-flex overflow-auto">
+          <div *ngFor="let temple of nearbytemples.iconic_temples" class="flex-shrink-0 p-2" style="width: 200px;">
+            <div class="text-center">
+              <a (click)="navigateTotempleDetail(temple)">
+                <img [src]="temple.image_location[0] ? temple.image_location[0] : 'assets/ohm.jpg'"
+                     alt="image"
+                     style="height: 20vh; width: 100%; border-radius: 20px;"
+                     class="img-fluid rounded"
+                     (error)="handleImageError($event)">
+              </a>
+              <p class="text-center mt-2">{{ temple.name }}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </ng-container>
+
+  <ng-template #iconictemple>
+    <div class="text-center text-muted py-4">
+      <button type="button"
+              (click)="navigateTo('addtemple')"
+              class="btn btn-block p-2"
+              style="border: none; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;">
+        Add a Temple
+      </button>
+    </div>
+  </ng-template>
+
+</div>
+
+
+<div *ngIf="selectedCategory === 'Famous'" id="Famous" class="container-fluid px-4 py-3" style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+    <h1 class="text-center">Famous Temples</h1>
+
+  <div class="row py-1" *ngIf="nearbytemples.famous_temples?.length > 0; else nofamous">
+
+    <div class="container-fluid">
+      <div class="d-flex overflow-auto">
+        <div *ngFor="let temple of nearbytemples.famous_temples" class="flex-shrink-0 p-2" style="width: 200px;">
+          <div class="text-center">
+            <a (click)="navigateTotempleDetail(temple)">
+              <img [src]="temple.image_location[0] ? temple.image_location[0] : 'assets/ohm.jpg'" alt="image"
+                class="img-fluid rounded" style="height: 20vh; width: 100%; border-radius: 20px;" (error)="handleImageError($event)">
+            </a>
+            <p class="text-center mt-2">{{ temple.name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <ng-template #nofamous>
+    <div class="text-center text-muted py-4">
+      <button type="button"
+              (click)="navigateTo('addtemple')"
+              class="btn btn-block p-2"
+              style="border: none; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;">
+        Add a Temple
+      </button>
+    </div>
+  </ng-template>
+</div>
+<div *ngIf="selectedCategory === 'Gramadevata'" id="Gramadevata" class="container-fluid px-4 py-3" style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+
+  <div class="row py-1">
+    <h1 class="text-center">Gramadevata Temples</h1>
+
+    <div class="container-fluid">
+      <ng-container *ngIf="nearbytemples.gramadevata_temples?.length > 0; else noData">
+        <div class="d-flex overflow-auto">
+          <div *ngFor="let gramadevatatemple of nearbytemples.gramadevata_temples" class="flex-shrink-0 p-2" style="width: 200px;">
+            <div class="text-center">
+              <a (click)="navigateTotempleDetail(gramadevatatemple)">
+                <img [src]="gramadevatatemple.image_location[0] ? gramadevatatemple.image_location[0] : 'assets/ohm.jpg'"
+                     alt="image"
+                     class="img-fluid rounded"
+                     style="height: 20vh; width: 100%; border-radius: 20px;"
+                     (error)="handleImageError($event)">
+              </a>
+              <p class="text-center mt-2">{{ gramadevatatemple.name }}</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #noData>
+        <div class="row">
+          <p class="text-center">Share your Gramadevata temples by adding it below!</p>
+        </div>
+
+        <div class="container">
+          <div class="row justify-content-around align-items-center">
+            <div class="col-md-7 col-sm-12">
+              <div class="text-center">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-3">
+          <button type="button" (click)="navigateTo('addtemple')" class="p-2" style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;">
+            Add a Temple
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="selectedCategory === 'Other'" id="Other" class="container-fluid px-4 py-3" style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+
+  <div class="row py-1">
+    <h1 class="mb-3 text-center">Other Temples</h1>
+
+    <div class="container-fluid">
+          <ng-container *ngIf="nearbytemples.other_temples?.length > 0; else nootherdata">
+            <div class="d-flex overflow-auto">
+              <div *ngFor="let temple of nearbytemples.other_temples" class="flex-shrink-0 p-2" style="width: 200px;">
+                <div class="text-center">
+                  <a (click)="navigateTotempleDetail(temple)">
+                    <img [src]="temple.image_location[0] || 'assets/ohm.jpg'"
+                        class="img-fluid rounded"
+                        style="height: 20vh; width: 100%; border-radius: 20px;"
+                        alt="image"
+                        (error)="handleImageError($event)">
+                  </a>
+                  <p class="text-center mt-2">{{ temple.name }}</p>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+      <ng-template #nootherdata>
+        <div class="row text-center">
+          <p>We do not have temples from your City. Please add one by clicking below.</p>
+        </div>
+
+        <div class="text-center mt-3">
+          <button type="button"
+                  (click)="navigateTo('addtemple')"
+                  class="p-2"
+                  style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;">
+            Add a Temple
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+</div>
+
+
+      
+ <div *ngIf="selectedCategory === 'gallery'" id="gallery" class="container-fluid px-4 py-3" 
+ style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+<h2 class="mb-4">Goshala Gallery</h2>
+
+<div *ngFor="let temple of goshaladata" class="bg-light p-4 mb-5 rounded shadow-sm">
+<div class="d-flex overflow-auto" style="white-space: nowrap;">
+  <div *ngFor="let image of temple.image_location" class="me-2" style="flex-shrink: 0;">
+    <img [src]="image || 'assets/ohm.jpg'" 
+         class="d-block img-fluid rounded" 
+         style="height: 150px; width: auto; object-fit: cover; cursor: pointer;" 
+         (error)="handleImageError($event)" alt="temple image">
+  </div>
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div *ngIf="selectedCategory === 'video'" id="video" class="container-fluid px-4 py-3" 
+ style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+<h2 class="mb-4">Goshala video</h2>
+<div *ngFor="let temple of goshaladata" class="bg-light p-4 mb-5 rounded shadow-sm">
+  <div class="d-flex overflow-auto" style="white-space: nowrap;">
+    <div *ngFor="let videourl of temple.goshala_video[0].split(',')" class="me-3">
+      <a 
+        [href]="'https://www.youtube.com/watch?v=' + getVideoId(videourl)" 
+        target="_blank" 
+        rel="noopener noreferrer">
+        <img 
+          [src]="'https://img.youtube.com/vi/' + getVideoId(videourl) + '/0.jpg'" 
+          alt="YouTube video thumbnail" 
+          width="300" 
+          height="200" 
+          class="rounded shadow-sm" />
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div *ngIf="selectedCategory === 'facilities'" id="facilities" class="container-fluid px-4 py-3" style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+  <h2 class="mb-4">Goshala Facilities</h2>
+
+  <div *ngFor="let temple of goshaladata" class="bg-light p-4 mb-5 rounded shadow-sm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-2"><strong>Devotees Visiting:</strong> {{ temple?.devotees_visiting || '--' }}</div>
+        <div class="mb-2"><strong>Feeding Accessbility:</strong> {{ temple?.feeding_accessibility }}</div>
+        <div class="mb-2"><strong>Inside Feeding Accessbility:</strong> {{ temple?.inside_feeding_accessibility }}</div>
+        <div class="mb-2"><strong>Outside Feeding Accessbility:</strong> {{ temple?.outside_feeding_accessibility }}</div>
+        <div class="mb-2"><strong>Adoption Of Cow or Bull Inside:</strong> {{ temple?.adoption_of_cow_or_bull_inside }}</div>
+        <div class="mb-2"><strong>Adoption Of Cow or Bull Outside:</strong> {{ temple?.adoption_of_cow_or_bull_outside }}</div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-2"><strong>Festivals:</strong> {{ temple?.festivals }}</div>
+        <div class="mb-2"><strong>Prayers:</strong> {{ temple?.prayers }}</div>
+        <div class="mb-2"><strong>Social Activities:</strong> {{ temple?.social_activites }}</div>
+        <div class="mb-2"><strong>Other Services:</strong> {{ temple?.other_services }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+      <div class="container mt-2 mb-2">
+        <div class="row">
+          <div class="col-md-12col-12">
+            <div class="my-y " [formGroup]="commentform">
+        <div class="card bg-warning bg-opacity-25">
+          <div class="card-header">
+            <h5>Comments</h5>
+          </div>
+
+          <div class="card-body p-2" style="height: 400px; display: flex; flex-direction: column;">
+            
+            <div class="mb-2">
+              <textarea class="form-control" formControlName="body" placeholder="Add a comment..." rows="3"></textarea>
+              <button class="btn btn-primary mt-2" (click)="onSubmit()">Post Comment</button>
+            </div>
+
+            <div class="flex-grow-1 overflow-auto">
+              <div *ngFor="let comment of temple.comments" class="card mb-2">
+                <div class="card-body p-2">
+                  <div class="d-flex align-items-center mb-1">
+                    <img [src]="comment.user.profile_pic ? comment.user.profile_pic : 'assets/profile1.webp'" 
+                        alt="Profile" class="rounded-circle me-2" width="30" height="30">
+                    <strong>{{ comment?.user?.name }}</strong>
+                  </div>
+                  <p class="card-text ms-4 mb-0" style="font-size: 16px;">
+                    {{ comment.body }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+        
+        
+        
+        
+        
+          </div>
+
+
+
+          <!-- RIGHT SIDE: Ads -->
+          <!-- <div class="col-md-2 d-none d-md-block">
+            <div class="ad-space-container">
+              <app-add-space class=""></app-add-space>
+              <app-add-space1 class="mt-3"></app-add-space1>
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+
+              
+</div>
+
+
+
+</div>
+
+   
+
+
+
+        <div class="modal fade" id="descModal" tabindex="-1" aria-labelledby="descModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header bg-light">
+                <h5 class="modal-title" id="descModalLabel">Temple Description</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body text-justify" style="text-align: justify;">
+                {{ selectedDescription }}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+              <ng-template #AddmoreListDialog>
+        <!-- <h5 class="mb-3 text-center mt-4 mb-0">Add more details</h5> -->
+                   <div class="row align-items-center">
+            <div class="col-10">
+                <h3 class="text-center mt-3">Add more details</h3>
+            </div>
+            <div class="col-2 text-end">
+                <button type="button" (click)="dialogRef.close()"style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+        <div class="container p-4">
+
+          <form [formGroup]="detailsForm"  >
+
+
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="temple_map_location">Goshala Map Location (URL) </label>
+                  <div class="input-group d-flex align-items-center gap-2">
+                    <input
+                      type="url"
+                      class="form-control"
+                      id="temple_map_location"
+                      formControlName="map_location"
+                      placeholder="https://example.com/map" (keydown)="preventLeadingSpace($event)"
+                    />
+                    <div class="input-group-append">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        (click)="getCurrentLocation()"
+                        title="Fetch Current Location"
+                      >
+                        📍 Get Location
+                      </button>
+                    </div>
+                  </div>
+                  <small class="form-text text-muted">
+                    Please provide a valid URL for the Goshala's map location.
+                  </small>
+                                <div
+  *ngIf="detailsForm.get('map_location')?.invalid 
+         && (detailsForm.get('map_location')?.dirty 
+         || detailsForm.get('map_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="detailsForm.get('map_location')?.errors?.['required']">
+    Goshala Map Location is required.
+  </div>
+
+  <div *ngIf="detailsForm.get('map_location')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="desc">About The Goshala</label>
+                  <textarea class="form-control" id="desc" formControlName="desc" placeholder="Describe about the Village in less than 4500 words" rows="3" (keydown)="preventLeadingSpace($event)"></textarea>
+
+                </div>
+              </div>
+            </div>
+
+            <div >
+              <div class="row mt-2" >
+                <label>Goshala Image </label>
+                <div>
+                  <nz-upload
+                    nzListType="picture-card"
+                    [(nzFileList)]="bannerFileList"
+                    [nzMultiple]="true"
+                    [nzShowButton]="bannerFileList.length < 10"
+                    (nzChange)="handleimageChange($event)"
+                    [nzAccept]="'image/*'"
+                    (nzRemove)="handleimageRemove()"
+                  >
+                    <div >
+                      <i nz-icon nzType="plus"></i>
+                      Add Goshala Images
+                    </div>
+                  </nz-upload>
+          
+                  
+                </div>
+              </div>
+
+            </div>
+
+
+
+
+            <div class="row mt-3">
+  <div class="col-md-4">
+    <label class="form-label"><strong>Goshala Video</strong></label>
+    <nz-upload
+      nzListType="text"
+      [(nzFileList)]="addmoreVideoList"
+      [nzMultiple]="false"
+      [nzShowUploadList]="true"
+      [nzShowButton]="addmoreVideoList.length < 1"
+      (nzChange)="handleaddmoreVideoUpload($event, 'goshala_video')"
+      [nzAccept]="'video/*'"
+      (nzRemove)="handleaddmoreVideoRemove('goshala_video')"
+    >
+      <button nz-button>
+        <i nz-icon nzType="upload"></i>
+        Upload Video
+      </button>
+    </nz-upload>
+  </div>
+</div>
+
+            <!-- <div class="text-center">
+              <button type="button" (click)="Addmore()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+            </div> -->
+          <div class="row mt-3">
+            <div class="col-12 text-center">
+              <button
+                type="button"
+                (click)="dialogRef.close()"
+                style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;"
+            >
+            Cancel
+            </button>
+
+            <button
+            type="submit"
+            (click)="Addmore()"
+            style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;"
+            >
+            Submit
+            </button>
+        </div>
+        </div>
+          </form>
+        </div>
+      
+
+        
+      </ng-template>

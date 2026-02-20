@@ -1,0 +1,111 @@
+
+<div
+  class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-75"
+  *ngIf="isFormVisible"
+>
+
+  <div class="card shadow-lg  p-3" style="width: 420px;background-color: #f2f2f2e5;border-radius: 0px;">
+
+    <div class="bg-light rounded-4 shadow-sm p-4 text-center position-relative">
+
+      <button
+        type="button"
+        class="btn-close position-absolute top-0 end-0 m-3"
+        (click)="closeDialog()">
+      </button>
+
+      <img
+        src="../../../assets/icon.jpg"
+        class="rounded-circle mb-3"
+        width="80"
+        height="80"
+        alt="Logo"
+      />
+
+      <h5 class="mb-0 text-dark">Welcome to</h5>
+      <h2 class="fw-bold  mb-2" style="color: #ff6600cc;">Gramadevata</h2>
+
+      <!-- <div class="d-flex justify-content-center my-2">
+        <span class="bg-warning rounded-pill" style="width: 8px; height: 8px;"></span>
+      </div> -->
+      <div class="d-flex align-items-center justify-content-center my-3">
+  <hr class="border-secondary opacity-50 me-2 m-0" style="width: 60px;">
+  <span class="bg-warning rounded-circle" style="width: 8px; height: 8px;"></span>
+  <hr class="border-secondary opacity-50 ms-2 m-0" style="width: 60px;">
+</div>
+
+
+      <h6 class="text-dark mb-3">Sign In</h6>
+
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+        <input
+          type="text"
+          class="form-control form-control-lg mb-2"
+          placeholder="Email or Phone Number"
+          formControlName="username" [ngClass]="{ 'is-invalid': signupForm.get('username')?.invalid && signupForm.get('username')?.touched }"
+        />
+        <div *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched" 
+          class="invalid-feedback text-center">
+          Please enter a valid email or phone number.
+        </div>
+        <div class="form-check d-flex justify-content-start gap-2 mb-2">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="termsAccepted"
+            formControlName="termsAccepted" style="cursor: pointer;"
+          />
+          <label class="form-check-label" for="termsAccepted">
+            I Am A Sanatana Dharma follower
+          </label>
+        </div>
+
+        <!-- <button
+          type="submit"
+          class="btn btn-warning btn-lg w-100 text-white fw-semibold"
+          [disabled]="!signupForm.get('termsAccepted')?.value"
+        >
+          Continue
+        </button> -->
+        <button
+  type="submit"
+  class="btn btn-warning btn-lg w-100 fw-semibold text-white"
+  style="background-color: #ff6600cc; border-color: #ff6600cc;"
+  [disabled]="!signupForm.get('termsAccepted')?.value"
+>
+  Continue
+</button>
+
+
+      </form>
+
+      <div class="d-flex align-items-center my-4">
+        <hr class="flex-grow-1">
+        <span class="mx-2 text-muted small">OR</span>
+        <hr class="flex-grow-1">
+      </div>
+
+      <p class="mb-0 small text-muted ">
+        Non-Indian user? Sign in with email!
+        <!-- <span class="text-warning fw-semibold">
+          
+        </span> -->
+      </p>
+
+    </div>
+
+        <p class="mb-0 small text-muted">
+          By continuing, you agree to our
+          <span class=" fw-semibold" >
+            Terms of Service
+          </span>
+          and
+          <span class=" fw-semibold" >
+            Privacy Policy
+          </span>
+        </p>
+
+  </div>
+</div>
+

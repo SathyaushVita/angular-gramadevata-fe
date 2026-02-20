@@ -1,0 +1,158 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
+
+/* --- Google Translate Customization --- */
+
+/* 1. HIDE THE TOP BANNER/FRAME completely */
+/* 1. HIDE THE TOP BANNER/FRAME completely - FAILSAFE */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+iframe[id=":1.container"],
+body>.skiptranslate>iframe.goog-te-banner-frame {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -9999 !important;
+}
+
+/* Hide the specific container injected at the top of body */
+body>.skiptranslate {
+    display: none !important;
+}
+
+.goog-te-gadget-simple {
+    background-color: transparent !important;
+}
+
+/* Reset Body Position that Google Translate shifts */
+body {
+    top: 0px !important;
+    position: static !important;
+}
+
+/* 2. HIDE "Powered by Google" text and logo - Aggressive Method */
+.goog-logo-link,
+.goog-te-gadget span,
+.goog-te-gadget a {
+    display: none !important;
+}
+
+.goog-te-gadget {
+    color: transparent !important;
+    font-size: 0px !important;
+    text-indent: -9999px !important;
+    /* Move text off-screen */
+    white-space: nowrap !important;
+    margin-top: 0px !important;
+}
+
+/* Make sure the Dropdown is visible and reset */
+.goog-te-gadget .goog-te-combo {
+    display: inline-block !important;
+    /* Ensure visibility */
+    text-indent: 0 !important;
+    /* Reset text position */
+    color: #333 !important;
+    /* Visible text color */
+    font-size: 14px !important;
+    /* Visible font size */
+    margin: 0 !important;
+}
+
+/* Hide the Google Icon next to "Powered by" */
+.goog-te-gadget-icon {
+    display: none !important;
+    background: none !important;
+}
+
+/* 3. HIDE POPUPS AND BALLOONS */
+.goog-te-balloon-frame {
+    display: none !important;
+    visibility: hidden !important;
+    box-shadow: none !important;
+}
+
+/* The tooltip that appears on hover/selection */
+#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Hide the "Original text" popup on hover */
+.goog-text-highlight {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* 3. STYLE THE DROPDOWN (Attractive Look) */
+#google_translate_element {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* The Select Box itself */
+.goog-te-combo {
+    color: #333 !important;
+    /* Text Color */
+    background-color: #ffffff !important;
+    /* Background */
+    border: 1px solid #ccc !important;
+    border-radius: 25px !important;
+    /* Rounded capsule shape */
+    padding: 8px 35px 8px 15px !important;
+    /* Right padding for arrow */
+    font-size: 14px !important;
+    font-family: inherit !important;
+    font-weight: 600 !important;
+    outline: none !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease !important;
+    height: auto !important;
+    line-height: normal !important;
+
+    /* Clean Appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Custom Arrow Icon */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E') !important;
+    background-repeat: no-repeat !important;
+    background-position: right 12px center !important;
+    background-size: 10px !important;
+}
+
+.goog-te-combo:hover {
+    background-color: #f8f9fa !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    border-color: #bbb !important;
+}
+
+/* Hide annoying tooltips */
+.goog-tooltip {
+    display: none !important;
+}
+
+.goog-tooltip:hover {
+    display: none !important;
+}
+
+.goog-text-highlight {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+
+
+

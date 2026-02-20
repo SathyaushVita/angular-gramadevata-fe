@@ -1,0 +1,933 @@
+<div class="container-fluid overflow-hidden px-0">
+
+<div *ngFor="let temple of templedata" class="row mt-1">
+  <div class="col-12">
+    <div class="row gx-1">
+
+      <!-- Center Image -->
+      <div class="col-lg-6 col-md-4 col-12 mb-1 order-1 order-md-2 position-relative">
+        <img [src]="temple.image_location?.[1] || temple.image_location?.[0] || 'assets/ohm.jpg'" 
+             class="img-fluid w-100" 
+             style="height: 300px; object-fit: cover;" 
+             (error)="handleImageError($event)" 
+             alt="Middle temple image">
+
+        <!-- Name of the Temple -->
+        <div class="position-absolute top-0 start-50 translate-middle-x text-danger fw-bold text-center py-2"
+             style="font-size: 2.0rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%;
+                    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 0 5px #000;">
+          {{ temple.name }} -Tourism Place
+        </div>
+
+        <!-- Address -->
+        <div 
+             class="position-absolute bottom-0 start-50 translate-middle-x text-dark fw-semibold text-center py-2 px-3"
+             style="background-color: rgba(243, 239, 8, 0.9); font-size: 1rem; white-space: nowrap; overflow: hidden; 
+                    text-overflow: ellipsis; max-width: 90%; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+          <a  style=" color: blue;">
+            {{ temple.address }}
+          </a>
+        </div>
+
+
+      </div>
+
+      <!-- Left Image -->
+      <div class="col-lg-3 col-md-4 col-6 mb-1 order-2 order-md-1">
+        <img [src]="temple.image_location?.[0] || 'assets/ohm.jpg'" 
+             class="img-fluid w-100" 
+             style="height: 300px; object-fit: fill;" 
+             (error)="handleImageError($event)" 
+             alt="Left temple image">
+      </div>
+
+      <!-- Right Image -->
+      <div class="col-lg-3 col-md-4 col-6 mb-1 order-3 order-md-3">
+        <img [src]="temple.image_location?.[2] || 'assets/ohm.jpg'" 
+             class="img-fluid w-100" 
+             style="height: 300px; object-fit: cover;" 
+             (error)="handleImageError($event)" 
+             alt="Right temple image">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+      <div class="py-1" style="background-color: rgba(230, 69, 11, 0.925);">
+  <nav class="navbar navbar-dark">
+    <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
+
+      <ul class="navbar-nav flex-row flex-wrap gap-2 fw-bold" style="font-family: 'Times New Roman', Times, serif;">
+        <li class="nav-item dropdown me-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="templeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Tourism Information
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="templeDropdown">
+            <!-- <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Main Diety</a></li> -->
+             <!-- <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Location</a></li> -->
+            <!-- <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Timings</a></li> -->
+             <!-- <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Address</a></li> -->
+            <li><a class="dropdown-item" (click)="selectCategory('Transport')">Transport</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Accommodation')">Accommodation</a></li>
+            
+          </ul>
+        </li>
+
+        <!-- <li class="nav-item dropdown me-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="locationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Location
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="locationDropdown">
+            <li><a class="dropdown-item" (click)="selectCategory('location')">Full Address</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('location')">Contact Details</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('location')">Map Location</a></li>
+          </ul>
+        </li> -->
+
+        <!-- <li class="nav-item dropdown me-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="galleryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Temple Gallery
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
+            <li><a class="dropdown-item" (click)="selectCategory('gallery')">Images</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('video')">Videos</a></li>
+          </ul>
+        </li> -->
+
+        <li class="nav-item dropdown me-2">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Other Services
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <li><a class="dropdown-item" (click)="selectCategory('hospital')">Hospitals</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Restaurants')">Restaurants</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('Hotels')">Hotels</a></li>
+            <li><a class="dropdown-item" (click)="selectCategory('policestation')">Police Stations</a></li>
+
+            
+
+
+          </ul>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+
+        <ng-container >
+          <button class="btn btn-light btn-sm"  (click)="shareTemple()" style="background: transparent; color: white;">
+            <i class="fas fa-share-alt"></i>
+          </button>
+
+
+          <button
+  *ngIf="canEdit"
+  class="btn btn-warning btn-sm"
+  (click)="editTourism(templedata[0])">
+  Edit
+</button>
+
+        </ng-container>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+
+<!-- Outer container remains unchanged -->
+<div class="container-fluid mt-1 mb-2 px-0">
+  <div class="row g-3">
+
+    <!-- Main Content -->
+    <div class="col-12 col-md-10 d-flex flex-column flex-md-row gap-3">
+
+      <!-- Left Column -->
+      <div class="col-12 col-md-6 d-flex flex-column gap-2">
+        <div class="d-flex flex-column h-100 "><!-- Applied here -->
+          <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+            <div *ngFor="let temple of templedata">
+              <h5>About {{ temple?.name }}</h5>
+              <p class="text-wrap overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; text-overflow: ellipsis; text-align: justify;">
+                {{ temple?.desc }}
+              </p>
+              <div class="text-end">
+                <button class="btn btn-link p-0 text-decoration-none text-primary"
+                        (click)="openModal(temple?.desc, temple?.name)"
+
+                        data-bs-toggle="modal"
+                        data-bs-target="#descModal">
+                  View More
+                </button>
+              </div>
+            </div>
+          </div>
+                    <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+            <div *ngFor="let temple of templedata">
+              <div class="detail mb-3" *ngIf="temple?.map_location">
+                <div class="d-flex align-items-center">
+                  <i class="fa-solid fa-location-dot me-2 text-danger"></i>
+                  <label for="templeMapLocation" class="fw-bold me-2">Map Location:</label>
+                  <div id="templeMapLocation">
+                    <a [href]="temple.map_location" target="_blank" rel="noopener noreferrer" class="text-primary text-decoration-underline">
+                      Click Here
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2"><strong>Timings:</strong> {{ temple.timings }}</div>
+              <div class="mb-2"><strong>Type:</strong> {{ temple.type }}</div>
+              <div class="mb-2"><strong>Address:</strong> {{ temple.address }}</div>
+            </div>
+          </div>
+
+                    <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+            <h4>Goshalas</h4>
+            <ng-container *ngIf="goshalas && goshalas.length > 0; else nogoshalaData">
+              <div class="d-flex flex-nowrap overflow-auto">
+                <div *ngFor="let goshala of goshalas" class="me-3 text-center flex-shrink-0">
+                  <a (click)="navigategoshaladata(goshala)">
+                    <img [src]="goshala.image_location[0] || 'assets/ohm.jpg'"
+                         class="img-thumbnail"
+                         style="height: 100px; width: 100px; object-fit: cover;"
+                         (error)="handleImageError($event)" />
+                  </a>
+                  <p>{{ goshala.name }}</p>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #nogoshalaData>
+              <p class="text-center">Your Goshala isn’t listed here? Add now!</p>
+
+            </ng-template>
+
+                          <div class="text-center">
+                <button (click)="navigateTo('addgoshala')" class="btn btn-warning rounded-pill text-white">
+                  Add a Goshala
+                </button>
+              </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-12 col-md-6 d-flex flex-column gap-2">
+        <div class="d-flex flex-column h-100 "><!-- Applied here -->
+                   <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+              <h5 class="mb-3">Temples ({{ allTemples.length }})</h5>
+                  <ng-container *ngIf="allTemples && allTemples.length > 0; else noalltemplesData">
+                    <div class="d-flex flex-nowrap overflow-auto py-2">
+                      <div *ngFor="let temple of allTemples" class="card me-3 flex-shrink-0" style="width: 140px;">
+                        <a (click)="navigateTotempleDetail(temple)">
+                          <img [src]="temple.image_location[0] || 'assets/ohm.jpg'"
+                              class="card-img-top"
+                              style="height: 100px; object-fit: cover;"
+                              (error)="handleImageError($event)" />
+                        </a>
+                        <div class="card-body p-2">
+                          <p class="card-text text-truncate text-center d-block mb-0" style="font-size: 14px; max-width: 100%;">
+                            {{ temple.name }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+
+          <ng-template #noalltemplesData>
+            <p class="text-center">Your Temples isn’t listed here? Add now!</p>
+
+          </ng-template>
+
+                      <div class="text-center mt-3">
+         <button
+          type="button"
+          (click)="navigateTo('addtemple')"
+          class="p-2"
+          style="border: none; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;">
+          Add a Temple
+        </button>
+            </div>
+        </div> 
+
+
+
+                    <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill">
+            <h4> Events</h4>
+            <ng-container *ngIf="eventsData?.length > 0; else noEventData">
+              <div class="d-flex flex-nowrap overflow-auto">
+                <div *ngFor="let event of eventsData" class="me-3 text-center flex-shrink-0">
+                  <a (click)="navigateEventdata(event._id)">
+                    <img [src]="event.image_location[0] || 'assets/ohm.jpg'"
+                         class="img-thumbnail"
+                         style="height: 100px; width: 100px; object-fit: cover;"
+                         (error)="handleImageError($event)" />
+                  </a>
+                  <p>{{ event.name }}</p>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #noEventData>
+              <p class="text-center">Your event isn’t listed here? Add now!</p>
+  
+            </ng-template>
+                        <div class="text-center">
+                <button (click)="navigateTo('addevent')" class="btn btn-warning rounded-pill text-white">
+                  Add an Event
+                </button>
+              </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Ad Banner -->
+    <div class="col-12 col-md-2 d-none d-md-block">
+  <div class="border border-2 border-primary bg-light text-center d-flex flex-column h-100 ">
+    <img 
+      src="../../../assets/saynotoplastic.webp.jpg" 
+      alt="Ad" 
+      class="img-fluid w-100 h-100 "
+      style="object-fit: fill; border-radius: 5px;" />
+  </div>
+</div>
+
+
+  </div>
+</div>
+
+
+
+
+
+   <div *ngIf="selectedCategory === 'templeInfo'" id="templeInfo" class="container-fluid px-4 py-3 " style="border: 2px solid #003366; background-color: #f8d6a9dc;margin-bottom: 10px;">
+        <h2 class="mb-4">Temple Information</h2>
+      
+        <div *ngFor="let temple of templedata" class="bg-light p-4 mb-5 rounded shadow-sm">
+          <!-- Temple Basic Info -->
+          <div class="row mb-3">
+            <div class="col-md-6 mb-2"><strong>Timings:</strong> {{ temple.temple_timings}}</div>
+            <div class="col-md-6 mb-2"><strong>Address:</strong> {{ temple.address}}</div>
+            
+          <div class="col-md-6 mb-2">
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-location-dot me-2 text-danger"></i>
+              <label for="templeMapLocation" class="fw-bold me-2 mb-0">Map Location:</label>
+              <div id="templeMapLocation">
+                <a 
+                  [href]="temple.map_location" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="text-primary text-decoration-underline"
+                >
+                  Click Here
+                </a>
+              </div>
+            </div>
+          </div>
+
+            <div class="col-md-6 mb-2"><strong>Type:</strong> {{ temple.type}}</div>
+            <!-- <div class="col-md-6 mb-2"><strong>Other Dieties:</strong> {{ temple?.other_dieties }}</div> -->
+            <!-- <div class="col-md-6 mb-2"><strong>Temple Timings:</strong> {{ temple?.temple_timings || '--' }}</div> -->
+            <!-- <div class="col-md-6">
+              <strong>Map Location:</strong>
+              <a *ngIf="temple.temple_map_location" (click)="openMap(temple.temple_map_location)" class="text-primary" style="cursor: pointer;">Click Here</a>
+            </div> -->
+           
+            <!-- <div class="col-md-6 mb-2"><strong>Managed By:</strong> {{ temple?.temple_management }}</div>
+            <div class="col-md-6 mb-2"><strong>Festivals:</strong> {{ temple?.festivals }}</div>
+            <div class="col-md-6 mb-2"><strong>Dress Code:</strong> {{ temple?.dress_code }}</div> -->
+          </div>
+      
+          
+      
+       
+      
+      
+         
+        </div>
+      </div>
+
+
+
+
+
+      <div *ngIf="selectedCategory === 'Transport'" id="Transport" class="container-fluid px-4 py-3" 
+      style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+   
+   <h6 class="fw-bold d-flex align-items-center" style="cursor: pointer; user-select: none;">
+     Transport Facility
+   </h6>
+ 
+   <div *ngIf="transportdetails.length > 0">
+     <div class="row g-3">
+       <div *ngFor="let item of transportdetails" class="col-12 col-md-6 col-lg-3">
+         <div class="card shadow-sm rounded p-3 text-center">
+           <h6 class="fw-bold mb-2">
+             {{ getTransportIcon(item.transport_type) }} {{ item.transport_type }}
+           </h6>        
+           <div>
+             <span class="detail-label"><b>Map Location:</b></span>
+             <a [href]="item.map_location" target="_blank" rel="noopener noreferrer" class="ms-2">
+               Click Here
+             </a>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ 
+ </div>
+
+ <div *ngIf="selectedCategory === 'Hotels'" id="Hotels" class="container-fluid px-4 py-3"  style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+    <div class="mt-3">
+        <h4 class="mb-4 fw-bold">Near By Hotels</h4>
+        
+        <div *ngIf="nearby_hotelsdetails && nearby_hotelsdetails.length">
+        <div class="d-flex overflow-auto pb-3">
+          <div *ngFor="let option of nearby_hotelsdetails" 
+               class="me-3 flex-shrink-0" 
+               style="width: 250px; ">
+               
+            <div class="card h-100  border border-none  rounded-2">
+              <div class="card-body text-center d-flex flex-column p-2 overflow-hidden">
+                
+                <h6 class="mb-2 text-truncate" title="{{ option.name }}">
+                  {{ option.name }}
+                </h6>
+        
+                <a>
+                  <img 
+                    [src]="option.image_location[0] ? option.image_location[0] : 'assets/ohm.jpg'"
+                    alt="image"
+                    class="img-fluid rounded mb-2"
+                    style="width: 100%; height: 120px; object-fit: cover;"
+                    (error)="handlehotelImageError($event)">
+                </a>
+        
+                <p class="card-title small " title="{{ option.address }}">
+                  {{ option.address }}
+                </p>
+        
+                <p class="detail  text-truncate" *ngIf="option.map_location">
+                  <span class="detail-label"><b>Map:</b></span>
+                  <a (click)="openMap(option.map_location)" 
+                     href="Temple Map Location" 
+                     target="_blank">
+                     Hotel Map
+                  </a>
+                </p>
+                <p>
+                  <span class="detail-label"><b>Rating:</b></span>
+        
+                  <span class="value">{{ option.hotel_rating }} </span>
+                </p>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <!-- <div class="text-center">
+        <button
+          type="button"
+          
+          class="p-2 mt-2"
+          style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;" (click)="opennearbyhotels()"
+        >
+         Register
+        </button>
+        </div> -->
+        </div>
+        <!-- <ng-template #hotelsDialog>
+        <h5 class="mb-3 text-center mt-4">Register Near By Hotel</h5>        
+        <form [formGroup]="hotelmForm"  class="px-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Hotel Name</label>
+              <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter the  Name" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter the  Address" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="map_location"> Map Location (URL) </label>
+              <div class="input-group">
+                <input
+                type="url"
+                class="form-control"
+                id="map_location"
+                formControlName="map_location"
+                placeholder="https://example.com/map"
+              />
+              
+                <div class="input-group-append">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="getnearbyhotels()"
+                    title="Fetch Current Location"
+                  >
+                    📍 Get Location
+                  </button>
+                </div>
+              </div>
+              <small class="form-text text-muted">
+                Please provide a valid URL for the temple's map location.
+              </small>
+        
+            </div>
+          </div>
+        </div>
+
+        
+        <div >
+          <div class="row mt-2" >
+            <label>Hotel Image </label>
+            <div>
+              <nz-upload
+                nzListType="picture-card"
+                [(nzFileList)]="bannerFileList"
+                [nzMultiple]="true"
+                [nzShowButton]="bannerFileList.length < 10"
+                (nzChange)="Uploadhotelimage($event)"
+                [nzAccept]="'image/*'"
+                (nzRemove)="handleimageRemove()"
+              >
+                <div >
+                  <i nz-icon nzType="plus"></i>
+                  Add Hotel Images
+                </div>
+              </nz-upload>                  
+            </div>
+          </div>
+        </div>
+        
+        
+        
+        
+        
+        <div class="text-center mb-3">
+          <button type="button" (click)="Addhotels()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+        </div>
+        </form>         
+        </ng-template> -->
+
+ </div>
+
+ <div *ngIf="selectedCategory === 'Restaurants'" id="Restaurants" class="container-fluid px-4 py-3"  style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+
+
+    <div class=" mt-3">
+        <h4 class="mb-4 fw-bold">Near By Restaurants</h4>
+        <div *ngIf="resturant && resturant.length">
+          <div class="d-flex overflow-auto pb-3">
+            <div *ngFor="let option of resturant" 
+                 class="me-3 flex-shrink-0" 
+                 style="width: 250px; ">
+                 
+              <div class="card h-100  border border-none  rounded-2">
+                <div class="card-body text-center d-flex flex-column p-2 overflow-hidden">
+                  
+                  <h6 class="mb-2 text-truncate" title="{{ option.name }}">
+                    {{ option.name }}
+                  </h6>
+      
+                  <a>
+                    <img 
+                      [src]="option.image_location[0] ? option.image_location[0] : 'assets/ohm.jpg'"
+                      alt="image"
+                      class="img-fluid rounded mb-2"
+                      style="width: 100%; height: 120px; object-fit: cover;"
+                      (error)="handlehospitalImageError($event)">
+                  </a>
+
+                  <p class="card-title small " title="{{ option.address }}">
+                    {{ option.address }}
+                  </p>
+       
+                  <p class="detail  text-truncate" *ngIf="option.map_location">
+                    <span class="detail-label"><b>Map:</b></span>
+                    <a [href]="option.map_location" target="_blank" rel="noopener noreferrer">
+                      Click Here
+                    </a> 
+                  </p>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="text-center">
+          <button
+          type="button"
+          
+          class="p-2 mt-2"
+          style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;" (click)="openrestaurantform()"
+          >
+          Register
+          </button>
+          </div> -->
+  
+      </div>
+
+
+
+
+<!-- 
+      <ng-template #restaurantDialog>
+        <h5 class="mb-3 text-center mt-4">Register Restaurant Details</h5>        
+        <form [formGroup]="restaurantForm"  class="px-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">Restaurant Name</label>
+                <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter the  Name" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="owner_name">Restaurant Owner Name</label>
+                <input type="text" class="form-control" id="owner_name" formControlName="owner_name" placeholder="Enter the  Restaurant Owner Name" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="contact_number">Contact Number</label>
+                <input type="number" class="form-control" id="contact_number" formControlName="contact_number" placeholder="Enter the  Contact Number" />
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter the  Address" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="email_id">Email</label>
+                <input type="text" class="form-control" id="email_id" formControlName="email_id" placeholder="Enter the  Email" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="website">Website</label>
+                <input type="text" class="form-control" id="website" formControlName="website" placeholder="Enter the  Website" />
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="map_location"> Map Location (URL) </label>
+                <div class="input-group">
+                  <input
+                  type="url"
+                  class="form-control"
+                  id="map_location"
+                  formControlName="map_location"
+                  placeholder="https://example.com/map"
+                />
+                
+                  <div class="input-group-append">
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      (click)="getrestruntantLocation()"
+                      title="Fetch Current Location"
+                    >
+                      📍 Get Location
+                    </button>
+                  </div>
+                </div>
+                <small class="form-text text-muted">
+                  Please provide a valid URL for the temple's map location.
+                </small>
+          
+              </div>
+            </div>
+          </div>
+          
+
+          
+          <div >
+            <div class="row mt-2" >
+              <label>Restaurant Image </label>
+              <div>
+                <nz-upload
+                  nzListType="picture-card"
+                  [(nzFileList)]="bannerFileList"
+                  [nzMultiple]="true"
+                  [nzShowButton]="bannerFileList.length < 10"
+                  (nzChange)="Uploadrestaurantimage($event)"
+                  [nzAccept]="'image/*'"
+                  (nzRemove)="handleimageRemove()"
+                >
+                  <div >
+                    <i nz-icon nzType="plus"></i>
+                    Add Restaurant Images
+                  </div>
+                </nz-upload>                  
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          
+          
+          <div class="text-center mb-3">
+            <button type="button" (click)="Addrestaurant()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+          </div>
+          </form>         
+      </ng-template> -->
+ </div>
+
+
+       
+      <div *ngIf="selectedCategory === 'hospital'" id="hospital" class="container-fluid px-4 py-3"  style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+
+
+        <!-- <div class="container mt-3"> -->
+            <h4 class="mb-4 fw-bold">Near By Hospitals</h4>
+          
+          
+            <div *ngIf="nearesthospitals && nearesthospitals.length">
+              <div class="d-flex overflow-auto pb-3">
+                <div *ngFor="let option of nearesthospitals" 
+                     class="me-3 flex-shrink-0" 
+                     style="width: 250px; ">
+                     
+                  <div class="card h-100  border border-none  rounded-2">
+                    <div class="card-body text-center d-flex flex-column p-2 overflow-hidden">
+                      
+                      <h6 class="mb-2 text-truncate" title="{{ option.name }}">
+                        {{ option.name }}
+                      </h6>
+          
+                      <a>
+                        <img 
+                          [src]="option.image_location[0] ? option.image_location[0] : 'assets/ohm.jpg'"
+                          alt="image"
+                          class="img-fluid rounded mb-2"
+                          style="width: 100%; height: 120px; object-fit: cover;"
+                          (error)="handlehospitalImageError($event)">
+                      </a>
+          
+                      <p class="card-title small " title="{{ option.address }}">
+                        {{ option.address }}
+                      </p>
+          
+                      <p class="detail  text-truncate" *ngIf="option.map_location">
+                        <span class="detail-label"><b>Map:</b></span>
+                        <a [href]="option.map_location" target="_blank" rel="noopener noreferrer">
+                          Click Here
+                        </a> 
+                      </p>
+          
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+
+          
+
+      </div>
+
+      <div *ngIf="selectedCategory === 'policestation'" id="policestation" class="container-fluid px-4 py-3"  style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+      <div class="row py-1">
+  <h1 class="text-justify text-center"> Police Station </h1>
+
+  <div class="container">
+    <div class="row">
+
+
+      <ng-container *ngIf="policestation && policestation.length > 0; else nopolicestation">
+
+  <div class="d-flex flex-nowrap overflow-auto py-3 px-2">
+    <div *ngFor="let events of policestation" class="card me-3 flex-shrink-0 border-0 shadow-sm" style="min-width: 260px; max-width: 90vw;">
+      <div class="card-body text-center p-3">
+                <h6 class="fw-semibold mb-1 text-truncate">{{ events.name }}</h6>
+
+        <a >
+          <img 
+            [src]="events.image_location[0] ? events.image_location[0] : 'assets/ohm.jpg'"
+            class="img-fluid rounded-3 mb-2"
+            style="height: 20vh; width: 100%; object-fit: cover;"
+            alt="image"
+            (error)="handlepoliceImageError($event)"
+          >
+        </a>
+
+
+        <p class="text-muted small mb-2 text-truncate">{{ events.address }}</p>
+
+        <div *ngIf="events.map_location" class="d-flex justify-content-center align-items-center gap-2 mt-2">
+          <span class="fw-bold mb-0">Map Location:</span>
+          <a 
+            [href]="events.map_location"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-primary text-decoration-underline"
+          >
+            Click Here
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</ng-container>
+
+      <ng-template #nopolicestation>
+        <div class="col-12 text-center">
+          <p>No ploice stations listed from your Village</p>
+          <!-- <button (click)="navigateTo('addevent')" type="button" class="p-2" 
+                  style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;">
+            Add an Event
+          </button> -->
+          <!-- <button
+          type="button"
+         
+          class="p-2 mt-2"
+          style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;" (click)="openpolicastationform()"
+          >
+          Add  Police Station
+          </button> -->
+        </div>
+      </ng-template>
+
+
+
+      
+    </div>
+  </div>
+</div>
+
+  </div>
+
+
+
+   <div *ngIf="selectedCategory === 'Accommodation'" id="Accommodation" class="container-fluid px-4 py-3"  style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+    <div class="mt-3">
+        <h4 class="mb-4 fw-bold">Accommodation</h4>
+        
+        <div *ngIf="nearaccommodation && nearaccommodation.length">
+        <div class="d-flex overflow-auto pb-3">
+          <div *ngFor="let option of nearaccommodation" 
+               class="me-3 flex-shrink-0" 
+               style="width: 250px; ">
+               
+            <div class="card h-100  border border-none  rounded-2">
+              <div class="card-body text-center d-flex flex-column p-2 overflow-hidden">
+                
+                <h6 class="mb-2 text-truncate" title="{{ option.name }}">
+                  {{ option.name }}
+                </h6>
+        
+                <a>
+                  <img 
+                    [src]="option.image_location[0] ? option.image_location[0] : 'assets/ohm.jpg'"
+                    alt="image"
+                    class="img-fluid rounded mb-2"
+                    style="width: 100%; height: 120px; object-fit: cover;"
+                    (error)="handlehotelImageError($event)">
+                </a>
+        
+                <p class="card-title small " title="{{ option.address }}">
+                  {{ option.address }}
+                </p>
+        
+                <p class="detail  text-truncate" *ngIf="option.map_location">
+                  <span class="detail-label"><b>Map:</b></span>
+                  <a (click)="openMap(option.map_location)" 
+                     href="Temple Map Location" 
+                     target="_blank">
+                     Accommodation Map
+                  </a>
+                </p>
+                <p>
+                  <span class="detail-label"><b>Rating:</b></span>
+        
+                  <span class="value">{{ option.accommodation_rating }} </span>
+                </p>
+                                <p>
+                  <span class="detail-label"><b>Owner Name:</b></span>
+        
+                  <span class="value">{{ option.owner_name }} </span>
+                </p>
+                                <p>
+                  <span class="detail-label"><b>Contact Number:</b></span>
+        
+                  <span class="value">{{ option.contact_number }} </span>
+                </p>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        </div>
+
+ </div>
+
+
+</div>
+
+
+
+
+
+
+        <div class="modal fade" id="descModal" tabindex="-1" aria-labelledby="descModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header bg-light">
+                  <h5 class="modal-title" id="descModalLabel">
+                    {{ selectedTourismName }} - Tourism Place
+                  </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body text-justify" style="text-align: justify;">
+                {{ selectedDescription }}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>

@@ -1,0 +1,13 @@
+/* Make upload list horizontal */
+::ng-deep .horizontal-upload .ant-upload-list-picture-card {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  gap: 12px;
+}
+
+/* Prevent vertical stacking */
+::ng-deep .horizontal-upload .ant-upload-list-item {
+  flex: 0 0 auto;
+}
+

@@ -1,0 +1,98 @@
+
+.truncate-2-lines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 2.8em;
+  line-height: 1.4em;
+  white-space: normal;
+}
+
+
+
+
+
+/* .profile-pic-container {
+  position: relative;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid orange; 
+} */
+
+.profile-pic-container {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-pic-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.plus-icon {
+  font-size: 24px;
+  color: #aaa;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  text-align: center;
+  color: white;
+  display: block; /* Show by default */
+}
+
+.edit-icon {
+  font-size: 18px;
+}
+
+.dropdown-menu {
+  position: absolute; /* Adjust positioning as necessary */
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  z-index: 1000; /* Make sure it appears above other elements */
+}
+
+.dropdown-menu button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  display: block;
+  width: 100%;
+}
+
+.dropdown-menu button:hover {
+  background: #f0f0f0; /* Highlight on hover */
+}
+
+

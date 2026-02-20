@@ -1,0 +1,48 @@
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+
+/* Default size for large screens */
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 20vh; /* Ensures the container does not overflow */
+}
+
+img {
+    height: 20vh; /* Default size for large screens */
+    width: 20vw;  /* Maintain aspect ratio */
+    border-radius: 10px;
+}
+
+.temple-name {
+    font-size: 1.2rem; /* Default font size */
+    margin-top: 5px; /* Space between image and text */
+    max-width: 100%; /* Ensure text does not overflow the container */
+    word-break: break-word; /* Break long words */
+    overflow-wrap: break-word; /* Ensure text wraps within the container */
+    hyphens: auto; /* Hyphenate text when needed */
+}
+
+/* Adjust sizes for small screens */
+@media (max-width: 576px) {
+    .image-container {
+        max-width: 10vh; /* Smaller container size for small screens */
+    }
+
+    img {
+        height: 10vh; /* Smaller size for small screens */
+        width: 10vh;
+    }
+
+    .temple-name {
+        font-size: 0.7rem; /* Smaller font size for small screens */
+    }
+}

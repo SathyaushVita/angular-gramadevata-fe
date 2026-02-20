@@ -1,0 +1,75 @@
+<div class="container mt-3">
+  <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()">
+    <h3 class="text-center">Update Family Roots</h3>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="father_name">Father's Name</label>
+          <input type="text" id="father_name" class="form-control" formControlName="father_name" placeholder="Enter father's name" />
+        </div>
+        <div class="form-group">
+          <label for="paternal_grandfather_name">Paternal Grandfather's Name</label>
+          <input type="text" id="paternal_grandfather_name" class="form-control" formControlName="paternal_grandfather_name" placeholder="Enter paternal grandfather's name" />
+        </div>
+        <div class="form-group">
+          <label for="paternal_grandmother_name">Paternal Grandmother's Name</label>
+          <input type="text" id="paternal_grandmother_name" class="form-control" formControlName="paternal_grandmother_name" placeholder="Enter paternal grandmother's name" />
+        </div>
+        <div class="form-group">
+          <label for="paternal_great_grandfather_name">Paternal Great Grandfather's Name</label>
+          <input type="text" id="paternal_great_grandfather_name" class="form-control" formControlName="paternal_great_grandfather_name" placeholder="Enter paternal great grandfather's name" />
+        </div>
+        <div class="form-group">
+          <label for="paternal_great_grandmother_name">Paternal Great Grandmother's Name</label>
+          <input type="text" id="paternal_great_grandmother_name" class="form-control" formControlName="paternal_great_grandmother_name" placeholder="Enter paternal great grandmother's name" />
+        </div>
+        <div class="form-group">
+          <label for="paternal_grandmother_father_name">Paternal Grandmother's Father Name</label>
+          <input type="text" id="paternal_grandmother_father_name" class="form-control" formControlName="paternal_grandmother_father_name" placeholder="Enter paternal grandmother's father's name" />
+        </div>
+        <div class="form-group">
+          <label for="paternal_grandmother_mother_name">Paternal Grandmother's Mother Name</label>
+          <input type="text" id="paternal_grandmother_mother_name" class="form-control" formControlName="paternal_grandmother_mother_name" placeholder="Enter paternal grandmother's mother's name" />
+        </div>
+      </div>
+      
+      <!-- Maternal side (right column) -->
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="mother_name">Mother's Name</label>
+          <input type="text" id="mother_name" class="form-control" formControlName="mother_name" placeholder="Enter mother's name" />
+        </div>
+        <div class="form-group">
+          <label for="maternal_grandfather_name">Maternal Grandfather's Name</label>
+          <input type="text" id="maternal_grandfather_name" class="form-control" formControlName="maternal_grandfather_name" placeholder="Enter maternal grandfather's name" />
+        </div>
+        <div class="form-group">
+          <label for="maternal_grandmother_name">Maternal Grandmother's Name</label>
+          <input type="text" id="maternal_grandmother_name" class="form-control" formControlName="maternal_grandmother_name" placeholder="Enter maternal grandmother's name" />
+        </div>
+        <div class="form-group">
+          <label for="maternal_great_grandfather_name">Maternal Great Grandfather's Name</label>
+          <input type="text" id="maternal_great_grandfather_name" class="form-control" formControlName="maternal_great_grandfather_name" placeholder="Enter maternal great grandfather's name" />
+        </div>
+        <div class="form-group">
+          <label for="maternal_great_grandmother_name">Maternal Great Grandmother's Name</label>
+          <input type="text" id="maternal_great_grandmother_name" class="form-control" formControlName="maternal_great_grandmother_name" placeholder="Enter maternal great grandmother's name" />
+        </div>
+        <div class="form-group">
+          <label for="maternal_grandmother_father_name">Maternal Grandmother's Father Name</label>
+          <input type="text" id="maternal_grandmother_father_name" class="form-control" formControlName="maternal_grandmother_father_name" placeholder="Enter maternal grandmother's father's name" />
+        </div>
+        <div class="form-group">
+          <label for="maternal_grandmother_mother_name" >Maternal Grandmother's Mother Name</label>
+          <input type="text" id="maternal_grandmother_mother_name" class="form-control" formControlName="maternal_grandmother_mother_name" placeholder="Enter maternal grandmother's mother's name" />
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-3">
+      <!-- <button type="submit" class="btn btn-primary mt-3" [disabled]="updateProfileForm.invalid">Update Profile</button> -->
+
+      <button type="submit" class="btn btn-primary mb-2" style="background-color: orange; border-color: orange;"[disabled]="updateProfileForm.invalid">Update Profile</button>
+    </div>
+  </form>
+</div>

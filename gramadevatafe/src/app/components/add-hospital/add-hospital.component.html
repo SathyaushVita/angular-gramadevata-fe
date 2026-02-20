@@ -1,0 +1,358 @@
+
+         <!-- <div style="max-height: 80vh;overflow-y: auto;"> -->
+                              <div class=""
+     style="max-height: calc(80vh - 10px);
+            overflow-y: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;">
+            <!-- <h5 class="mb-3 text-center mt-2">Register Hospital</h5>         -->
+             <!-- <h5 class="mb-3 text-center mt-4">
+  {{ isEditMode ? 'Update Hospital' : 'Register Hospital' }}
+</h5> -->
+
+
+            <form [formGroup]="hospitalform"  class="px-4">
+                                                    <div class="row align-items-center">
+            <div class="col-10">
+<h5 class="mb-3 mt-4 text-center">
+  {{ isEditMode ? 'Update Hospital' : 'Register Hospital' }}
+</h5>            </div>
+            <div class="col-2 text-end">
+                <button type="button" (click)="dialogRef.close()"style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="name">Hospital Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter the Hospital Name" [class.is-invalid]="hospitalform.get('name')?.touched && hospitalform.get('name')?.invalid" (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)"/>
+                </div>
+              </div>
+            </div>
+
+
+                              <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="owner_name">Owner Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="owner_name" formControlName="owner_name" placeholder="Enter the Owner Name" [class.is-invalid]="hospitalform.get('owner_name')?.touched && hospitalform.get('owner_name')?.invalid" (keydown)="preventLeadingSpace($event)" (keydown)="validatenumberInput($event)"/>
+          </div>
+        </div>
+      </div>
+
+
+                  <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="contact_number">Contact Number <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="contact_number" formControlName="contact_number" placeholder="Enter the Contact Number" maxlength="10" inputmode="numeric" (input)="onlyNumbers($event)" [class.is-invalid]="hospitalform.get('contact_number')?.touched && hospitalform.get('contact_number')?.invalid" (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)"/>
+          </div>
+
+              <div
+                        *ngIf="
+                          hospitalform.get('contact_number')?.invalid &&
+                          (hospitalform.get('contact_number')?.dirty || hospitalform.get('contact_number')?.touched)
+                        "
+                        class="text-danger"
+                      >
+
+                        <div *ngIf="hospitalform.get('contact_number')?.errors?.['pattern']">
+                          Contact Number must be a 10-digit number
+                        </div>
+                      </div>
+        </div>
+      </div>
+            
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="address">Address <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter the  Address" [class.is-invalid]="hospitalform.get('address')?.touched && hospitalform.get('address')?.invalid" (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)"/>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="map_location"> Map Location (URL) <span class="text-danger">*</span></label>
+                  <div class="input-group d-flex align-items-center gap-2">
+                    <input
+                    type="url"
+                    class="form-control"
+                    id="map_location"
+                    formControlName="map_location"
+                    placeholder="https://example.com/map"
+                    [class.is-invalid]="hospitalform.get('map_location')?.touched && hospitalform.get('map_location')?.invalid" (keydown)="preventLeadingSpace($event)" 
+                  />
+                  
+                    <div class="input-group-append">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        (click)="gethospitalLocation()"
+                        title="Fetch Current Location"
+                      >
+                        📍 Get Location
+                      </button>
+                    </div>
+                  </div>
+                  <small class="form-text text-muted">
+                    Please provide a valid URL for the temple's map location.
+                  </small>
+                                                <div
+  *ngIf="hospitalform.get('map_location')?.invalid 
+         && (hospitalform.get('map_location')?.dirty 
+         || hospitalform.get('map_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="hospitalform.get('map_location')?.errors?.['required']">
+    Map Location is required.
+  </div>
+
+  <div *ngIf="hospitalform.get('map_location')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+                </div>
+              </div>
+            </div>
+            
+
+
+            <div class="row" *ngIf="!InVillage && !isEditMode">
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please select a country">
+                <label for="country">Country <span class="text-danger">*</span></label>
+                <nz-select 
+                  formControlName="country" 
+                  nzPlaceHolder="Select country" 
+                  [nzShowSearch]="true"
+                  nzNotFoundContent="No data found"
+                  >
+                  <nz-option *ngFor="let option of templeCountryOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-control >
+                <label for="state">State</label>
+                
+                <nz-select 
+  formControlName="state" 
+  nzPlaceHolder="Select state" 
+  [nzShowSearch]="true" 
+  nzNotFoundContent="No data found">
+  <nz-option 
+    *ngFor="let option of templeStateOptions" 
+    [nzValue]="option.value" 
+    [nzLabel]="option.label">
+  </nz-option>
+</nz-select>
+
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-control >
+                <label for="district">District</label>
+                <nz-select formControlName="district" nzPlaceHolder="Select district" 
+                          [nzShowSearch]="true" nzNotFoundContent="No data found"
+                          >
+                  <nz-option *ngFor="let option of templeDistrictOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-control >
+                <label for="mandal">Town/Mandal</label>
+                <nz-select formControlName="mandal" nzPlaceHolder="Select mandal" 
+                          [nzShowSearch]="true" nzNotFoundContent="No data found"
+                          >
+                  <nz-option *ngFor="let option of templeMandalOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-control >
+                <label for="village">Area/Village</label>
+                <nz-select formControlName="village_id" nzPlaceHolder="Select Village" 
+                          [nzShowSearch]="true" nzNotFoundContent="No data found"
+                         >
+                  <nz-option *ngFor="let option of templeVillageOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+
+
+            <!-- <div >
+              <div class="row " >
+                <label>Hospital Image</label>
+                <div>
+                  <nz-upload
+                    nzListType="picture-card"
+                    [(nzFileList)]="bannerFileList"
+                    [nzMultiple]="true"
+                    [nzShowButton]="bannerFileList.length "
+                    (nzChange)="Uploadhospitalimage($event)"
+                    [nzAccept]="'image/*'"
+                    (nzRemove)="handleimageRemove()"
+                  >
+                    <div >
+                      <i nz-icon nzType="plus"></i>
+                      Add Hospital Images
+                    </div>
+                  </nz-upload>                  
+                </div>
+              </div>
+            </div> -->
+            
+                  <div class="row mt-2">
+  <!-- 🏥 Hospital Image Upload -->
+  <div class="col-md-6 col-12">
+    <label>🏥 Hospital Image <span class="text-danger">*</span></label>
+    <nz-upload
+      nzListType="picture-card"
+      [(nzFileList)]="bannerFileList"
+      [nzMultiple]="true"
+      [nzShowButton]="bannerFileList.length < 10"
+      (nzChange)="Uploadhospitalimage($event)"
+      [nzAccept]="'image/*'"
+      (nzRemove)="handleimageRemove()"
+      [nzPreview]="handlePreview"
+    >
+      <div>
+        <i nz-icon nzType="plus"></i>
+        Add Hospital Images
+      </div>
+    </nz-upload>
+    <div *ngIf="hospitalform.get('image_location')?.touched && hospitalform.get('image_location')?.invalid" class="text-danger mt-1">
+      Please upload at least one hospital image
+    </div>
+                                   <nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+  </div>
+                 <nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+
+  <!-- 📄 License Copy Image Upload -->
+  <div class="col-md-6 col-12">
+    <label>📄 License Copy</label>
+    <nz-upload
+      nzListType="picture-card"
+      [(nzFileList)]="licenseFileList"
+      [nzMultiple]="true"
+      [nzShowButton]="licenseFileList.length < 10"
+      (nzChange)="Uploadlicensecopy($event)"
+      [nzAccept]="'image/*'"
+      (nzRemove)="handleLicenseRemove()"
+       [nzPreview]="handlePreview"
+    >
+      <div>
+        <i nz-icon nzType="plus"></i>
+        Add License Images
+      </div>
+    </nz-upload>
+  </div>
+</div>
+            
+            <!-- <div class="text-center mb-3">
+                     <button
+  type="button"
+  (click)="Addhospital()"
+  style="border-width: 0px;background-color: rgb(241, 124, 15);
+  border-radius:20px;color: white; padding: 10px;">
+
+  {{ isEditMode ? 'Update Hospital' : 'Add Hospital' }}
+</button>
+            </div> -->
+                 <div class="row mt-3 pb-4">
+  <div class="col-12">
+    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+
+      <!-- Cancel Button -->
+      <button
+        type="button"
+        (click)="dialogRef.close()"
+        class="btn btn-secondary px-4 py-2 rounded-pill"
+      >
+        Cancel
+      </button>
+
+      <!-- Submit Button -->
+      <button
+        type="button"
+        (click)="Addhospital()"
+        class="btn px-4 py-2 rounded-pill text-white"
+        style="background-color: rgb(241, 124, 15);"
+      >
+        {{ isEditMode ? 'Update Hospital' : 'Register Hospital' }}
+      </button>
+
+    </div>
+  </div>
+</div>
+            </form> 
+          </div>        

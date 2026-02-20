@@ -1,0 +1,141 @@
+<div class="container" style="margin-top: 150px;margin-bottom: 80px;">
+    <div class="row">
+        <div class="text-center">
+            <h4>{{villageName}} Chatroom</h4>
+
+         </div>
+        <div class="col-md-3">
+            
+         
+            <div class="card">
+                <div class="card-header">Users</div>
+                
+                  <ul class="list-group list-group-flush">
+                    <ng-container *ngFor="let member of membersdata">
+                      <li class="list-group-item">
+                        <img src="../../../assets/profile1.webp" alt="Profile" class="rounded-circle me-2" width="30" height="30">
+                        {{ member.user.name }}
+                      </li>
+                    </ng-container>
+                  </ul>
+                  
+
+            </div>
+        </div>
+        <div class="col-md-9">
+           
+            <div class="card">
+                <div class="card-header">Chatroom</div>
+
+
+                <div class="card-body chat-box">
+                    <div *ngFor="let chatdata of chatdata" class="chat-container">
+                        <div class="chat-bubble" [ngClass]="{'sent': chatdata.isSent, 'received': !chatdata.isSent}">
+                            <div class="chat-header">
+                                <img src="../../../assets/profile1.webp" alt="Profile" class="profile-pic" *ngIf="!chatdata.isSent">
+                                
+                                <div class="chat-message">
+                                    <span class="user-name">{{ chatdata.user.name }}</span>
+                                    <p>{{ chatdata.message }}</p>
+                                    <span class="chat-time">{{ chatdata.posted_time_ago}}</span>
+
+                                </div>
+                                
+                                <img src="../../../assets/profile1.webp" alt="Profile" class="profile-pic" *ngIf="chatdata.isSent">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <form [formGroup]="chatform" (ngSubmit)="addchat()" id="chat-form">
+                        <div class="input-group">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Type a message..." 
+                                formControlName="message" 
+                                aria-label="Message" 
+                                aria-describedby="send-button"
+                            />
+                            <div class="input-group-append" style="margin-left: 15px;">
+                                <button 
+                                    class="btn btn-primary" 
+                                    type="submit" 
+                                    id="send-button"
+                                >
+                                    Send
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="container" style="margin-top: 100px;margin-bottom: 80px;">
+    <div class="row">
+        <div class="col-md-3">
+            
+            <div class="card">
+                <div class="card-header">Users</div>
+                <ul class="list-group list-group-flush">
+                    <ng-container *ngFor="let member of membersdata">
+                      <li class="list-group-item">
+                        <img src="../../../assets/profile1.webp" alt="Profile" class="rounded-circle me-2" width="30" height="30">
+                        {{ member.user.name }}
+                      </li>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            
+            <div class="card">
+                <div class="card-header">Chatroom</div>
+                <div class="card-body chat-box" #chatBox>
+                    <div *ngFor="let chatdata of chatdata" class="chat-container">
+                        <div class="chat-bubble" [ngClass]="{'sent': chatdata.isSent, 'received': !chatdata.isSent}">
+                            <div class="chat-header">
+                                <img src="../../../assets/profile1.webp" alt="Profile" class="profile-pic" *ngIf="!chatdata.isSent">
+                                <div class="chat-message">
+                                    <span class="user-name">{{ chatdata.user.name }}</span>
+                                    <p>{{ chatdata.message }}</p>
+                                    <span class="chat-time">{{ chatdata.posted_time_ago}}</span>
+                                </div>
+                                <img src="../../../assets/profile1.webp" alt="Profile" class="profile-pic" *ngIf="chatdata.isSent">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <form [formGroup]="chatform" (ngSubmit)="addchat()" id="chat-form">
+                        <div class="input-group">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Type a message..." 
+                                formControlName="message" 
+                                aria-label="Message" 
+                                aria-describedby="send-button"
+                            />
+                            <div class="input-group-append" style="margin-left: 15px;">
+                                <button 
+                                    class="btn btn-primary" 
+                                    type="submit" 
+                                    id="send-button"
+                                >
+                                    Send
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

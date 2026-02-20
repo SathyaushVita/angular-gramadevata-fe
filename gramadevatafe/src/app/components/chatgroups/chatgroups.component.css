@@ -1,0 +1,126 @@
+.village-tab {
+    background-color: green;
+    color: white;
+  }
+  
+  .village-tab.active {
+    background-color: darkgreen;
+    color: white;
+  }
+  
+  .temple-tab {
+    background-color: orange;
+    color: white;
+  }
+  
+  .temple-tab.active {
+    background-color: darkorange;
+    color: white;
+  }
+
+
+  
+.card-body.chat-box {
+  height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+  background-color: #f0f0f0;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; 
+}
+.chat-bubble {
+  max-width: 35%;  
+  padding: 8px;    
+  border-radius: 15px;  
+  margin: 1px 0;
+  margin-left: 15px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.chat-bubble.sent {
+  background-color: #dcf8c6;
+  align-self: flex-end;
+  border-bottom-right-radius: 0;
+}
+
+.chat-bubble.received {
+  background-color: #fff;
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 32px;  
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+  margin-bottom: 3px;  
+  font-size: 0.85em;   
+}
+
+.chat-bubble p {
+  margin: 0;
+  word-wrap: break-word;
+  font-size: 0.9em;   
+}
+
+.chat-time {
+  display: block;
+  font-size: 0.6em;
+  color: gray;
+  text-align: right;
+  margin-top: 3px;
+}
+
+.rounded-circle {
+  display: inline-block;
+  width: 35px; /* Adjust size as needed */
+  height: 35px; /* Adjust size as needed */
+  line-height: 35px; /* Align icon vertically */
+  text-align: center; /* Center the icon horizontally */
+  border-radius: 50%; /* Make the element circular */
+  color: white; /* Icon color */
+  font-size: 20px; /* Adjust icon size */
+  
+
+  
+  
+}
+
+
+.temple-rounded-circle {
+  display: inline-block;
+  width: 35px; /* Adjust size as needed */
+  height: 35px; /* Adjust size as needed */
+  line-height: 40px; /* Align icon vertically */
+  text-align: center; /* Center the icon horizontally */
+  border-radius: 50%; /* Make the element circular */
+  background-color: #e97d03; /* Background color */
+  color: white; /* Icon color */
+  font-size: 20px; /* Adjust icon size */
+}
+
+
+  

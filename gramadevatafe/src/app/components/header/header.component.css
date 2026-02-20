@@ -1,0 +1,225 @@
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .custom-nav-links {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  #mainNav {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  #mainNav .nav-link {
+    color: #000 !important;
+  }
+
+  .navbar-nav .dropdown-menu {
+    border-radius: 8px;
+  }
+}
+
+/* Active link styling for top navbar */
+.navbar-nav .nav-link.active-link,
+.navbar-nav .nav-item.active-link>.nav-link {
+  color: #FFD700 !important;
+  /* Gold/Yellow for high contrast on orange background */
+  font-weight: bold;
+  border-bottom: 2px solid #FFD700;
+}
+
+/* Ensure the icon also gets colored */
+.navbar-nav .active-link i,
+.navbar-nav .nav-item.active-link>.nav-link i {
+  color: #FFD700 !important;
+}
+
+/* Dropdown active item styling (inside white menu) */
+.dropdown-ui .dropdown-link.active-link {
+  color: #e6450b !important;
+  /* Brand Orange */
+  background-color: rgba(230, 69, 11, 0.15);
+  font-weight: bold;
+}
+
+
+@media (min-width: 768px) {
+  .navbar-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}
+
+.navbar-nav .separator {
+  color: black;
+  font-size: 18px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@media (max-width: 767.98px) {
+  .navbar-nav .separator {
+    display: none;
+  }
+
+  .navbar-nav {
+    display: block;
+  }
+}
+
+.navbar-nav .nav-link,
+.navbar-nav .dropdown-item {
+  color: white !important;
+}
+
+@media (min-width: 768px) and (max-width: 1450px) {
+  .navbar-nav .nav-link {
+    font-size: 11px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+
+  .navbar-nav .separator {
+    font-size: 12px;
+    margin: 0 1px;
+  }
+
+  .navbar-nav.ms-auto .nav-link {
+    font-size: 10px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .navbar-nav .nav-link {
+    font-size: 9px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+  }
+}
+
+.responsive-nav {
+  background-color: rgb(114, 45, 45);
+  background-image: url('../../../assets/WEBSITE DESIGN (example) (1).webp');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .responsive-nav {
+    background-image: url('../../../assets/WEBSITE DESIGN (example) (1).webp');
+    background-color: rgb(114, 45, 45);
+    background-repeat: no-repeat;
+    background-position: left 10% center;
+    background-size: cover;
+  }
+}
+
+@media (max-width: 767px) {
+  .responsive-nav {
+    background-image: none;
+    background-color: rgb(114, 45, 45);
+  }
+}
+
+.logo-link {
+  margin-left: 25px;
+}
+
+@media (max-width: 767.98px) {
+  .logo-link {
+    margin-left: 0px;
+  }
+}
+
+.scroll-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Dropdown container */
+.dropdown-ui {
+  min-width: 240px;
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(255, 247, 240, 0.98));
+  border-radius: 10px;
+  font-family: 'Times New Roman', Times, serif;
+  padding: 6px;
+}
+
+/* FORCE BLACK TEXT ALWAYS */
+.dropdown-ui .dropdown-link {
+  color: #000 !important;
+  font-weight: 600;
+}
+
+/* Hover: background only, text stays BLACK */
+.dropdown-ui .dropdown-link:hover,
+.dropdown-ui .dropdown-link:focus,
+.dropdown-ui .dropdown-link:active {
+  background-color: rgba(230, 69, 11, 0.15);
+  color: #000 !important;
+}
+
+/* Divider */
+.dropdown-divider {
+  margin: 6px 0;
+  opacity: 0.25;
+}
+
+/* Mobile friendly */
+@media (max-width: 768px) {
+  .dropdown-ui {
+    width: 100%;
+  }
+}
+
+/* Mobile active state adjustment */
+@media (max-width: 767.98px) {
+
+  #mainNav .navbar-nav .nav-link.active-link,
+  #mainNav .navbar-nav .nav-item.active-link>.nav-link {
+    color: #e6450b !important;
+    /* Orange on white background */
+    background-color: rgba(230, 69, 11, 0.1);
+    border-radius: 5px;
+    border-bottom: none !important;
+    /* Remove the gold border from desktop styles */
+  }
+
+  #mainNav .navbar-nav .nav-link.active-link i,
+  #mainNav .navbar-nav .nav-item.active-link>.nav-link i {
+    color: #e6450b !important;
+  }
+
+
+  input:focus {
+  box-shadow: none !important;
+}
+
+.input-group:focus-within {
+  box-shadow: 0 0 8px rgba(13,110,253,0.4);
+}
+
+
+
+}
+
+
+.input-group-text {
+  border-right: 0 !important;
+}
+
+.form-control {
+  border-left: 0 !important;
+}

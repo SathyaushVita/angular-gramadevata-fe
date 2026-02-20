@@ -1,0 +1,6 @@
+.video-custom {
+    margin-top: 10px;
+    height: 150px; 
+    width: 200px ; 
+    object-fit: cover; 
+  }

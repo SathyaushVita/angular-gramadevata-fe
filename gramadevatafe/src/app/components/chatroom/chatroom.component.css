@@ -1,0 +1,149 @@
+/* .card-body.chat-box {
+    height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    background-color: #f0f0f0;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; 
+}
+
+
+.chat-bubble {
+    max-width: 70%; 
+    padding: 5px; 
+    border-radius: 15px;
+    margin: 2px 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
+
+.chat-bubble.sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+}
+
+.chat-bubble.received {
+    background-color: #ffffff;
+    align-self: flex-start;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.chat-message {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.chat-bubble p {
+    margin: 0;
+    word-wrap: break-word;
+    font-size: 0.9em;
+}
+
+.chat-time {
+    display: block;
+    font-size: 0.6em;
+    color: gray;
+    text-align: right;
+    margin-top: 3px;
+} */
+
+
+.card-body.chat-box {
+    height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+    background-color: #f0f0f0;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; 
+}
+.chat-bubble {
+    max-width: 50%;  
+    padding: 8px;    
+    border-radius: 15px;  
+    margin: 1px 0;
+    margin-left: 15px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.chat-bubble.sent {
+    background-color: #dcf8c6;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+}
+
+.chat-bubble.received {
+    background-color: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 32px;  
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.chat-message {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: bold;
+    margin-bottom: 3px;  
+    font-size: 0.85em;   
+}
+
+.chat-bubble p {
+    margin: 0;
+    word-wrap: break-word;
+    font-size: 0.9em;   
+}
+
+.chat-time {
+    display: block;
+    font-size: 0.6em;
+    color: gray;
+    text-align: right;
+    margin-top: 3px;
+}
+

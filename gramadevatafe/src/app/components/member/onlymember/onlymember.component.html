@@ -1,0 +1,158 @@
+<div class="container p-4"  style="max-width: 600px; margin: 0 auto; max-height: 800px">
+    <form [formGroup]="memberform">
+        <div>
+            <!-- <div class="row">
+                <h3 class="text-center">Member Registration</h3>
+            </div> -->
+                        <div class="row align-items-center">
+            <div class="col-10">
+                <h3 class="text-center">Member Registration</h3>
+            </div>
+            <div class="col-2 text-end">
+                <button type="button" (click)="dialogRef.close()"style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="full_name">Name <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" formControlName="full_name" placeholder="Enter the Name" (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)">
+                        <div *ngIf="memberform.get('full_name')?.invalid && (memberform.get('full_name')?.dirty || memberform.get('full_name')?.touched)" class="text-danger">
+                             Name is required
+                          </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="father_name">Surname <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" formControlName="surname" placeholder="Enter the Surname" (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)">
+                        <div *ngIf="memberform.get('surname')?.invalid && (memberform.get('surname')?.dirty || memberform.get('surname')?.touched)" class="text-danger">
+                            Surname is required
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="father_name">Father Name <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" formControlName="father_name" placeholder="Enter the Father Name" (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)">
+                        <div *ngIf="memberform.get('father_name')?.invalid && (memberform.get('father_name')?.dirty || memberform.get('father_name')?.touched)" class="text-danger">
+                            Father Name is required
+                          </div>
+                    </div>
+                </div>
+             
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="contact_number">Contact Number <span style="color: red;">*</span></label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="contact_number"
+                        placeholder="Enter the Contact Number" (keydown)="preventLeadingSpace($event)"
+                      />
+                      <!-- Error messages for validation -->
+                      <div
+                        *ngIf="
+                          contactNumber?.invalid &&
+                          (contactNumber?.dirty || contactNumber?.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <div *ngIf="contactNumber?.errors?.['required']">
+                          Contact Number is required
+                        </div>
+                        <div *ngIf="contactNumber?.errors?.['pattern']">
+                          Contact Number must be a 10-digit number
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="gender">Gender <span style="color: red;">*</span></label>
+                        <select class="form-control" formControlName="gender">
+                            <option [ngValue]="null" disabled >Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                        <div *ngIf="memberform.get('gender')?.invalid && (memberform.get('gender')?.dirty || memberform.get('gender')?.touched)" class="text-danger">
+                            Gender required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="gender"> Visibility <span style="color: red;">*</span></label>
+                        <select class="form-control" formControlName="account_type">
+                            <option [ngValue]="null" disabled > Select Visibility</option>
+                            <option value="PRIVATE">PRIVATE</option>
+                            <option value="PUBLIC">PUBLIC</option>
+                            
+                        </select>
+                        <div *ngIf="memberform.get('account_type')?.invalid && (memberform.get('account_type')?.dirty || memberform.get('account_type')?.touched)" class="text-danger">
+                            Visibility required
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="contact_number">Email <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" formControlName="email" placeholder="Enter the Email" (keydown)="preventLeadingSpace($event)">
+                        <div *ngIf="memberform.get('email')?.invalid && (memberform.get('email')?.dirty || memberform.get('email')?.touched)" class="text-danger">
+                            Email is required
+                          </div>
+                    </div>
+                </div>
+
+            </div>
+          
+           
+            <!-- <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+                </div>
+            </div> -->
+                    <div class="row mt-3">
+        <div class="col-12 text-center">
+            <button
+            type="button"
+            (click)="dialogRef.close()"
+            style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;"
+            >
+            Cancel
+            </button>
+
+            <button
+            type="button"
+            (click)="onSubmit()"
+            style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;"
+            >
+            Submit
+            </button>
+        </div>
+        </div>
+
+        </div>
+    </form>
+</div>

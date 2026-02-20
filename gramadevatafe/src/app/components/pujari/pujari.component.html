@@ -1,0 +1,685 @@
+<div class="card pt-5 pb-5">
+  <div class="container p-4" *ngIf="!isMemberIn;" style="max-height: 80vh;overflow-y: auto;" >
+
+          <ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff"
+          type="ball-spin-clockwise">
+        </ngx-spinner>
+    <form [formGroup]="memberform">
+        <div >
+            <!-- <div class="row">
+                <h3 class="text-center">Pujari/Purohit Registration</h3>
+            </div> -->
+              <div class="row align-items-center">
+              <div class="col-10">
+                  <h3 class="text-center">Pujari/Purohit Registration</h3>
+              </div>
+              <div class="col-2 text-end">
+                  <button type="button" (click)="dialogRef.close()"style="
+                          position: absolute;
+                          top: 10px;
+                          right: 10px;
+                          width: 32px;
+                          height: 32px;
+                          border: none;
+                          background: transparent;
+                          font-size: 26px;
+                          font-weight: bold;
+                          cursor: pointer;
+                          line-height: 32px;
+                          text-align: center;"
+                      title="Cancel"> × </button>
+                  </div>
+              </div>
+
+            <div class="row ">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Name <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" formControlName="full_name" placeholder="Enter the Full Name">
+                        <div *ngIf="memberform.get('full_name')?.invalid && (memberform.get('full_name')?.dirty || memberform.get('full_name')?.touched)" class="text-danger">
+                            name required
+                          </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="surname">Surname <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" formControlName="surname" placeholder="Enter the surname">
+                        <div *ngIf="memberform.get('father_name')?.invalid && (memberform.get('surname')?.dirty || memberform.get('surname')?.touched)" class="text-danger">
+                            surname is required
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="surname">Father Name <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" formControlName="father_name" placeholder="Enter the Father's Name">
+                        <div *ngIf="memberform.get('father_name')?.invalid && (memberform.get('father_name')?.dirty || memberform.get('father_name')?.touched)" class="text-danger">
+                            Father's Name required
+                          </div>
+                    </div>
+                </div>
+              
+              
+              
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="contact_number">Contact Number <span style="color: red;">*</span></label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="contact_number"
+                        placeholder="Enter the contact number"
+                      />
+                      <!-- Error messages for validation -->
+                      <div
+                        *ngIf="
+                          contactNumber?.invalid &&
+                          (contactNumber?.dirty || contactNumber?.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <div *ngIf="contactNumber?.errors?.['required']">
+                          Contact Number is required
+                        </div>
+                        <div *ngIf="contactNumber?.errors?.['pattern']">
+                          Contact Number must be a 10-digit number
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="gender">Gender <span style="color: red;">*</span></label>
+                        <select class="form-control" formControlName="gender">
+                            <option [ngValue]="null" disabled >Select your gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div *ngIf="memberform.get('gender')?.invalid && (memberform.get('gender')?.dirty || memberform.get('gender')?.touched)" class="text-danger">
+                            Gender required
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="gender"> Visibility <span style="color: red;">*</span></label>
+                        <select class="form-control" formControlName="account_type">
+                            <option [ngValue]="null" disabled ></option>
+                            <option value="PRIVATE">PRIVATE</option>
+                            <option value="PUBLIC">PUBLIC</option>
+                          
+                        </select>
+                        <div *ngIf="memberform.get('account_type')?.invalid && (memberform.get('account_type')?.dirty || memberform.get('account_type')?.touched)" class="text-danger">
+                            Visibility required
+                        </div>
+                    </div>
+                </div>
+              
+            
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="contact_number">Email <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" formControlName="email" placeholder="Enter the email">
+                        <div *ngIf="memberform.get('email')?.invalid && (memberform.get('email')?.dirty || memberform.get('email')?.touched)" class="text-danger">
+                            Email required
+                          </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                      <label for="working_temple">Pujari Desgingination</label>
+                    
+                          <input type="text" class="form-control" formControlName="pujari_designation" placeholder="Enter the pujari desgingination in temple">
+                          <div *ngIf="memberform.get('pujari_designation')?.invalid && (memberform.get('pujari_designation')?.dirty || memberform.get('pujari_designation')?.touched)" class="text-danger">
+                              Pujari Desgingination required
+                            </div>
+                    
+                  </div>
+              </div> -->
+            </div>
+
+            <div>
+          
+        
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="certificate_type">Certificate Type <span style="color: red;">*</span></label>
+                    <select class="form-control form-select" formControlName="pujari_certificate_type" (change)="onCertificateTypeChange($event)">
+                      <option value="" disabled>Select Certificate Type</option>
+                  
+                      <option value="ISSUED_BY_ENDOWNMENT">Issued By Endownment</option>
+                      <option value="ISSUED_BY_SANGHAM">Issued By sangam</option>
+              
+                    </select>
+                    <div *ngIf="memberform.get('pujari_certificate_type')?.invalid && memberform.get('pujari_certificate_type')?.touched" class="text-danger">
+                      Certificate Type is required
+                    </div>
+                  </div>
+                </div>
+        
+                <div class="col-md-6">
+                  <div>
+                    <label>pujari certificate <span style="color: red;">*</span></label>
+                  </div>
+                  <nz-upload
+                  nzListType="picture-card"
+                  [(nzFileList)]="bannerFileList"
+                  [nzMultiple]="true"
+                  [nzShowButton]="bannerFileList.length < 1"
+                  (nzChange)="handleBannerFileChange($event)"
+                  [nzAccept]="'image/*'"
+                  (nzRemove)="handleBannerFileRemove($event)"
+                >
+                  <div >
+                    <i nz-icon nzType="plus"></i>
+                    Add pujari certificate
+                  </div>
+        
+                </nz-upload>
+                <div *ngIf="memberform.get('pujari_certificate')?.invalid && memberform.get('pujari_certificate')?.touched" class="text-danger">
+                      Certificate Image is required
+                    </div>
+                </div>
+        
+              
+        
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Pujari Designation</label>
+                    <input type="text" class="form-control" formControlName="pujari_designation" placeholder="Enter Pujari designation">
+        
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Working Temple</label>
+                    <input type="text" class="form-control" formControlName="working_temple" placeholder="Enter working temple">
+        
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Expertise</label>
+                    <input type="text" class="form-control" formControlName="pujari_expertise" placeholder="Enter Your  Expertise">
+                  </div>
+                </div>
+        
+        
+        
+                <div class="row mt-2">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="">Your Id</label>
+                      <select class="form-control form-select" formControlName="pujari_id_type">
+                        <option value="" disabled>Select ID Type</option>
+                        <option value="AADHAR_ID">Aadhaar</option>
+                        <option value="VOTER_ID">Voter</option>
+                        <option value="ENDOWMENT_ID">Endownment ID</option>
+              
+                      </select>
+                  
+                    </div>
+                  </div>
+        
+                  <div class="col-md-6">
+                    <div>
+                      <label>Your Id  certificate Image </label>
+                    </div>
+                    <nz-upload
+                    nzListType="picture-card"
+                    [(nzFileList)]="pujariFileList"
+                    [nzMultiple]="true"
+                    [nzShowButton]="pujariFileList.length < 1"
+                    (nzChange)="handlepujaricertificate($event)"
+                    [nzAccept]="'image/*'"
+                    (nzRemove)="handleBannerFileRemovepujari($event)"
+                  >
+                    <div >
+                      <i nz-icon nzType="plus"></i>
+                      Add Id certificate Image
+                    </div>
+                  </nz-upload>
+        
+                  </div>
+        
+                  </div>
+        
+                <div class="row">
+                  <div class="col-md-6">
+                        <div class="form-group">
+                              <label for="" class="m-2"> Profile Image <span style="color: red;">*</span></label>
+                        <div class="profile-pic-container " formControlName="profile_pic" (click)="triggerFileInput()">
+                        
+                          <img  
+                              [src]="'data:image/jpg;base64,' + profileImage"
+                              alt="Profile Picture"
+                              class="profile-pic"
+                              (error)="onImageError($event)"
+                              />
+                    
+                  
+                  
+                        
+                          <ng-template #defaultPic>
+                            <div class="profile-pic-placeholder">
+                              <span class="plus-icon">+</span>
+                            </div>
+                          </ng-template>
+                        
+                          <div class="overlay">
+                            <span class="edit-icon">+</span>
+                          </div>
+                        </div>
+                    
+                        <input
+                          id="profile_pic"
+                          type="file"
+                          accept="image/*"
+                          (change)="onFileChange($event)"
+                          style="display: none;"
+                          #fileInput
+                        />
+                    
+                        <div *ngIf="memberform.controls['profile_pic'].invalid && memberform.controls['profile_pic'].touched" class="text-danger">
+                          Profile Picture is required.
+                        </div>
+                      </div>
+        
+                  </div>
+            
+        
+                </div>
+              
+              </div>
+        
+        
+          
+          
+        
+              <div class="row mt-4">
+                <div class="col-md-12 ">
+                  <input type="checkbox" id="showLocation" class="form-check-input" (change)="toggleDropdown($event)">
+                  <label for="showLocation" class="form-check-label ms-2">Are you interested in joining as a volunteer?</label>
+                  <div *ngIf="isDropdownVisible" class="mt-3">
+                    <select class="form-select w-50 " formControlName="voluntary_level">
+                      <option value="" disabled>Select Location</option>
+            
+                      <option value="">City level</option>
+                      <option value="DISTRICT">District level</option>
+                      <option value="BLOCK">Block/Mandal level</option>
+                      <option value="VILLAGE">Village/Area level</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+        
+              
+            </div>
+          
+            <!-- <div class="row mt-3">
+                <div class="col-12 text-center mb-3" >
+                    <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+                </div>
+            </div> -->
+        <div class="row mt-3">
+          <div class="col-12 text-center">
+              <button
+              type="button"
+              (click)="dialogRef.close()"
+              style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;"
+              >
+              Cancel
+              </button>
+
+              <button
+              type="submit"
+              (click)="onSubmit()"
+              style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;"
+              >
+              Submit
+              </button>
+          </div>
+          </div>
+          
+        </div>
+    </form>
+  </div>
+</div>
+
+<div class="card pt-5 pb-5">
+  <div class="container1 p-4" *ngIf="isMemberIn;" style="max-height: 80vh;overflow-y: auto;">
+  <form [formGroup]="memberform" >
+    <div>
+                  <div class="row align-items-center">
+            <div class="col-10">
+                <h3 class="text-center">Pujari/Purohit Registration</h3>
+            </div>
+            <div class="col-2 text-end">
+                <button type="button" (click)="dialogRef.close()"style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+      <div class="row mt-4 ps-2">
+        <div class="col-12 d-flex align-items-center">
+          <div class="me-4">
+            <input type="radio" id="PUJARI" name="role" value="PUJARI" class="form-check-input"  formControlName="pujari_type">
+            <label for="PUJARI" class="form-check-label ms-2">Pujari </label>
+          </div>
+          <div class="me-4">
+            <input type="radio" id="PUROHITH" name="role" value="PUROHITH" class="form-check-input" formControlName="pujari_type">
+            <label for="PUROHITH" class="form-check-label ms-2">Purohit</label>
+          </div>
+          <div class="me-4">
+            <input type="radio" id="BOTH" name="role" value="BOTH" class="form-check-input" formControlName="pujari_type">
+            <label for="BOTH" class="form-check-label ms-2">Both</label>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="p-3 ">
+  
+
+  
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="pujari_certificate_type">Certificate Type <span style="color: red;">*</span></label>
+                <select id="pujari_certificate_type" class="form-control form-select" formControlName="pujari_certificate_type">
+                  <option value="" disabled>Select Certificate Type</option>
+                  <option value="PRAVARA">Pravara</option>
+                  <option value="VARA">Vara</option>
+                  <option value="PRAVESA">Pravesa</option>
+                  <option value="GHANAM">Ghanam</option>
+                  <option value="KRAMAM">Kramam</option>
+                  <option value="PADAM">Padam</option>
+                  <option value="MULANTAM">Mulantam</option>
+                </select>
+                <div *ngIf="memberform.get('pujari_certificate_type')?.invalid && memberform.get('pujari_certificate_type')?.touched"
+                  class="text-danger">
+                  Certificate Type is required
+                </div>
+              </div>
+  
+              <div class="col-md-6">
+                <label for="issued_by">Certificate Issued By <span style="color: red;">*</span></label>
+                <select id="issued_by" class="form-control form-select"
+                  formControlName="issued_by" (change)="onCertificateTypeChange($event)">
+                  <option value="" disabled>Select Certificate Issuer</option>
+                  <option value="ISSUED_BY_ENDOWNMENT">Issued By Endownment</option>
+                  <option value="ISSUED_BY_SANGHAM">Issued By Sangham</option>
+                </select>
+                <div
+                  *ngIf="memberform.get('issued_by')?.invalid && memberform.get('issued_by')?.touched"
+                  class="text-danger">
+                  Certificate Issuer is required
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="working_temple">Working Temple/Freelancer</label>
+                <input type="text" class="form-control" id="working_temple" formControlName="working_temple"
+                  placeholder="Enter working temple or freelancer">
+              </div>
+  
+              <div class="col-md-6">
+                <label for="pujari_designation">Pujari Designation</label>
+                <input type="text" class="form-control" id="pujari_designation" formControlName="pujari_designation"
+                  placeholder="Enter Pujari designation">
+              </div>
+            </div>
+  
+          </div>
+        </div>
+  
+        <div class="col-md-4 d-flex justify-content-start align-items-start mt-3">
+          <div >
+            <div>
+              <label>pujari certificate <span style="color: red;">*</span></label>
+            </div>
+            <nz-upload
+            nzListType="picture-card"
+            [(nzFileList)]="bannerFileList"
+            [nzMultiple]="true"
+            [nzShowButton]="bannerFileList.length < 2"
+            (nzChange)="handleBannerFileChange($event)"
+            [nzAccept]="'image/*'"
+            (nzRemove)="handleBannerFileRemove($event)"
+          >
+            <div >
+              <i nz-icon nzType="plus"></i>
+              Add pujari certificate
+            </div>
+  
+          </nz-upload>
+          <div *ngIf="memberform.get('pujari_certificate')?.invalid && memberform.get('pujari_certificate')?.touched" class="text-danger">
+                Certificate Image is required
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+
+        <div class="form-group">
+            <div class="mt-0">
+              <label><strong>Select Expertise Categories</strong></label>
+              <div class="mt-2 mb-2 d-flex flex-wrap gap-2">
+                <span *ngFor="let sub of selectedSubcategories" class="badge bg-primary text-white d-flex align-items-center me-2">
+                  {{ sub.name }}
+                  <button type="button" class="btn-close btn-close-white btn-sm ms-1"
+                          (click)="removeSelectedSubcategory(sub.categoryId, sub.id)"></button>
+                </span>
+              </div>
+              <div class="row mt-2 mb-2">
+                <div class="col-md-2" *ngFor="let category of categories">
+                  <div class="border p-2 rounded">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <strong>{{ category.label }}</strong>
+                      <button type="button" class="btn btn-sm" (click)="toggleSubcategories(category.id)">
+                        <span *ngIf="!expandedCategories.includes(category.id)">▼</span>
+                        <span *ngIf="expandedCategories.includes(category.id)">▲</span>
+                      </button>
+                    </div>
+                    <div *ngIf="expandedCategories.includes(category.id)">
+                      <div *ngFor="let sub of subcategoriesByCategoryId[category.id]">
+                        <label class="d-block">
+                          <input type="checkbox"
+                                [checked]="isSubcategorySelected(sub.id)"
+                                (change)="onSubCategoryChange(category.id, sub, $event)">
+                          {{ sub.label }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+              
+            </div>
+        </div>
+        
+
+ 
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="">Id Type</label>
+              <select class="form-control form-select" formControlName="pujari_id_type">
+                <option value="" disabled>Select ID Type</option>
+                 <option value="AADHAR_ID">Aadhaar</option>
+                <option value="VOTER_ID">Voter</option>
+                <option value="ENDOWMENT_ID">Endownment ID</option>
+       
+              </select>
+           
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div>
+              <label>Id Proof </label>
+            </div>
+            <nz-upload
+            nzListType="picture-card"
+            [(nzFileList)]="pujariFileList"
+            [nzMultiple]="true"
+            [nzShowButton]="pujariFileList.length < 1"
+            (nzChange)="handlepujaricertificate($event)"
+            [nzAccept]="'image/*'"
+            (nzRemove)="handleBannerFileRemovepujari($event)"
+          >
+            <div >
+              <i nz-icon nzType="plus"></i>
+              Add Id Proof Image
+            </div>
+          </nz-upload>
+ 
+          </div>
+          
+           <div class="col-md-3">
+            <div>
+              <label>Performance Video</label>
+            </div>
+            <nz-upload
+              nzListType="picture-card"
+              [(nzFileList)]="performanceVideoList"
+              [nzMultiple]="false"
+              [nzShowButton]="performanceVideoList.length < 1"
+              (nzChange)="handlePerformanceVideo($event)"
+              [nzAccept]="'video/*'"
+              (nzRemove)="handlePerformanceVideoRemove($event)"
+            >
+                <i nz-icon nzType="upload" class="me-2"></i>Upload Performance Video
+            
+            </nz-upload>
+          </div> 
+
+       
+     
+          
+
+          
+          <div class="col-md-3">
+                <div class="form-group">
+                       <label for="" class="m-2"> Profile Image <span style="color: red;">*</span></label>
+                <div class="profile-pic-container " formControlName="profile_pic" (click)="triggerFileInput()">
+                 
+                  <img  
+                      [src]="'data:image/jpg;base64,' + profileImage"
+                      alt="Profile Picture"
+                      class="profile-pic"
+                      (error)="onImageError($event)"
+                      />
+             
+           
+           
+                 
+                  <ng-template #defaultPic>
+                    <div class="profile-pic-placeholder">
+                      <span class="plus-icon">+</span>
+                    </div>
+                  </ng-template>
+                 
+                  <div class="overlay">
+                    <span class="edit-icon">+</span>
+                  </div>
+                </div>
+             
+                <input
+                  id="profile_pic"
+                  type="file"
+                  accept="image/*"
+                  (change)="onFileChange($event)"
+                  style="display: none;"
+                  #fileInput
+                />
+             
+                <div *ngIf="memberform.controls['profile_pic'].invalid && memberform.controls['profile_pic'].touched" class="text-danger">
+                  Profile Picture is required.
+                </div>
+              </div>
+
+          </div>
+     
+
+        </div>
+       
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-12 ">
+          <input type="checkbox" id="showLocation" class="form-check-input" (change)="toggleDropdown($event)">
+          <label for="showLocation" class="form-check-label ms-2">Are you interested in joining as a volunteer?</label>
+          <div *ngIf="isDropdownVisible" class="mt-3">
+            <select class="form-select w-50 " formControlName="voluntary_level">
+              <option value="" disabled>Select Location</option>
+     
+              <option value="">City level</option>
+              <option value="DISTRICT">District level</option>
+              <option value="BLOCK">Block/Mandal level</option>
+              <option value="VILLAGE">Village/Area level</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+            <div class="row mt-3">
+        <div class="col-12 text-center">
+            <button
+            type="button"
+            (click)="dialogRef.close()"
+            style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;"
+            >
+            Cancel
+            </button>
+
+            <button
+            type="submit"
+            (click)="onSubmit()"
+            style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;"
+            >
+            Submit
+            </button>
+        </div>
+        </div>
+    </div>
+  </form>
+</div>
+</div>
+

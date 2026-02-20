@@ -1,0 +1,77 @@
+<section style="width: 300px;">
+    <div class="container p-4"  *ngIf="IsPublic">
+       
+        <div class="text-center mb-4">
+            <h4 style="color: #FF5733;"><strong>Member Details</strong></h4>
+        </div>
+
+        
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center p-3">
+                
+                <img [src]="member?.profile_pic"
+                    class="rounded-circle mb-3"
+                    [ngStyle]="{ 'height': '80px', 'width': '80px', 'border-radius': '50%', 'border': '2px solid #FF5733' }"
+                    alt="Profile Image"
+                    (error)="handleProfileImageError($event)">
+
+                
+                <h5 class="card-title mb-1">{{member?.full_name}}</h5>
+                <p class="text-muted">Father's Name: {{member?.father_name}}</p>
+
+                
+                <hr class="my-3" style="border-top: 1px solid #ddd;">
+
+               
+                <p class="mb-2">
+                    <i class="fas fa-phone-alt me-2" style="color: #FF5733;"></i> 
+                    <strong>Contact:</strong> {{member?.contact_number}}
+                </p>
+
+                
+                <p class="mb-2">
+                    <i class="fas fa-venus-mars me-2" style="color: #FF5733;"></i> 
+                    <strong>Gender:</strong> {{member?.gender}}
+                </p>
+
+                
+                <div class="mt-3">
+                    <button class="btn btn-outline-primary" 
+                            style="border-color: #FF5733; color: #FF5733; border-radius: 20px;" (click)="navigateToProfile(member.id)">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container p-4" *ngIf="IsPrivate">
+       
+        <div class="text-center mb-4">
+            <h4 style="color: #FF5733;"><strong>Member Details</strong></h4>
+        </div>
+
+       
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center p-3">
+              
+                <img [src]="member?.profile_pic"
+                    class="rounded-circle mb-3"
+                    [ngStyle]="{ 'height': '80px', 'width': '80px', 'border-radius': '50%', 'border': '2px solid #FF5733' }"
+                    alt="Profile Image"
+                    (error)="handleProfileImageError($event)">
+
+               
+                <h5 class="card-title mb-1">{{member?.full_name}}</h5>
+
+                
+                <hr class="my-3" style="border-top: 1px solid #ddd;">
+
+              
+                <div class="mt-3">
+                    <p>This account is Private</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

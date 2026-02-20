@@ -1,0 +1,2483 @@
+<div class="container-fluid overflow-hidden px-0">
+
+  <ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff" type="ball-spin-clockwise">
+  </ngx-spinner>
+  <div *ngFor="let temple of templedata" class="row mt-1">
+    <div class="col-12">
+      <div class="row gx-1">
+
+        <div class="col-lg-6 col-md-4 col-12 mb-1 order-1 order-md-2 position-relative">
+          <img [src]="temple.image_location?.[1] || temple.image_location?.[0] || getDefaultStateImage(temple)"
+            class="img-fluid w-100" style="height: 300px; object-fit: cover;" (error)="handleImageError($event)"
+            alt="Middle temple image">
+
+          <div class="position-absolute top-0 start-50 translate-middle-x text-danger fw-bold text-center py-2" style="
+       font-size: 2.0rem;
+       white-space: nowrap;
+       overflow: hidden;
+       text-overflow: ellipsis;
+       max-width: 90%;
+       text-shadow:
+         -1px -1px 0 #fff,
+         1px -1px 0 #fff,
+         -1px 1px 0 #fff,
+         1px 1px 0 #fff,
+         0 0 5px #000;
+     ">
+            {{ temple.name }}
+          </div>
+          <div *ngIf="temple?.address && temple?.object_id?._id"
+            class="position-absolute bottom-0 start-50 translate-middle-x text-dark fw-semibold text-center py-2 px-3"
+            style="background-color: rgba(243, 239, 8, 0.9); font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+
+            <a (click)="navigateToVillage(temple.object_id._id)" style="cursor: pointer; color: blue;">
+              {{ getVillageName(temple.address) }}
+            </a>{{ getRemainingAddress(temple.address) }}
+          </div>
+
+
+          <div *ngIf="!temple?.address || !temple?.object_id?._id"
+            class="position-absolute bottom-0 start-50 translate-middle-x text-dark fw-semibold text-center py-2 px-3"
+            style="background-color: rgba(243, 239, 8, 0.9); font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+            Address not available
+          </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-6 mb-1 order-2 order-md-1">
+          <img [src]="temple.image_location?.[0] || getDefaultStateImage(temple)" class="img-fluid w-100"
+            style="height: 300px; object-fit: cover;" (error)="handleImageError($event)" alt="Left temple image">
+        </div>
+
+        <!-- <div class="col-lg-3 col-md-4 col-6 mb-1 order-3 order-md-3">
+        <img [src]="temple.image_location?.[2] || getDefaultStateImage(temple)" 
+             class="img-fluid w-100" 
+             style="height: 300px; object-fit: cover;" 
+             (error)="handleImageError($event)" 
+             alt="Right temple image">
+      </div> -->
+        <div class="col-lg-3 col-md-4 col-6 mb-1 order-3 order-md-3 position-relative">
+
+          <img [src]="temple.image_location?.[2] || getDefaultStateImage(temple)" class="img-fluid w-100"
+            style="height: 300px; object-fit: cover;" (error)="handleImageError($event)" alt="Right temple image">
+
+          <!-- ✅ View Gallery Button -->
+          <button *ngIf="temple.image_location?.length > 0"
+            class="btn btn-dark btn-sm position-absolute top-0 end-0 m-2" style="opacity: 0.9;"
+            (click)="openGalleryFromButton(temple.image_location)">
+            <i class="bi bi-images me-1"></i> View Gallery
+          </button>
+
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="py-1" style="background-color: rgba(230, 69, 11, 0.925);">
+    <nav class="navbar navbar-dark">
+      <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
+
+        <ul class="navbar-nav flex-row flex-wrap gap-2 fw-bold" style="font-family: 'Times New Roman', Times, serif;">
+
+
+          <li class="nav-item dropdown me-2">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="locationDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Location
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="locationDropdown">
+              <li><a class="dropdown-item" (click)="selectCategory('location')">Full Address</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('location')">Contact Details</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('location')">Map Location</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown me-2">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="galleryDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Temple Gallery
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
+              <li><a class="dropdown-item" (click)="selectCategory('gallery')">Images</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('video')">Videos</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown me-2">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="servicesDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Other Services
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+              <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Prayers</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Facilities</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('templeInfo')">Social Activities</a></li>
+
+              <li><a class="dropdown-item" (click)="selectCategory('poojastores')">Pooja Stores</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('hospital')">Hospitals</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('Restaurants')">Restaurants</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('Hotels')">Hotels</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('Transport')">Transport</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('Operators')">Tour Operators</a></li>
+              <li><a class="dropdown-item" (click)="selectCategory('Guides')">Tourist Guides</a></li>
+
+            </ul>
+          </li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-2 mt-2 mt-md-0">
+
+          <!-- <button *ngIf="!isFavorited()" (click)="toggleFavorite(temple)" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-heart"></i> Visited
+          </button>
+
+          <button *ngIf="isFavorited()" (click)="removeFromFavorites(getFavoriteId())" class="btn btn-danger btn-sm">
+            <i class="bi bi-heart-fill"></i> Remove
+          </button> -->
+          <button *ngIf="!isFavorited()" 
+        (click)="toggleFavorite(temple)" 
+        class="btn btn-outline-light btn-sm">
+  <i class="bi bi-heart"></i> Visited
+</button>
+
+<button *ngIf="isFavorited()" 
+        (click)="toggleFavorite(temple)" 
+        class="btn btn-danger btn-sm">
+  <i class="bi bi-heart-fill"></i> Remove
+</button>
+
+
+          <ng-container>
+            <button class="btn btn-light btn-sm" (click)="shareTemple()" style="background: transparent; color: white;">
+              <i class="fas fa-share-alt"></i>
+            </button>
+          </ng-container>
+
+
+
+
+
+        </div>
+      </div>
+    </nav>
+  </div>
+
+
+
+  <div class="container-fluid mt-2 mb-2 px-0">
+    <div class="row  ">
+
+      <div class="col-12 col-md-10 d-flex flex-column flex-md-row gap-3">
+
+        <div class="col-12 col-md-6 d-flex flex-column gap-2">
+          <div class="d-flex flex-column h-100">
+
+            <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+              <div *ngFor="let temple of templedata">
+                <h5>About {{ temple?.name }} </h5>
+                <p class="text-wrap overflow-hidden"
+                  style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; text-align: justify;">
+                  {{ temple?.desc }}
+                </p>
+                <div class="text-end">
+                  <button class="btn btn-link p-0 text-decoration-none text-primary" (click)="openModal(temple?.desc)"
+                    data-bs-toggle="modal" data-bs-target="#descModal">
+                    View More
+                  </button>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-warning"
+                  style="border-radius: 20px; color: white; padding: 10px 20px; border: none;"
+                  (click)="openAddMoreDetailsDialog()">
+                  Add more Information
+                </button>
+              </div>
+            </div>
+
+            <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+              <div *ngFor="let temple of templedata" class="bg-light p-4 mb-5 rounded shadow-sm">
+                <h5> {{ temple?.name }} Information</h5>
+
+
+
+                <div class="row mb-3">
+                  <div class="col-md-6 mb-2"><strong>Main Diety:</strong> {{ temple?.diety }}</div>
+                  <div class="col-md-6 mb-2"><strong>Other Dieties:</strong> {{ temple?.other_dieties }}</div>
+                  <div class="col-md-6 mb-2"><strong>Temple Timings:</strong> {{ temple?.temple_timings || '--' }}</div>
+
+                  <!-- <div class="col-md-6 ">
+                <span class="detail-label"><b>Official Website:</b></span>
+                <a [href]="temple.temple_official_website" target="_blank" rel="noopener noreferrer">Click Here</a>
+            </div> -->
+                  <div class="col-md-6">
+                    <span class="detail-label"><b>Official Website:</b></span>
+
+                    <ng-container *ngIf="temple?.temple_official_website; else noWebsite">
+                      <a [href]="temple.temple_official_website" target="_blank" rel="noopener noreferrer">
+                        Click Here
+                      </a>
+                    </ng-container>
+
+                    <ng-template #noWebsite>
+                      <span class="text-muted"> --</span>
+                    </ng-template>
+                  </div>
+
+                  <div class="col-md-6 mb-2"><strong>Managed By:</strong> {{ temple?.temple_management }}</div>
+                  <div class="col-md-6 mb-2"><strong>Festivals:</strong> {{ temple?.festivals }}</div>
+                  <div class="col-md-6 mb-2"><strong>Dress Code:</strong> {{ temple?.dress_code }}</div>
+                  <div class="col-md-6 mb-2" *ngIf="temple?.temple_map_location">
+                    <div class="d-flex align-items-center">
+                      <label for="templeMapLocation" class="fw-bold me-2">Temple Map Location:</label>
+                      <div id="templeMapLocation">
+                        <a [href]="temple.temple_map_location" target="_blank" rel="noopener noreferrer"
+                          class="text-primary text-decoration">
+                          Click Here
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+              </div>
+            </div>
+
+            <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill">
+              <h4>Temple Events</h4>
+              <ng-container *ngIf="eventsData?.length > 0; else noEventData">
+                <div class="d-flex flex-nowrap overflow-auto">
+                  <div *ngFor="let event of eventsData" class="me-3 text-center flex-shrink-0">
+                    <a (click)="navigateEventdata(event._id)">
+                      <img [src]="event.image_location || 'assets/ohm.jpg'" class="img-thumbnail"
+                        style="height: 100px; width: 100px; object-fit: cover;" (error)="handleImageError($event)" />
+                    </a>
+                    <p>{{ event.name }}</p>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #noEventData>
+                <p class="text-center">Your event isn’t listed here? Add now!</p>
+                <div class="text-center">
+                  <button (click)="navigateTo('addevent')" class="btn btn-warning rounded-pill text-white">
+                    Add an Event
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 d-flex flex-column gap-2">
+          <div class="d-flex flex-column h-100">
+
+            <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+              <h5>Nearby Temples</h5>
+              <div class="d-flex flex-nowrap overflow-auto">
+                <div *ngFor="let temple of nearbytemples" class="me-3 flex-shrink-0">
+                  <div class="card mb-2" style="width: 12rem;">
+                    <a (click)="navigatetemple(temple._id)">
+                      <img [src]="temple.image_location[0] || 'assets/ohm.jpg'" class="card-img-top"
+                        style="height: 150px; object-fit: cover;" (error)="handleImageError($event)" />
+                    </a>
+                    <div class="card-body text-center">
+                      <h6 class="card-title text-truncate">{{ temple?.name }}</h6>
+                      <p class="card-text text-truncate" title="{{ temple?.address }}">
+                        <b>{{ temple?.address }}</b>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+              <h4>Nearest Tourism Places</h4>
+              <div *ngIf="tourismplacedetails?.length">
+                <div class="d-flex flex-nowrap overflow-auto">
+                  <div *ngFor="let option of tourismplacedetails" class="me-3 flex-shrink-0 mb-3" style="width: 250px;">
+                    <div class="card h-100 border-0 ">
+                      <div class="card-body text-center p-2 d-flex flex-column ">
+                        <h6 class="text-truncate" title="{{ option.name }}">{{ option.name }}</h6>
+
+                        <a [routerLink]="['/tourism-places', option._id]" (click)="scrollToTop()">
+                          <img [src]="option.image_location[0] || 'assets/ohm.jpg'" alt="temple"
+                            class="img-fluid rounded shadow-sm"
+                            style="aspect-ratio: 3 / 2; width: 100%; object-fit: cover;"
+                            (error)="handlehotelImageError($event)" />
+                        </a>
+
+                        <p class="small text-truncate" title="{{ option.address }}">{{ option.address }}</p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-warning rounded-pill text-white mt-2" (click)="opentourismplaces()">
+                  Add Tour Places
+                </button>
+              </div>
+            </div>
+
+
+            <div class="p-3 border border-2 border-primary bg-warning bg-opacity-25 flex-fill mb-1">
+              <h4>Goshalas</h4>
+              <ng-container *ngIf="templegoshals && templegoshals.length > 0; else nogoshalaData">
+                <div class="d-flex flex-nowrap overflow-auto">
+                  <div *ngFor="let goshala of templegoshals" class="me-3 text-center flex-shrink-0">
+                    <a (click)="navigategoshaladata(goshala._id)">
+                      <img [src]="goshala.image_location || 'assets/ohm.jpg'" class="img-thumbnail"
+                        style="height: 100px; width: 100px; object-fit: cover;" (error)="handleImageError($event)" />
+                    </a>
+                    <p>{{ goshala.name }}</p>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #nogoshalaData>
+                <p class="text-center">Your Goshala isn’t listed here? Add now!</p>
+                <div class="text-center">
+                  <button (click)="navigateTo('addgoshala')" class="btn btn-warning rounded-pill text-white">
+                    Add a Goshala
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-2 d-none d-md-block">
+        <div class="border border-2 border-primary bg-light text-center h-100 d-flex flex-column">
+          <img src="../../../assets/saynotoplastic.webp.jpg" alt="Ad" class="img-fluid w-100 h-100"
+            style="object-fit: fill; border-radius: 5px;" />
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+
+
+
+  <ng-template #tourplacesDialog>
+    <!-- <h5 class="mb-3 text-center mt-4">Add More Tourism Places</h5>        
+            <form [formGroup]="tourismForm"  class="px-4">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="name">Tourism  Name</label>
+                  <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter the  Name" />
+                </div>
+              </div>
+            </div>
+            
+         <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Timings</label>
+              <input type="text" class="form-control" id="address" formControlName="timings" placeholder="Enter the Timings" />
+            </div>
+          </div>
+        </div>
+         <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Type</label>
+              <input type="text" class="form-control" id="address" formControlName="type" placeholder="Enter the Type" />
+            </div>
+          </div>
+        </div>
+         <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Description</label>
+              <textarea class="form-control" id="address" formControlName="desc" placeholder="Enter the Description"></textarea>
+            </div>
+          </div>
+        </div>
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter the  Address" />
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="map_location"> Map Location (URL) </label>
+                  <div class="input-group">
+                    <input
+                    type="url"
+                    class="form-control"
+                    id="map_location"
+                    formControlName="map_location"
+                    placeholder="https://example.com/map"
+                  />
+                  
+                    <div class="input-group-append">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        (click)="gettourismCurrentLocation()"
+                        title="Fetch Current Location"
+                      >
+                        📍 Get Location
+                      </button>
+                    </div>
+                  </div>
+                  <small class="form-text text-muted">
+                    Please provide a valid URL for the temple's map location.
+                  </small>
+            
+                </div>
+              </div>
+            </div>
+            
+            <div >
+              <div class="row mt-2" >
+                <label>Tourism place </label>
+                <div>
+                  <nz-upload
+                    nzListType="picture-card"
+                    [(nzFileList)]="bannerFileList"
+                    [nzMultiple]="true"
+                    [nzShowButton]="bannerFileList.length < 10"
+                    (nzChange)="Uploadtouismimage($event)"
+                    [nzAccept]="'image/*'"
+                    (nzRemove)="handleimageRemove()"
+                  >
+                    <div >
+                      <i nz-icon nzType="plus"></i>
+                      Add Tourism Images
+                    </div>
+                  </nz-upload>                  
+                </div>
+              </div>
+            </div>
+            
+            
+            
+            <div class="text-center mb-3">
+              <button type="button" (click)="Addtourismplaces()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+            </div>
+            </form>          -->
+
+    <div style="max-height: 80vh;overflow-y: auto;">
+      <!-- <h5 class="mb-3 text-center mt-4">
+  {{ isEditMode ? 'Update Tourism Places' : 'Add Tourism Places' }}
+</h5> -->
+
+      <form [formGroup]="tourismForm" class="px-4">
+              <div class="row align-items-center">
+        <div class="col-10">
+          <h5 class="mb-3 mt-4 text-center">
+            Add Tourism Places
+          </h5>
+        </div>
+        <div class="col-2 text-end">
+          <button type="button" (click)="dialogRef.close()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;" title="Cancel"> × </button>
+        </div>
+      </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Tourism Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="name" formControlName="name"
+                placeholder="Enter the Tourism Name"
+                [class.is-invalid]="tourismForm.get('name')?.touched && tourismForm.get('name')?.invalid"
+                (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Timings <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="address" formControlName="timings"
+                placeholder="Enter the Timings"
+                [class.is-invalid]="tourismForm.get('timings')?.touched && tourismForm.get('timings')?.invalid"
+                (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Type <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="address" formControlName="type" placeholder="Enter the Type"
+                [class.is-invalid]="tourismForm.get('type')?.touched && tourismForm.get('type')?.invalid"
+                (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Description <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="address" formControlName="desc" placeholder="Enter the Description"
+                [class.is-invalid]="tourismForm.get('desc')?.touched && tourismForm.get('desc')?.invalid"
+                (keydown)="preventLeadingSpace($event)"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Address <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="address" formControlName="address"
+                placeholder="Enter the  Address"
+                [class.is-invalid]="tourismForm.get('address')?.touched && tourismForm.get('address')?.invalid"
+                (keydown)="preventLeadingSpace($event)" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="map_location"> Map Location (URL) <span class="text-danger">*</span></label>
+              <div class="input-group d-flex align-items-center gap-2">
+                <input type="url" class="form-control" id="map_location" formControlName="map_location"
+                  placeholder="https://example.com/map"
+                  [class.is-invalid]="tourismForm.get('map_location')?.touched && tourismForm.get('map_location')?.invalid"
+                  (keydown)="preventLeadingSpace($event)" />
+
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-outline-secondary" (click)="gettourismCurrentLocation()"
+                    title="Fetch Current Location">
+                    📍 Get Location
+                  </button>
+                </div>
+              </div>
+              <small class="form-text text-muted">
+                Please provide a valid URL for the tourism place's map location.
+              </small>
+                 <div
+  *ngIf="tourismForm.get('map_location')?.invalid 
+         && (tourismForm.get('map_location')?.dirty 
+         || tourismForm.get('map_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="tourismForm.get('map_location')?.errors?.['required']">
+    Tourism Map Location is required.
+  </div>
+
+  <div *ngIf="tourismForm.get('map_location')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="row mt-2">
+            <label>Tourism place <span class="text-danger">*</span></label>
+            <div>
+              <nz-upload nzListType="picture-card" [(nzFileList)]="bannerFileList" [nzMultiple]="true"
+                [nzShowButton]="bannerFileList.length < 10" (nzChange)="Uploadtouismimage($event)"
+                [nzAccept]="'image/*'" (nzRemove)="handleimageRemove()" [nzPreview]="handlePreview">
+                <div>
+                  <i nz-icon nzType="plus"></i>
+                  Add Tourism Images
+                </div>
+              </nz-upload>
+              <div *ngIf="!bannerFileList.length" class="text-danger">
+                Image is required.
+              </div>
+            </div>
+          </div>
+        </div>
+        <nz-modal [(nzVisible)]="previewVisible" [nzFooter]="null" (nzOnCancel)="previewVisible = false">
+          <ng-container *nzModalContent>
+            <img *ngIf="previewImage" [src]="previewImage" style="width: 100%; max-height: 70vh; object-fit: fill;" />
+          </ng-container>
+        </nz-modal>
+
+
+        <!-- <div class="text-center mb-3">
+        <button
+  type="button"
+  (click)="submitTourism()"
+  style="border-width: 0px;background-color: rgb(241, 124, 15);
+  border-radius:20px;color: white; padding: 10px;">
+
+  {{ isEditMode ? 'Update Tourism' : 'Add Tourism' }}
+</button>
+
+        
+        
+        </div> -->
+
+        <div class="row mt-3 pb-4">
+          <div class="col-12">
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+
+              <!-- Cancel Button -->
+              <button type="button" (click)="dialogRef.close()" class="btn btn-secondary px-4 py-2 rounded-pill">
+                Cancel
+              </button>
+
+              <!-- Submit Button -->
+              <button type="button" (click)="Addtourismplaces()" class="btn px-4 py-2 rounded-pill text-white"
+                style="background-color: rgb(241, 124, 15);">
+                Add Tourism
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+      </form>
+    </div>
+  </ng-template>
+
+  <div class="modal fade" id="descModal" tabindex="-1" aria-labelledby="descModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-light">
+          <h5 class="modal-title" id="descModalLabel">Temple Description</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-justify" style="text-align: justify;">
+          {{ selectedDescription }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div *ngFor="let temple of templedata" class="connection-card mb-4 p-4">
+    <div class="row align-items-center">
+
+      <!-- Left Section: Members List -->
+      <div class="col-12 col-md-8 mb-4 mb-md-0">
+        <h6 class="section-title">Devotees & Pujaris</h6>
+
+        <div class="avatar-scroll" *ngIf="temple.Connections?.length; else noConnections">
+          <div *ngFor="let member of temple.Connections" class="d-flex flex-column align-items-center text-center me-3">
+            <div class="avatar-img-wrapper">
+              <!-- Use actual user image if available, fallback to icon -->
+              <ng-container *ngIf="member?.user?.profile_pic; else defaultIcon">
+                <img [src]="member.user.profile_pic" class="w-100 h-100 object-fit-cover" alt="User">
+              </ng-container>
+              <ng-template #defaultIcon>
+                <i class="fas fa-user avatar-icon"></i>
+              </ng-template>
+            </div>
+            <span class="avatar-name" title="{{ member?.user?.name }}">{{ member?.user?.name }}</span>
+          </div>
+        </div>
+        <ng-template #noConnections>
+          <p class="text-muted small fst-italic mt-2">Be the first to connect!</p>
+        </ng-template>
+
+      </div>
+
+      <!-- Right Section: Actions -->
+      <div
+        class="col-12 col-md-4 d-flex flex-column justify-content-center align-items-center gap-3 border-start-md ps-md-4">
+
+        <!-- Not Connected State -->
+        <ng-container *ngIf="!temple.isConnected">
+          <div class="d-flex flex-wrap gap-2 justify-content-center w-100">
+            <!-- Devotee Connect Button -->
+            <ng-container *ngIf="!isMemberIn">
+              <button type="button" (click)="OpenAddmemberDilog(temple._id)"
+                class="btn connect-btn connect-btn-primary w-100">
+                <i class="fas fa-praying-hands me-2"></i> Join as Devotee
+              </button>
+            </ng-container>
+            <ng-container *ngIf="isMemberIn">
+              <button type="button" (click)="isMemberconnect(temple._id)"
+                class="btn connect-btn connect-btn-primary w-100">
+                <i class="fas fa-praying-hands me-2"></i> Connect as Devotee
+              </button>
+            </ng-container>
+
+            <!-- Pujari Connect Button -->
+            <ng-container *ngIf="!isPujariIn">
+              <button type="button" (click)="OpenPujariDilog(temple._id)"
+                class="btn connect-btn connect-btn-outline w-100">
+                <i class="fas fa-om me-2"></i> Join as Pujari
+              </button>
+            </ng-container>
+            <ng-container *ngIf="isPujariIn">
+              <button type="button" (click)="isPujariconnect(temple._id)"
+                class="btn connect-btn connect-btn-outline w-100">
+                <i class="fas fa-om me-2"></i> Connect as Pujari
+              </button>
+            </ng-container>
+          </div>
+        </ng-container>
+
+        <!-- Connected State -->
+        <ng-container *ngIf="temple.isConnected">
+          <div class="text-center w-100">
+            <div class="mb-3">
+              <span
+                class="badge bg-success bg-opacity-10 text-success border border-success px-3 py-2 rounded-pill fs-6">
+                <i class="fas fa-check-circle me-1"></i> Connected
+              </span>
+            </div>
+            <button (click)="disconnect(temple.connectedId)" type="button" class="btn disconnect-btn w-100">
+              <i class="fas fa-unlink me-1"></i> Disconnect
+            </button>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="selectedCategory === 'templeInfo'" id="templeInfo" class="container-fluid px-4 py-3 "
+    style="border: 2px solid #003366; background-color: #f8d6a9dc;margin-bottom: 10px;">
+    <h2 class="mb-4">Temple Information</h2>
+  <ng-container *ngIf="
+      (prayersandbenfits&&prayersandbenfits.length > 0) || 
+      (socialactivity&&socialactivity.length > 0) || 
+      (templefacilities&&templefacilities.length > 0);
+      else noTempleInfo">
+    <div *ngFor="let temple of templedata" class="bg-light p-4 mb-5 rounded shadow-sm">
+
+      <div class="container mt-4">
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="border rounded shadow-sm bg-white p-3 h-100">
+              <h5 class="text-center text-primary mb-3">Prayers</h5>
+              <div *ngFor="let item of prayersandbenfits">
+                <p><strong>Homam:</strong> <span class="text-warning">{{ item.homam }}</span></p>
+                <p><strong>Special Vratas:</strong> <span class="text-warning">{{ item.special_vratas }}</span></p>
+                <p><strong>Sevas:</strong> <span class="text-warning">{{ item.sevas }}</span></p>
+                <p><strong>Abshikam:</strong> <span class="text-warning">{{ item.abshikam }}</span></p>
+                <p><strong>Kalyanam:</strong> <span class="text-warning">{{ item.kalyanam }}</span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <div class="border rounded shadow-sm bg-white p-3 h-100">
+              <h5 class="text-center text-success mb-3">Social Activities</h5>
+              <div *ngFor="let item of socialactivity">
+                <p><strong>Annadhaanam:</strong> <span class="text-warning">{{ item.annadhaanam }}</span></p>
+                <p><strong>Marriage Hall:</strong> <span class="text-warning">{{ item.marriage_hall }}</span></p>
+                <p><strong>Naamkarann:</strong> <span class="text-warning">{{ item.naamkarann }}</span></p>
+                <p><strong>Barasala:</strong> <span class="text-warning">{{ item.barasala }}</span></p>
+                <p><strong>Aksharabhyasam:</strong> <span class="text-warning">{{ item.aksharabhyasam }}</span></p>
+                <p><strong>Upanayanam:</strong> <span class="text-warning">{{ item.upanayanam }}</span></p>
+                <p><strong>Tulabharam:</strong> <span class="text-warning">{{ item.tulabharam }}</span></p>
+                <p><strong>Ear Piercing:</strong> <span class="text-warning">{{ item.ear_piercing }}</span></p>
+                <p><strong>Annaprashanam:</strong> <span class="text-warning">{{ item.annaprashanam }}</span></p>
+                <p><strong>Head Shave:</strong> <span class="text-warning">{{ item.head_shave }}</span></p>
+                <p><strong>Danaas:</strong> <span class="text-warning">{{ item.danaas }}</span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-12">
+            <div class="border rounded shadow-sm bg-white p-3 h-100">
+              <h5 class="text-center text-info mb-3">Facilities</h5>
+              <div *ngFor="let item of templefacilities">
+                <p><strong>Pooja Shops:</strong> <span class="text-warning">{{ item.pooja_shops }}</span></p>
+                <p><strong>Restroom:</strong> <span class="text-warning">{{ item.restroom }}</span></p>
+                <p><strong>Drinking Water:</strong> <span class="text-warning">{{ item.drinking_water }}</span></p>
+                <p><strong>Accommodation:</strong> <span class="text-warning">{{ item.accommodation }}</span></p>
+                <p><strong>Restaurants:</strong> <span class="text-warning">{{ item.restaurants }}</span></p>
+                <p><strong>Lockers:</strong> <span class="text-warning">{{ item.lockers }}</span></p>
+                <p><strong>Shoe Rack:</strong> <span class="text-warning">{{ item.shoe_rack }}</span></p>
+                <p><strong>Disability Services:</strong> <span class="text-warning">{{
+                    item.physical_disabilities_services }}</span></p>
+                <p><strong>Medical Emergency:</strong> <span class="text-warning">{{ item.medical_emergency }}</span>
+                </p>
+                <p><strong>Chemist Pharmacy:</strong> <span class="text-warning">{{ item.chemist_pharmacy }}</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+  </ng-container>
+
+  <!-- ✅ No Data Template -->
+  <ng-template #noTempleInfo>
+    <div class="text-center text-muted py-5">
+      <h6>No temple information available.(Prayers,Facilities,Social Activities)</h6>
+    </div>
+  </ng-template>
+
+  </div>
+
+
+
+
+
+  <div *ngIf="selectedCategory === 'location'" id="location" class="container-fluid px-4 py-3"
+    style="border: 2px solid #003366; background-color: #f8d6a9dc;margin-bottom: 10px;">
+    <h2 class="mb-4">Temple Location</h2>
+
+    <div *ngFor="let temple of templedata" class="bg-light p-4 mb-5 rounded shadow-sm">
+
+
+      <div class="row mb-3">
+        <div class="col-md-6 mb-3">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-location-dot me-2"></i>
+            <label for="templeLocation" class="fw-bold me-2">Location:</label>
+            <div id="templeLocation" class="d-flex align-items-center">
+
+              <span>
+                <a *ngIf="temple?.address && temple?.object_id?._id" (click)="navigateToVillage(temple.object_id._id)"
+                  style="cursor: pointer; color: blue;">
+                  {{ getVillageName(temple.address) }}
+                </a>{{ getRemainingAddress(temple.address) }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <div class="d-flex align-items-center">
+            <i class="fa-solid fa-phone me-2"></i>
+            <label for="templePhone" class="fw-bold me-2">Phone:</label>
+            <div id="templePhone" class="d-flex align-items-center">
+
+              <span>{{ temple?.contact_phone }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="d-flex align-items-center">
+          <i class="fa-solid fa-envelope me-2"></i>
+          <label for="templeEmail" class="fw-bold me-2">Email:</label>
+          <div id="templeEmail" class="d-flex align-items-center">
+
+            <span>{{ temple?.contact_email }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail mb-3" *ngIf="temple?.temple_map_location">
+        <div class="d-flex align-items-center">
+          <i class="fa-solid fa-location-dot me-2"></i>
+          <label for="templeMapLocation" class="fw-bold me-2">Temple Map Location:</label>
+          <div id="templeMapLocation">
+            <a [href]="temple.temple_map_location" target="_blank" rel="noopener noreferrer"
+              class="text-primary text-decoration">
+              Click Here
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <div *ngIf="selectedCategory === 'gallery'" id="gallery" class="container-fluid px-4 py-3"
+    style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+    <h2 class="mb-4">Temple Gallery</h2>
+
+    <div *ngFor="let temple of templedata" class="bg-light p-4 mb-5 rounded shadow-sm">
+      <div class="d-flex overflow-auto" style="white-space: nowrap;">
+        <div *ngFor="let image of temple.image_location" class="me-2" style="flex-shrink: 0;">
+          <img [src]="image || 'assets/ohm.jpg'" class="d-block img-fluid rounded"
+            style="height: 150px; width: auto; object-fit: cover; cursor: pointer;"
+            (click)="openImage(image, temple.image_location)" (error)="handleImageError($event)" alt="temple image">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <ng-template #imageDialog>
+    <div class="p-3 position-relative text-center">
+
+      <!-- ❌ Close -->
+      <button class="btn-close position-absolute top-0 end-0 m-2" (click)="closeDialog();"></button>
+
+      <!-- ⬅️ Previous -->
+      <button class="nav-btn left" (click)="prevImage()" [disabled]="currentIndex === 0">
+        ❮
+      </button>
+
+      <!-- IMAGE -->
+      <img [src]="selectedImage" class="img-fluid rounded" style="max-height: 70vh; object-fit: contain;" />
+
+      <!-- ➡️ Next -->
+      <button class="nav-btn right" (click)="nextImage()" [disabled]="currentIndex === imageList.length - 1">
+        ❯
+      </button>
+
+    </div>
+  </ng-template>
+
+
+
+<div *ngIf="selectedCategory === 'video'" 
+     id="video" 
+     class="container-fluid px-4 py-3"
+     style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+
+  <h2 class="mb-4">Temple Video</h2>
+
+  <!-- ✅ If Videos Available -->
+  <ng-container *ngIf="mediaDetails && mediaDetails.length > 0 && mediaDetails[0]?.video?.length > 0; else noVideos">
+
+    <div *ngFor="let temple of mediaDetails" 
+         class="bg-light p-4 mb-5 rounded shadow-sm">
+
+      <div class="d-flex overflow-auto" style="white-space: nowrap;">
+        <div *ngFor="let videourl of temple.video[0]?.split(',')" class="me-3">
+          
+          <a [href]="'https://www.youtube.com/watch?v=' + getVideoId(videourl)"
+             target="_blank"
+             rel="noopener noreferrer">
+
+            <img [src]="'https://img.youtube.com/vi/' + getVideoId(videourl) + '/0.jpg'"
+                 alt="YouTube video thumbnail"
+                 width="300"
+                 height="200"
+                 class="rounded shadow-sm" />
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <!-- ✅ No Videos Template -->
+  <ng-template #noVideos>
+    <div class="text-center text-muted py-5">
+      <h5>No videos available for this temple.</h5>
+    </div>
+  </ng-template>
+
+</div>
+
+
+
+
+
+
+  <div *ngIf="selectedCategory === 'hospital'" id="hospital" class="container-fluid px-4 py-3"
+    style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+
+
+    <h4 class="mb-4 fw-bold">Near By Hospitals</h4>
+
+
+    <div *ngIf="nearesthospitals && nearesthospitals.length >0; else nohospitals">
+      <div class="d-flex overflow-auto pb-3">
+        <div *ngFor="let option of nearesthospitals" class="me-3 flex-shrink-0" style="width: 250px; ">
+
+          <div class="card h-100  border border-none  rounded-2">
+            <div class="card-body text-center d-flex flex-column p-2 overflow-hidden">
+
+              <h6 class="mb-2 text-truncate" title="{{ option.name }}">
+                {{ option.name }}
+              </h6>
+
+              <a>
+                <img [src]="option.image_location[0] ? option.image_location[0] : 'assets/ohm.jpg'" alt="image"
+                  class="img-fluid rounded mb-2" style="width: 100%; height: 120px; object-fit: cover;"
+                  (error)="handlehospitalImageError($event)">
+              </a>
+
+              <p class="card-title small " title="{{ option.address }}">
+                {{ option.address }}
+              </p>
+
+              <p class="detail  text-truncate" *ngIf="option.map_location">
+                <span class="detail-label"><b>Map:</b></span>
+                <a [href]="option.map_location" target="_blank" rel="noopener noreferrer">
+                  Click Here
+                </a>
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #nohospitals>
+      <div class="text-center text-muted py-5">
+        <h6>No hospitals information available.</h6>
+      </div>
+    </ng-template>
+
+    <div class="text-center">
+      <button type="button" class="p-2 mt-2"
+        style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;"
+        (click)="openaddnearbyhospitals()">
+        Register
+      </button>
+    </div>
+
+
+
+
+    <ng-template #nearbyhospitalsDialog>
+      <!-- <h5 class="mb-3 text-center mt-4">Register Hospital</h5> -->
+
+      <form [formGroup]="hospitalform" class="px-4" style="max-height: 80vh;overflow-y: auto;" >
+                     <div class="row align-items-center mt-3">
+        <div class="col-10">
+          <h3 class="text-center">Register Hospital</h3>
+        </div>
+        <div class="col-2 text-end">
+          <button type="button" (click)="dialogRef.close()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Hospital Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="name" formControlName="name"
+                placeholder="Enter the Hospital Name" (keydown)="validateNameInput($event)" [class.is-invalid]="hospitalform.get('name')?.touched && hospitalform.get('name')?.invalid"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="owner_name">Owner Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="owner_name" formControlName="owner_name"
+                placeholder="Enter the Owner Name" (keydown)="validateNameInput($event)" [class.is-invalid]="hospitalform.get('owner_name')?.touched && hospitalform.get('owner_name')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="contact_number">Contact Number <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" id="contact_number" formControlName="contact_number"
+                placeholder="Enter the Contact Number" (keydown)="validateNameInput($event)" [class.is-invalid]="hospitalform.get('contact_number')?.touched && hospitalform.get('contact_number')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Address <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="address" formControlName="address"
+                placeholder="Enter the  Address" (keydown)="preventLeadingSpace($event)" [class.is-invalid]="hospitalform.get('address')?.touched && hospitalform.get('address')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="map_location"> Map Location (URL) <span class="text-danger">*</span></label>
+              <div class="input-group d-flex align-items-center gap-2">
+                <input type="url" class="form-control" id="map_location" formControlName="map_location"
+                  placeholder="https://example.com/map" (keydown)="preventLeadingSpace($event)" [class.is-invalid]="hospitalform.get('map_location')?.touched && hospitalform.get('map_location')?.invalid"/>
+
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-outline-secondary" (click)="gethospitalLocation()"
+                    title="Fetch Current Location">
+                    📍 Get Location
+                  </button>
+                </div>
+              </div>
+              <small class="form-text text-muted">
+                Please provide a valid URL for the temple's map location.
+              </small>
+              <div
+  *ngIf="hospitalform.get('map_location')?.invalid 
+         && (hospitalform.get('map_location')?.dirty 
+         || hospitalform.get('map_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="hospitalform.get('map_location')?.errors?.['required']">
+    Temple Map Location is required.
+  </div>
+
+  <div *ngIf="hospitalform.get('map_location')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-2">
+          <div class="col-md-6 col-12">
+            <label>🏥 Hospital Image <span class="text-danger">*</span></label>
+            <nz-upload nzListType="picture-card" [(nzFileList)]="bannerFileList" [nzMultiple]="true"
+              [nzShowButton]="bannerFileList.length < 10" (nzChange)="Uploadhospitalimage($event)"
+              [nzAccept]="'image/*'" (nzRemove)="handleimageRemove()" [nzPreview]="handlePreview">
+              <div>
+                <i nz-icon nzType="plus"></i>
+                Add Hospital Images
+              </div>
+            </nz-upload>
+            <div *ngIf="!bannerFileList.length" class="text-danger">
+              Image is required.
+            </div>
+                 <nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+          </div>
+
+          <!-- 📄 License Copy Image Upload -->
+          <div class="col-md-6 col-12">
+            <label>📄 License Copy</label>
+            <nz-upload nzListType="picture-card" [(nzFileList)]="licenseFileList" [nzMultiple]="true"
+              [nzShowButton]="licenseFileList.length < 10" (nzChange)="Uploadlicensecopy($event)" [nzAccept]="'image/*'"
+              (nzRemove)="handleLicenseRemove()" [nzPreview]="handlePreview">
+              <div>
+                <i nz-icon nzType="plus"></i>
+                Add License Images
+              </div>
+            </nz-upload>
+          </div>
+                           <nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+        </div>
+
+        <!-- <div class="text-center mb-3">
+          <button type="button" (click)="Addhospital()"
+            style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;">
+            Submit </button>
+        </div> -->
+                <div class="row mt-3 mb-3">
+        <div class="col-12 text-center">
+            <button
+            type="button"
+            (click)="dialogRef.close()"
+            style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;"
+            >
+            Cancel
+            </button>
+
+            <button
+            type="submit"
+            (click)="Addhospital()"
+            style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;"
+            >
+            Register
+            </button>
+        </div>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+
+
+  <div *ngIf="selectedCategory === 'Transport'" id="Transport" class="container-fluid px-4 py-3"
+    style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+
+    <h6 class="fw-bold d-flex align-items-center" style="cursor: pointer; user-select: none;">
+      Transport Facility
+    </h6>
+
+    <div *ngIf="transportdetails.length > 0">
+      <div class="row g-3">
+        <div *ngFor="let item of transportdetails" class="col-12 col-md-6 col-lg-3">
+          <div class="card shadow-sm rounded p-3 text-center">
+            <h6 class="fw-bold mb-2">
+              {{ getTransportIcon(item.transport_type) }} {{ item.transport_type }}
+            </h6>
+            <div>
+              <span class="detail-label"><b>Map Location:</b></span>
+              <a [href]="item.map_location" target="_blank" rel="noopener noreferrer" class="ms-2">
+                Click Here
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="selectedCategory === 'Hotels'" id="Hotels" class="container-fluid px-4 py-3"
+    style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+    <div class="mt-3">
+      <h4 class="mb-4 fw-bold">Near By Hotels</h4>
+
+      <div *ngIf="nearby_hotelsdetails && nearby_hotelsdetails.length >0;else noHotels">
+        <div class="d-flex overflow-auto pb-3">
+          <div *ngFor="let option of nearby_hotelsdetails" class="me-3 flex-shrink-0" style="width: 250px; ">
+
+            <div class="card h-100  border border-none  rounded-2">
+              <div class="card-body text-center d-flex flex-column p-2 overflow-hidden">
+
+                <h6 class="mb-2 text-truncate" title="{{ option.name }}">
+                  {{ option.name }}
+                </h6>
+
+                <a>
+                  <img [src]="option.image_location[0] ? option.image_location[0] : 'assets/ohm.jpg'" alt="image"
+                    class="img-fluid rounded mb-2" style="width: 100%; height: 120px; object-fit: cover;"
+                    (error)="handlehotelImageError($event)">
+                </a>
+
+                <p class="card-title small " title="{{ option.address }}">
+                  {{ option.address }}
+                </p>
+
+                <p class="detail  text-truncate" *ngIf="option.map_location">
+                  <span class="detail-label"><b>Map:</b></span>
+                  <a (click)="openMap(option.map_location)" href="Temple Map Location" target="_blank">
+                    Hotel Map
+                  </a>
+                </p>
+                <p>
+                  <span class="detail-label"><b>Rating:</b></span>
+
+                  <span class="value">{{ option.hotel_rating }} </span>
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+          <ng-template #noHotels>
+      <div class="text-center text-muted py-5">
+        <h6>No hotels information available.</h6>
+      </div>
+    </ng-template>
+      <div class="text-center">
+        <button type="button" class="p-2 mt-2"
+          style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;"
+          (click)="opennearbyhotels()">
+          Register
+        </button>
+      </div>
+    </div>
+    <ng-template #hotelsDialog>
+      <!-- <h5 class="mb-3 text-center mt-4">Register Hotel</h5> -->
+
+      <form [formGroup]="hotelmForm" class="px-4" style="max-height: 80vh;overflow-y: auto;">
+                            <div class="row align-items-center mt-3">
+        <div class="col-10">
+          <h3 class="text-center">Register Hotel</h3>
+        </div>
+        <div class="col-2 text-end">
+          <button type="button" (click)="dialogRef.close()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Hotel Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter the  Name" (keydown)="validateNameInput($event)" [class.is-invalid]="hotelmForm.get('name')?.touched && hotelmForm.get('name')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="owner_name">Owner Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="owner_name" formControlName="owner_name" placeholder="Enter the Owner Name" (keydown)="validateNameInput($event)" [class.is-invalid]="hotelmForm.get('owner_name')?.touched && hotelmForm.get('owner_name')?.invalid"/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="contact_number">Contact Number <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" id="contact_number" formControlName="contact_number" placeholder="Enter the Owner Name" (keydown)="validateNameInput($event)" [class.is-invalid]="hotelmForm.get('contact_number')?.touched && hotelmForm.get('contact_number')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="form-label"><strong>Restaurant Available?</strong></label>
+              <select class="form-select" formControlName="restaurent">
+                <option [ngValue]="null">-- Select --</option>
+                <option value="YES">YES</option>
+                <option value="NO">NO</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Address <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="address" formControlName="address" (keydown)="preventLeadingSpace($event)" [class.is-invalid]="hotelmForm.get('address')?.touched && hotelmForm.get('address')?.invalid"
+                placeholder="Enter the  Address" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group ">
+              <label for="map_location"> Map Location (URL) <span class="text-danger">*</span></label>
+              <div class="input-group d-flex align-items-center gap-2" >
+                <input type="url" class="form-control" id="map_location" formControlName="map_location"
+                  placeholder="https://example.com/map" (keydown)="preventLeadingSpace($event)" [class.is-invalid]="hotelmForm.get('map_location')?.touched && hotelmForm.get('map_location')?.invalid"/>
+
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-outline-secondary" (click)="getnearbyhotels()"
+                    title="Fetch Current Location">
+                    📍 Get Location
+                  </button>
+                </div>
+              </div>
+              <small class="form-text text-muted">
+                Please provide a valid URL for the temple's map location.
+              </small>
+                                          <div
+  *ngIf="hotelmForm.get('map_location')?.invalid 
+         && (hotelmForm.get('map_location')?.dirty 
+         || hotelmForm.get('map_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="hotelmForm.get('map_location')?.errors?.['required']">
+    Map Location is required.
+  </div>
+
+  <div *ngIf="hotelmForm.get('map_location')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row mt-2">
+          <div class="col-md-6 col-12">
+            <label>🏨 Hotel Image <span class="text-danger">*</span></label>
+            <nz-upload nzListType="picture-card" [(nzFileList)]="bannerFileList" [nzMultiple]="true"
+              [nzShowButton]="bannerFileList.length < 10" (nzChange)="Uploadhotelimage($event)" [nzAccept]="'image/*'"
+              (nzRemove)="handleimageRemove()" [nzPreview]="handlePreview">
+              <div>
+                <i nz-icon nzType="plus"></i>
+                Add Hotel Images
+              </div>
+            </nz-upload>
+            <div
+  *ngIf="hotelmForm.get('image_location')?.invalid 
+         && (hotelmForm.get('image_location')?.dirty 
+         || hotelmForm.get('image_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="hotelmForm.get('image_location')?.errors?.['required']">
+    Image Location is required.
+  </div>
+</div>
+                 <nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+          </div>
+
+          <!-- 📄 License Copy Upload -->
+          <div class="col-md-6 col-12">
+            <label>📄 License Copy</label>
+            <nz-upload nzListType="picture-card" [(nzFileList)]="licenseFileList" [nzMultiple]="true"
+              [nzShowButton]="licenseFileList.length < 10" (nzChange)="UploadLicenseCopy($event)" [nzAccept]="'image/*'"
+              (nzRemove)="handleLicenseRemove()" [nzPreview]="handlePreview">
+              <div>
+                <i nz-icon nzType="plus"></i>
+                Add License Images
+              </div>
+            </nz-upload>
+                             <nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+          </div>
+        </div>
+
+
+
+        <!-- <div class="text-center mb-3">
+          <button type="button" (click)="Addhotels()"
+            style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;">
+            Submit </button>
+        </div> -->
+                        <div class="row mt-3 mb-3">
+        <div class="col-12 text-center">
+            <button
+            type="button"
+            (click)="dialogRef.close()"
+            style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;"
+            >
+            Cancel
+            </button>
+
+            <button
+            type="submit"
+            (click)="Addhotels()"
+            style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;"
+            >
+            Submit
+            </button>
+        </div>
+        </div>
+      </form>
+    </ng-template>
+
+  </div>
+
+  <div *ngIf="selectedCategory === 'Restaurants'" id="Restaurants" class="container-fluid px-4 py-3"
+    style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+
+
+    <div class=" mt-3">
+      <h4 class="mb-4 fw-bold">Near By Restaurants</h4>
+      <div *ngIf="resturant && resturant.length">
+        <div class="d-flex overflow-auto pb-3">
+          <div *ngFor="let option of resturant" class="me-3 flex-shrink-0" style="width: 250px; ">
+
+            <div class="card h-100  border border-none  rounded-2">
+              <div class="card-body text-center d-flex flex-column p-2 overflow-hidden">
+
+                <h6 class="mb-2 text-truncate" title="{{ option.name }}">
+                  {{ option.name }}
+                </h6>
+
+                <a>
+                  <img [src]="option.image_location[0] ? option.image_location[0] : 'assets/ohm.jpg'" alt="image"
+                    class="img-fluid rounded mb-2" style="width: 100%; height: 120px; object-fit: cover;"
+                    (error)="handlehospitalImageError($event)">
+                </a>
+
+                <p class="card-title small " title="{{ option.address }}">
+                  {{ option.address }}
+                </p>
+
+                <p class="detail  text-truncate" *ngIf="option.map_location">
+                  <span class="detail-label"><b>Map:</b></span>
+                  <a [href]="option.map_location" target="_blank" rel="noopener noreferrer">
+                    Click Here
+                  </a>
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="button" class="p-2 mt-2"
+          style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;"
+          (click)="openrestaurantform()">
+          Register
+        </button>
+      </div>
+
+    </div>
+
+
+
+
+
+    <ng-template #restaurantDialog>
+      <!-- <h5 class="mb-3 text-center mt-4">Register Restaurant </h5> -->
+
+      <form [formGroup]="restaurantForm" class="px-4" style="max-height: 80vh;overflow-y: auto;">
+                     <div class="row align-items-center mt-3">
+        <div class="col-10">
+          <h3 class="text-center">Register Restaurant</h3>
+        </div>
+        <div class="col-2 text-end">
+          <button type="button" (click)="dialogRef.close()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Restaurant Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter the  Name" (keydown)="validateNameInput($event)" [class.is-invalid]="restaurantForm.get('name')?.touched && restaurantForm.get('name')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="owner_name">Restaurant Owner Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="owner_name" formControlName="owner_name" placeholder="Enter the  Restaurant Owner Name" (keydown)="validateNameInput($event)" [class.is-invalid]="restaurantForm.get('owner_name')?.touched && restaurantForm.get('owner_name')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="contact_number">Contact Number <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" id="contact_number" formControlName="contact_number" placeholder="Enter the  Contact Number" (keydown)="validateNameInput($event)" [class.is-invalid]="restaurantForm.get('contact_number')?.touched && restaurantForm.get('contact_number')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Address <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter the  Address" (keydown)="validateNameInput($event)" [class.is-invalid]="restaurantForm.get('address')?.touched && restaurantForm.get('address')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="email_id">Email <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="email_id" formControlName="email_id" placeholder="Enter the  Email" (keydown)="preventLeadingSpace($event)" [class.is-invalid]="restaurantForm.get('email_id')?.touched && restaurantForm.get('email_id')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="website">Website</label>
+              <input type="text" class="form-control" id="website" formControlName="website" placeholder="Enter the  Website" (keydown)="preventLeadingSpace($event)"/>
+                                        <div
+  *ngIf="restaurantForm.get('website')?.invalid 
+         && (restaurantForm.get('website')?.dirty 
+         || restaurantForm.get('website')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="restaurantForm.get('website')?.errors?.['required']">
+    Website is required.
+  </div>
+
+  <div *ngIf="restaurantForm.get('website')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="map_location"> Map Location (URL) <span class="text-danger">*</span></label>
+              <div class="input-group d-flex align-items-center gap-2">
+                <input type="url" class="form-control" id="map_location" formControlName="map_location" placeholder="https://example.com/map" (keydown)="preventLeadingSpace($event)" [class.is-invalid]="restaurantForm.get('map_location')?.touched && restaurantForm.get('map_location')?.invalid"/>
+
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-outline-secondary" (click)="getrestruntantLocation()"
+                    title="Fetch Current Location">
+                    📍 Get Location
+                  </button>
+                </div>
+              </div>
+              <small class="form-text text-muted">
+                Please provide a valid URL for the temple's map location.
+              </small>
+                            <div
+  *ngIf="restaurantForm.get('map_location')?.invalid 
+         && (restaurantForm.get('map_location')?.dirty 
+         || restaurantForm.get('map_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="restaurantForm.get('map_location')?.errors?.['required']">
+    Map Location is required.
+  </div>
+
+  <div *ngIf="restaurantForm.get('map_location')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+        <div>
+          <div class="row mt-2">
+            <label>Restaurant Image <span class="text-danger">*</span></label>
+            <div>
+              <nz-upload nzListType="picture-card" [(nzFileList)]="bannerFileList" [nzMultiple]="true"
+                [nzShowButton]="bannerFileList.length < 10" (nzChange)="Uploadrestaurantimage($event)"
+                [nzAccept]="'image/*'" (nzRemove)="handleimageRemove()" [nzPreview]="handlePreview">
+                <div>
+                  <i nz-icon nzType="plus"></i>
+                  Add Restaurant Images
+                </div>
+              </nz-upload>
+              <div *ngIf="!bannerFileList.length" class="text-danger">
+                Image is required.
+              </div> 
+                               <nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <!-- <div class="text-center mb-3">
+          <button type="button" (click)="Addrestaurant()"
+            style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;">
+            Submit </button>
+        </div> -->
+                <div class="row mt-3 mb-3">
+        <div class="col-12 text-center">
+            <button
+            type="button"
+            (click)="dialogRef.close()"
+            style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;"
+            >
+            Cancel
+            </button>
+
+            <button
+            type="submit"
+            (click)="Addrestaurant()"
+            style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;"
+            >
+            Submit
+            </button>
+        </div>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+
+
+  <div *ngIf="selectedCategory === 'Operators'" id="Operators" class="container-fluid px-4 py-3"
+    style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+    <div class=" mt-3">
+      <h4 class="mb-4 fw-bold">Tour Operators</h4>
+      <div *ngIf="touroperatordetails && touroperatordetails.length >0;else noTOUROPERATOR ">
+        <div class="row gy-4">
+          <div *ngFor="let option of touroperatordetails" class="col-12 col-sm-6 col-md-4">
+            <div class="card border border-none  rounded-2 h-100">
+              <div class="card-body text-center">
+                <h6 class="">{{ option.tour_operator_name }}</h6>
+
+                <div class="">
+                  <span class="detail-label"><b>Mobile Number:</b></span> {{ option.mobile_number }}
+                </div>
+
+                <div class="">
+                  <span class="detail-label"><b>Email:</b></span> {{ option.email }}
+                </div>
+
+                <div class="detail" *ngIf="option.website">
+                  <span class="detail-label"><b>Website:</b></span>
+                  <a [href]="option.website" target="_blank" rel="noopener noreferrer"
+                    (click)="openMap(option.website)">
+                    Visit Website
+                  </a>
+                </div>
+                <p class="card-title">{{ option.contact_address }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noTOUROPERATOR>
+        <div class="row gy-4">
+          <div class="col-12">
+            <div class="card border border-none  rounded-2 h-100">
+              <div class="card-body text-center">
+                <h6 class="">No Tour Operators Found</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="text-center">
+      <button type="button" class="p-2 mt-2"
+        style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;"
+        (click)="openaddtoutoperator()">
+        Register
+      </button>
+    </div>
+    <ng-template #touroperatorDialog>
+      <!-- <h5 class="mb-3 text-center mt-4">Register Tour Operator</h5> -->
+
+      <form [formGroup]="touroperatorForm" class="px-4" style="max-height: 80vh;overflow-y: auto;">
+                                   <div class="row align-items-center mt-3">
+        <div class="col-10">
+          <h3 class="text-center">Register Tour Operator</h3>
+        </div>
+        <div class="col-2 text-end">
+          <button type="button" (click)="dialogRef.close()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Operator Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="name" formControlName="tour_operator_name"
+                placeholder="Enter the  Name" (keydown)="validateNameInput($event)" [class.is-invalid]="touroperatorForm.get('tour_operator_name')?.touched && touroperatorForm.get('tour_operator_name')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Address <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="address" formControlName="contact_address"
+                placeholder="Enter the  Address" (keydown)="validateNameInput($event)" [class.is-invalid]="touroperatorForm.get('contact_address')?.touched && touroperatorForm.get('contact_address')?.invalid" />
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Mobile Number <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" id="name" formControlName="mobile_number"
+                placeholder="Enter the  Mobile Number" (keydown)="validateNameInput($event)" [class.is-invalid]="touroperatorForm.get('mobile_number')?.touched && touroperatorForm.get('mobile_number')?.invalid" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="email">Email <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="email" formControlName="email"
+                placeholder="Enter the  Email" (keydown)="preventLeadingSpace($event)" [class.is-invalid]="touroperatorForm.get('email')?.touched && touroperatorForm.get('email')?.invalid" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="website">Website <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="website" formControlName="website"
+                placeholder="Enter the  Website" (keydown)="preventLeadingSpace($event)" [class.is-invalid]="touroperatorForm.get('website')?.touched && touroperatorForm.get('website')?.invalid" />
+                                            <div
+  *ngIf="touroperatorForm.get('website')?.invalid 
+         && (touroperatorForm.get('website')?.dirty 
+         || touroperatorForm.get('website')?.touched)"
+  class="text-danger"
+>
+
+
+  <div *ngIf="touroperatorForm.get('website')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <!-- <div class="text-center mb-3">
+          <button type="button" (click)="Addtouroperator()"
+            style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;">
+            Submit </button>
+        </div> -->
+                                <div class="row mt-3 mb-3">
+        <div class="col-12 text-center">
+            <button
+            type="button"
+            (click)="dialogRef.close()"
+            style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;"
+            >
+            Cancel
+            </button>
+
+            <button
+            type="submit"
+            (click)="Addtouroperator()"
+            style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;"
+            >
+            Submit
+            </button>
+        </div>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+
+  <div *ngIf="selectedCategory === 'Guides'" id="Guides" class="container-fluid px-4 py-3"
+    style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+
+    <div class=" mt-3">
+      <h4 class="mb-4 fw-bold">Tour Guides</h4>
+
+      <div *ngIf="tourguides && tourguides.length >0; else noTourguides">
+        <div class="row gy-4">
+          <div *ngFor="let option of tourguides" class="col-12 col-sm-6 col-md-4">
+            <div class="card border border-none  rounded-2 h-100">
+              <div class="card-body text-center">
+                <div class="">
+                  <span class="detail-label"><b>Tourist Spot Covered:</b></span> {{ option.tourist_spot_covered }}
+                </div>
+                <div class="">
+                  <span class="detail-label"><b>Mobile Number:</b></span> {{ option.mobile }}
+                </div>
+
+                <div class="">
+                  <span class="detail-label"><b>Language:</b></span> {{ option.language }}
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noTourguides>
+        <div class="row gy-4">
+          <div class="col-12">
+            <div class="card border border-none  rounded-2 h-100">
+              <div class="card-body text-center">
+                <div class="">
+                  <span class="detail-label"><b>No Tour Guides Found</b></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+
+
+    <div class="text-center">
+      <button type="button" class="p-2 mt-2"
+        style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;"
+        (click)="openaddtoutguide()">
+        Register
+      </button>
+    </div>
+
+
+    <ng-template #tourguideDialog>
+      <!-- <h5 class="mb-3 text-center mt-4">Register Tour Guide</h5> -->
+
+      <form [formGroup]="tourguideForm" class="px-4" style="max-height: 80vh;overflow-y: auto;">
+                                   <div class="row align-items-center mt-3">
+        <div class="col-10">
+          <h3 class="text-center">Register Tour Guide</h3>
+        </div>
+        <div class="col-2 text-end">
+          <button type="button" (click)="dialogRef.close()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="tourist_spot_covered">Tourist Spot Covered <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="tourist_spot_covered" formControlName="tourist_spot_covered"
+                placeholder="Enter the  Tourist Spot Covered" (keydown)="validateNameInput($event)" [class.is-invalid]="tourguideForm.get('tourist_spot_covered')?.touched && tourguideForm.get('tourist_spot_covered')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Language <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="address" formControlName="language"
+                placeholder="Enter the  Language" (keydown)="validateNameInput($event)" [class.is-invalid]="tourguideForm.get('language')?.touched && tourguideForm.get('language')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Mobile Number <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" id="name" formControlName="mobile"
+                placeholder="Enter the  Mobile Number" (keydown)="validateNameInput($event)" [class.is-invalid]="tourguideForm.get('mobile')?.touched && tourguideForm.get('mobile')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+<!-- 
+        <div class="text-center mb-3">
+          <button type="button" (click)="Addtyourtourguide()"
+            style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;">
+            Submit </button>
+        </div> -->
+                                <div class="row mt-3 mb-3">
+        <div class="col-12 text-center">
+            <button
+            type="button"
+            (click)="dialogRef.close()"
+            style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;"
+            >
+            Cancel
+            </button>
+
+            <button
+            type="submit"
+            (click)="Addtyourtourguide()"
+            style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;"
+            >
+            Submit
+            </button>
+        </div>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+
+
+
+
+  <div *ngIf="selectedCategory === 'poojastores'" id="poojastores" class="container-fluid px-4 py-3"
+    style="border: 2px solid #003366; background-color: #f8d6a9dc; margin-bottom: 10px;">
+
+    <div class=" mt-3">
+      <h4 class="mb-4 fw-bold">Pooja Stores</h4>
+
+      <div *ngIf="poojastores && poojastores.length > 0; else nopoojastores">
+        <div class="row gy-4">
+          <div *ngFor="let option of poojastores" class="me-3 flex-shrink-0" style="width: 250px; ">
+
+            <div class="card h-100  border border-none  rounded-2">
+              <div class="card-body text-center d-flex flex-column p-2 overflow-hidden">
+
+                <h6 class="mb-2 text-truncate" title="{{ option.name }}">
+                  {{ option.name }}
+                </h6>
+
+                <a>
+                  <img [src]="option.image_location[0] ? option.image_location[0] : 'assets/ohm.jpg'" alt="image"
+                    class="img-fluid rounded mb-2" style="width: 100%; height: 120px; object-fit: cover;"
+                    (error)="handlehospitalImageError($event)">
+                </a>
+                <p class="card-title small " title="{{ option.owener_name }}">
+                  {{ option.owener_name }}
+                </p>
+                <p class="card-title small " title="{{ option.address }}">
+                  {{ option.address }}
+                </p>
+
+                <!-- <p class="detail  text-truncate" *ngIf="option.map_location">
+                    <span class="detail-label"><b>Map:</b></span>
+                    <a [href]="resturant.map_location" target="_blank" rel="noopener noreferrer">
+                      Click Here
+                    </a> 
+                  </p> -->
+
+                <p class="detail  text-truncate" *ngIf="option.map_location">
+                  <span class="detail-label"><b>Map:</b></span>
+                  <a [href]="option.map_location" target="_blank" rel="noopener noreferrer">
+                    Click Here
+                  </a>
+                </p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #nopoojastores>
+        <div class="text-center text-muted py-5">
+          <h6>No pooja stores information available.</h6>
+        </div>
+      </ng-template>
+    </div>
+
+
+    <div class="text-center">
+      <button type="button" class="p-2 mt-2"
+        style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white;"
+        (click)="openpoojastoresform()">
+        Register
+      </button>
+    </div>
+
+
+    <ng-template #poojastoresDialog>
+      <!-- <h5 class="mb-3 text-center mt-4">Register Pooja Store </h5> -->
+
+      <form [formGroup]="poojastoreForm" class="px-4" style="max-height: 80vh;overflow-y: auto;" >
+              <div class="row align-items-center mt-3">
+        <div class="col-10">
+          <h3 class="text-center">Register Pooja Store</h3>
+        </div>
+        <div class="col-2 text-end">
+          <button type="button" (click)="dialogRef.close()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Pooja Store Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter the  Name" (keydown)="validateNameInput($event)" [class.is-invalid]="poojastoreForm.get('name')?.touched && poojastoreForm.get('name')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="owner_name"> Owner Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="owner_name" formControlName="owener_name"
+                placeholder="Enter the  Name" (keydown)="validateNameInput($event)" [class.is-invalid]="poojastoreForm.get('owener_name')?.touched && poojastoreForm.get('owener_name')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Address <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="address" formControlName="address"
+                placeholder="Enter the  Address" (keydown)="validateNameInput($event)" [class.is-invalid]="poojastoreForm.get('address')?.touched && poojastoreForm.get('address')?.invalid"/>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="map_location"> Map Location (URL) <span class="text-danger">*</span></label>
+              <div class="input-group d-flex align-items-center gap-2">
+                <input type="url" class="form-control" id="map_location" formControlName="map_location"
+                  placeholder="https://example.com/map" (keydown)="preventLeadingSpace($event)" [class.is-invalid]="poojastoreForm.get('map_location')?.touched && poojastoreForm.get('map_location')?.invalid"/>
+
+                <div class="input-group-append">
+                  <button type="button" class="btn btn-outline-secondary" (click)="getpoojastoreLocation()"
+                    title="Fetch Current Location">
+                    📍 Get Location
+                  </button>
+                </div>
+              </div>
+              <small class="form-text text-muted">
+                Please provide a valid URL for the temple's map location.
+              </small>
+                            <div
+  *ngIf="poojastoreForm.get('map_location')?.invalid 
+         && (poojastoreForm.get('map_location')?.dirty 
+         || poojastoreForm.get('map_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="poojastoreForm.get('map_location')?.errors?.['required']">
+    Temple Map Location is required.
+  </div>
+
+  <div *ngIf="poojastoreForm.get('map_location')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+        <div>
+          <div class="row mt-2">
+            <label>Pooja Store Image <span class="text-danger">*</span></label>
+            <div>
+              <nz-upload nzListType="picture-card" [(nzFileList)]="bannerFileList" [nzMultiple]="true"
+                [nzShowButton]="bannerFileList.length < 10" (nzChange)="Uploadpoojastoreimage($event)"
+                [nzAccept]="'image/*'" (nzRemove)="handleimageRemove()"[nzPreview]="handlePreview">
+                <div>
+                  <i nz-icon nzType="plus"></i>
+                  Add Store Images
+                </div>
+              </nz-upload>
+                            <div *ngIf="!bannerFileList.length" class="text-danger">
+                Image is required.
+              </div> 
+                 <nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="text-center mb-3">
+          <button type="button" (click)="Addpoojastore()"
+            style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;">
+            Submit </button>
+        </div> -->
+        <div class="row mt-3 mb-3">
+        <div class="col-12 text-center">
+            <button
+            type="button"
+            (click)="dialogRef.close()"
+            style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;"
+            >
+            Cancel
+            </button>
+
+            <button
+            type="submit"
+            (click)="Addpoojastore()"
+            style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;"
+            >
+            Register
+            </button>
+        </div>
+        </div>
+      </form>
+    </ng-template>
+  </div>
+
+
+  <div class=" p-3" style="border: 2px solid #003366;background-color: #f8d6a9dc;">
+    <h4>Comments</h4>
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-10">
+        <div [formGroup]="commentform">
+          <div class="card">
+            <div class="card-body" style="background-color: #f8d6a9dc;">
+
+              <div class="p-3 rounded mb-3 d-flex align-items-start gap-2 flex-wrap">
+                <textarea class="form-control flex-grow-1" formControlName="body" placeholder="Add a comment..."
+                  rows="2" (keydown.enter)="onSubmit()">
+                  </textarea>
+                <button class="btn btn-primary text-nowrap" (click)="onSubmit()">Post Comment</button>
+              </div>
+
+              <div class="overflow-auto" style="max-height: 200px;">
+                <div *ngFor="let comment of CommentData" class="mb-2">
+                  <div class="card-body p-2">
+                    <div class="d-flex align-items-center mb-2">
+                      <img [src]="comment.user.profile_pic ? comment.user.profile_pic : 'assets/profile1.webp'"
+                        alt="Profile" class="rounded-circle me-2" width="40" height="40">
+                      <strong class="flex-grow-1">{{ comment?.user?.name }}</strong>
+                    </div>
+                    <p class="card-text ms-5" style="font-size: 16px;">
+                      {{ comment?.body }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<ng-template #memberListDialog>
+  <!-- <h5 class="mb-3 text-center mt-4">Add more details</h5>         -->
+
+  <form [formGroup]="detailsForm" class="px-4" style="max-height: 80vh;overflow-y: auto;">
+      <div class="row align-items-center">
+    <div class="col-10">
+      <h3 class="text-center mt-3">Add more details</h3>
+    </div>
+    <div class="col-2 text-end">
+      <button type="button" (click)="dialogRef.close()" style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;" title="Cancel"> × </button>
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="desc">About The Temple</label>
+          <textarea class="form-control" id="desc" formControlName="desc"
+            placeholder="Describe about the temple in less than 4500 words" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="row mt-2">
+        <label>Temple Image </label>
+        <div>
+          <nz-upload nzListType="picture-card" [(nzFileList)]="bannerFileList" [nzMultiple]="true"
+            [nzShowButton]="bannerFileList.length < 10" (nzChange)="handleimageChange($event)" [nzAccept]="'image/*'"
+            (nzRemove)="handleimageRemove()" [nzPreview]="handlePreview">
+            <div>
+              <i nz-icon nzType="plus"></i>
+              Add Temple Images
+            </div>
+          </nz-upload>
+        </div>
+                         <nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+      </div>
+    </div>
+
+
+                <div class="row mt-3">
+  <div class="col-md-4">
+    <label class="form-label"><strong>Temple Video</strong></label>
+    <nz-upload
+      nzListType="text"
+      [(nzFileList)]="addmoreVideoList"
+      [nzMultiple]="false"
+      [nzShowUploadList]="true"
+      [nzShowButton]="addmoreVideoList.length < 1"
+      (nzChange)="handleaddmoreVideoUpload($event, 'video')"
+      [nzAccept]="'video/*'"
+      (nzRemove)="handleaddmoreVideoRemove('video')"
+    >
+      <button nz-button>
+        <i nz-icon nzType="upload"></i>
+        Upload Video
+      </button>
+    </nz-upload>
+  </div>
+</div>
+    <!-- <div class="text-center mb-3">
+            <button type="button" (click)="Addmore()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 10px;"> Submit </button>
+          </div> -->
+
+    <div class="row mt-3 mb-3">
+      <div class="col-12 text-center">
+        <button type="button" (click)="dialogRef.close()"
+          style="border-width: 0px; background-color: #6c757d; border-radius: 20px; color: white; padding: 10px 20px; margin-right: 10px;">
+          Cancel
+        </button>
+
+        <button type="submit" (click)="Addmore()"
+          style="border-width: 0px; background-color: rgb(241, 124, 15); border-radius: 20px; color: white; padding: 10px 20px;">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form>
+</ng-template>

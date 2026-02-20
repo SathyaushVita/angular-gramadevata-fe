@@ -1,0 +1,576 @@
+<div class="container " translate="no">
+  <ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff"
+			type="ball-spin-clockwise">
+		</ngx-spinner>
+    <div class="form-card">
+        <ngx-spinner bdOpacity="0.9" bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-clockwise">
+        </ngx-spinner>
+        <form [formGroup]="goshalaForm" >
+            <!-- <div class="row">
+                <h3 class="section-header-title text-center">Add Goshala</h3>
+            </div> -->
+            <div class="row mt-5 align-items-center">
+              <div class="col-4 text-start">
+                <!-- Left side empty or can hold back button if needed -->
+              </div>
+              <div class="col-4 text-center">
+                <h3 class="section-header-title">Add  Goshala</h3>
+              </div>
+              <div class="col-4 text-end">
+                <button type="button" class="btn btn-light" (click)="sharepage()" style="font-size: 20px;">
+                  <i class="fas fa-share-alt"></i>
+                </button>
+              </div>
+          </div>
+            <div class="temple-form-heading pt-5">
+                <h3>Goshala Details</h3>
+                <hr>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="goshalanmae">Goshala Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="templeName" formControlName="name" placeholder="Enter the Goshala Name" (keydown)="validateTempleName($event)"/>
+                            <div *ngIf="goshalaForm.get('name')?.invalid && (goshalaForm.get('name')?.dirty || goshalaForm.get('name')?.touched)" class="text-danger">
+                              Goshala Name is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="GoshalaCategory">Goshala Category<span class="text-danger">*</span></label>
+                            <select class="form-control form-select" id="goshalaCategory" formControlName="category">
+                              <option value="" disabled selected hidden>Select goshala Category</option>
+                              <option *ngFor="let option of goshalaCategoryoptions" [value]="option.value">{{ option.label }}</option>
+                              </select>
+                              <div *ngIf="goshalaForm.get('category')?.invalid && (goshalaForm.get('category')?.dirty || goshalaForm.get('category')?.touched)" class="text-danger">
+                                Goshala Category is required
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                          <label for="goshalanmae">Contact Name <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="templeName" formControlName="contact_name" placeholder="Enter the Contact Name" (keydown)="validateTempleName($event)"/>
+                          <div *ngIf="goshalaForm.get('contact_name')?.invalid && (goshalaForm.get('contact_name')?.dirty || goshalaForm.get('contact_name')?.touched)" class="text-danger">
+                            Contact Name is required
+                          </div>
+                      </div>
+                  </div>
+                  <!-- <div class="col-md-4">
+                      <div class="form-group">
+                          <label for="GoshalaCategory">Contact Phone<span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="templeName" formControlName="contact_phone" placeholder="Enter the Contact's name">
+                          <div *ngIf="goshalaForm.get('contact_phone')?.invalid && (goshalaForm.get('contact_phone')?.dirty || goshalaForm.get('contact_phone')?.touched)" class="text-danger">
+                            Contact Phone is required
+                          </div>
+                      </div>
+                  </div> -->
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="contact_number">Contact Number <span class="text-danger">*</span></label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        formControlName="contact_phone"
+                        placeholder="Enter the Contact Number"
+                      />
+                      <!-- Error messages for validation -->
+                      <div
+                        *ngIf="
+                          contactNumber?.invalid &&
+                          (contactNumber?.dirty || contactNumber?.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <div *ngIf="contactNumber?.errors?.['required']">
+                          Contact Number is required
+                        </div>
+                        <div *ngIf="contactNumber?.errors?.['pattern']">
+                          Contact Number must be a 10-digit number
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                    <div class="col-md-4">
+                       <div class="form-group">
+                        <label for="registartion numer">Registration Number</label>
+                        <input type="text" class="form-control" id="reg_num" formControlName="reg_num" placeholder="Enter the Registration Number " (keydown)="validateTempleName($event)"/>
+                        <div *ngIf="goshalaForm.get('reg_num')?.invalid && (goshalaForm.get('reg_num')?.dirty || goshalaForm.get('reg_num')?.touched)" class="text-danger">
+                          Registration Number is required
+                        </div>
+                       </div> 
+                    </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="map_location">Goshala Map Location (URL) <span class="text-danger">*</span></label>
+                    <div class="input-group d-flex align-items-center gap-2">
+                      <input
+                        type="url"
+                        class="form-control"
+                        id="map_location"
+                        formControlName="map_location"
+                        placeholder="https://example.com/map" (keydown)="preventLeadingSpace($event)"
+                      />
+                      <div class="input-group-append">
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
+                          (click)="getCurrentLocation()"
+                          title="Fetch Current Location"
+                        >
+                          📍 Get Location
+                        </button>
+                      </div>
+                    </div>
+                    <small class="form-text text-muted">
+                      Please provide a valid URL for the Goshala's map location.
+                    </small>
+                    <!-- <div
+                      *ngIf="goshalaForm.get('map_location')?.invalid && (goshalaForm.get('map_location')?.dirty || goshalaForm.get('map_location')?.touched)"
+                      class="text-danger"
+                    >
+                      Please enter a valid URL for the Goshala Map Location.
+                    </div> -->
+                                  <div
+  *ngIf="goshalaForm.get('map_location')?.invalid 
+         && (goshalaForm.get('map_location')?.dirty 
+         || goshalaForm.get('map_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="goshalaForm.get('map_location')?.errors?.['required']">
+    Goshala Map Location is required.
+  </div>
+
+  <div *ngIf="goshalaForm.get('map_location')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+                  </div>
+                </div>
+              </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="address">Description</label>
+                      <textarea class="form-control" id="desc" formControlName="desc" placeholder="Describe about the Goshala in less than 4500 words" rows="3" (keydown)="preventLeadingSpace($event)"></textarea>
+                    </div> 
+                  </div>
+              </div>
+                
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                       <div class="form-group">
+                        <label for="address">Address *</label>
+                        <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter the Address">
+                        <div *ngIf="goshalaForm.get('address')?.invalid && (goshalaForm.get('address')?.dirty || goshalaForm.get('address')?.touched)" class="text-danger">
+                          Address is required
+                        </div>
+                       </div> 
+                    </div>
+                </div> -->
+                <!-- <div class="row"  *ngIf="!InVillage">
+                
+                  <div class="col-md-4">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Please select a country">
+                        <label for="country">Country</label>
+                        <nz-select 
+                          formControlName="country" 
+                          nzPlaceHolder="Select Country" 
+                          [nzShowSearch]="true" nzNotFoundContent="No data found">
+                          <nz-option 
+                            *ngFor="let option of CountryOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Please select a state">
+                        <label for="state">State *</label>
+                        <nz-select 
+                          formControlName="state" 
+                          nzPlaceHolder="Select State" 
+                          [nzShowSearch]="true" nzNotFoundContent="No data found">
+                          <nz-option 
+                            *ngFor="let option of StateOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                      <div *ngIf="goshalaForm.get('state')?.invalid && (goshalaForm.get('state')?.dirty || goshalaForm.get('state')?.touched)" class="text-danger">
+                        State is required
+                      </div>
+                    </nz-form-item>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Please select a district">
+                        <label for="district">District *</label>
+                        <nz-select 
+                          formControlName="district" 
+                          nzPlaceHolder="Select District" 
+                          [nzShowSearch]="true" nzNotFoundContent="No data found">
+                          <nz-option 
+                            *ngFor="let option of DistrictOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                      <div *ngIf="goshalaForm.get('district')?.invalid && (goshalaForm.get('district')?.dirty || goshalaForm.get('district')?.touched)" class="text-danger">
+                        District is required
+                      </div>
+                    </nz-form-item>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Please select a mandal">
+                        <label for="mandal">Mandal *</label>
+                        <nz-select 
+                          formControlName="mandal" 
+                          nzPlaceHolder="Select Mandal" 
+                          [nzShowSearch]="true"  nzNotFoundContent="No data found"
+                          [nzDisabled]="!goshalaForm.get('district')?.value">
+                          <nz-option 
+                            *ngFor="let option of MandalOptions" 
+                            [nzValue]="option.value"  
+                            [nzLabel]="option.label">
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                      <div *ngIf="goshalaForm.get('mandal')?.invalid && (goshalaForm.get('mandal')?.dirty || goshalaForm.get('mandal')?.touched)" class="text-danger">
+                        Mandal is required
+                      </div>
+                    </nz-form-item>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Please select a village">
+                        <label for="village">Village *</label>
+                        <nz-select 
+                          formControlName="object_id" 
+                          nzPlaceHolder="Select Village" 
+                          [nzShowSearch]="true" nzNotFoundContent="No data found">
+                          <nz-option 
+                            *ngFor="let option of VillageOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                      <div *ngIf="goshalaForm.get('object_id')?.invalid && (goshalaForm.get('object_id')?.dirty || goshalaForm.get('object_id')?.touched)" class="text-danger">
+                        Village is required
+                      </div>
+                    </nz-form-item>
+                  </div>
+                  </div> -->
+                  
+
+                  <div class="row" *ngIf="!InVillage">
+  <div class="col-md-4">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please select a country">
+        <label for="country">Country <span class="text-danger">*</span></label>
+        <nz-select 
+          formControlName="country" 
+          nzPlaceHolder="Select country" 
+          [nzShowSearch]="true"
+          nzNotFoundContent="No data found"
+          (ngModelChange)="onCountryChange($event)">
+          <nz-option *ngFor="let option of CountryOptions" 
+                     [nzValue]="option.value" 
+                     [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="col-md-4">
+    <nz-form-item>
+      <nz-form-control >
+        <label for="state">State</label>
+        <nz-select formControlName="state" nzPlaceHolder="Select state" 
+                   [nzShowSearch]="true" nzNotFoundContent="No data found"
+                   (ngModelChange)="onStateChange($event)">
+          <nz-option *ngFor="let option of StateOptions" 
+                     [nzValue]="option.value" 
+                     [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="col-md-4">
+    <nz-form-item>
+      <nz-form-control >
+        <label for="district">District</label>
+        <nz-select formControlName="district" nzPlaceHolder="Select district" 
+                   [nzShowSearch]="true" nzNotFoundContent="No data found"
+                   (ngModelChange)="onDistrictChange($event)">
+          <nz-option *ngFor="let option of DistrictOptions" 
+                     [nzValue]="option.value" 
+                     [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="col-md-4">
+    <nz-form-item>
+      <nz-form-control >
+        <label for="mandal">Town/Mandal</label>
+        <nz-select formControlName="mandal" nzPlaceHolder="Select mandal" 
+                   [nzShowSearch]="true" nzNotFoundContent="No data found"
+                   (ngModelChange)="onMandalChange($event)">
+          <nz-option *ngFor="let option of MandalOptions" 
+                     [nzValue]="option.value" 
+                     [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="col-md-4">
+    <nz-form-item>
+      <nz-form-control >
+        <label for="village">Area/Village</label>
+        <nz-select formControlName="object_id" nzPlaceHolder="Select village" 
+                   [nzShowSearch]="true" nzNotFoundContent="No data found"
+                   (ngModelChange)="onVillageChange($event)">
+          <nz-option *ngFor="let option of VillageOptions" 
+                     [nzValue]="option.value" 
+                     [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</div>
+
+<!-- MANUAL LOCATION INPUTS IF NOT FOUND -->
+<div class="row mt-4" *ngIf="isIndianSelected">
+  <div class="col-md-12">
+    <input type="checkbox" id="showLocation" class="form-check-input" 
+           (change)="toggleDropdown($event)">
+    <label for="showLocation" class="form-check-label ms-2">
+    If you location Not Found Above ? Mention Below
+    </label>
+
+    <div *ngIf="isDropdownVisible" class="row mt-3">
+      <!-- <div class="col-md-3 mb-2">
+        <input type="text" class="form-control" formControlName="country_manual" placeholder="Enter Country">
+      </div> -->
+      <!-- <div class="col-md-3 mb-2">
+        <label for="">State</label>
+        <input type="text" class="form-control" formControlName="state_name" placeholder="Enter State">
+      </div>
+      <div class="col-md-3 mb-2">
+         <label for="">District</label>
+        <input type="text" class="form-control" formControlName="district_name" placeholder="Enter District">
+      </div>
+      <div class="col-md-3 mb-2">
+          <label for="">Mandal</label>
+        <input type="text" class="form-control" formControlName="block_name" placeholder="Enter Mandal">
+      </div>
+      <div class="col-md-3">
+          <label for="">Village</label>
+        <input type="text" class="form-control" formControlName="village_name" placeholder="Enter Village">
+      </div> -->
+                      <div class="row">
+                    <div class="col-md-12">
+                       <div class="form-group">
+                        <label for="address">Address <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter the Address" (keydown)="preventLeadingSpace($event)">
+                        <div *ngIf="goshalaForm.get('address')?.invalid && (goshalaForm.get('address')?.dirty || goshalaForm.get('address')?.touched)" class="text-danger">
+                          Address is required
+                        </div>
+                       </div> 
+                    </div>
+                </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOREIGN ADDRESS INPUT -->
+<div class="row" *ngIf="!isIndianSelected">
+  <!-- <div class="col-md-6 mt-3">
+    <label>Enter Temple  Full address*</label>
+    <input type="text" class="form-control" formControlName="other_name" placeholder="Enter location">
+  </div> -->
+                        <div class="row">
+                    <div class="col-md-12">
+                       <div class="form-group">
+                        <label for="address">Address <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter the Address" (keydown)="preventLeadingSpace($event)">
+                        <div *ngIf="goshalaForm.get('address')?.invalid && (goshalaForm.get('address')?.dirty || goshalaForm.get('address')?.touched)" class="text-danger">
+                          Address is required
+                        </div>
+                       </div> 
+                    </div>
+                </div>
+</div>
+                  <!-- <div class="row">
+                    <div class="col-md-4">
+                        <label>Banner Image</label>
+                        <nz-upload nzListType="picture-card" [(nzFileList)]="bannerFileList" [nzShowButton]="bannerFileList.length < 1"
+                         (nzChange)="handleBannerFileChange($event)" [nzAccept]="'image/*'">
+                         <div>
+                            <i nz-icon nzType="plus"></i>
+                            Upload banner
+                          </div>
+                        </nz-upload>
+                    </div>
+
+                  </div> -->
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label>Goshala image <span class="text-danger">*</span></label>
+                      <!-- <nz-upload
+                        nzListType="picture-card"
+                        [(nzFileList)]="bannerFileList"
+                        [nzShowButton]="bannerFileList.length < 10"
+                        (nzChange)="handleBannerFileChange($event)"
+                        [nzAccept]="'image/*'"
+                        (nzRemove)="handleBannerFileRemove()">
+                        <div>
+                          <i nz-icon nzType="plus"></i>
+                          Upload Goshala Image
+                        </div>
+                      </nz-upload> -->
+                                                    <nz-upload
+                nzListType="picture-card"
+                [(nzFileList)]="bannerFileList"
+                [nzMultiple]="true"
+                [nzShowButton]="bannerFileList.length < 10"
+                (nzChange)="handleBannerFileChange($event)"
+                [nzAccept]="'image/*'"
+                (nzRemove)="handleBannerFileRemove($event)"
+              >
+                <div >
+                  <i nz-icon nzType="plus"></i>
+                 Upload Goshala Image
+                </div>
+              </nz-upload>
+                      <div *ngIf="!bannerFileList.length" class="text-danger">
+                        Image is required.
+                      </div>
+                  
+                    </div>
+                  </div>
+
+
+                               <!-- <div class="row mt-3">
+  <div class="col-md-4">
+    <label class="form-label"><strong>Goshala Video</strong></label>
+    <nz-upload
+      nzListType="text"
+      [(nzFileList)]="addmoreVideoList"
+      [nzMultiple]="false"
+      [nzShowUploadList]="true"
+      [nzShowButton]="addmoreVideoList.length < 1"
+      (nzChange)="handleaddmoreVideoUpload($event, 'goshala_video')"
+      [nzAccept]="'video/*'"
+      (nzRemove)="handleaddmoreVideoRemove('goshala_video')"
+    >
+      <button nz-button>
+        <i nz-icon nzType="upload"></i>
+        Upload Video
+      </button>
+    </nz-upload>
+  </div>
+</div> -->
+
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <div class="video-upload-card p-4">
+
+      <label class="form-label upload-title">
+        <i nz-icon nzType="video-camera" class="me-2"></i>
+        Goshala Video
+      </label>
+
+      <nz-upload
+        nzListType="picture"
+        [(nzFileList)]="addmoreVideoList"
+        [nzMultiple]="false"
+        [nzShowUploadList]="true"
+        [nzShowButton]="addmoreVideoList.length < 1"
+        [nzAccept]="'video/*'"
+        (nzChange)="handleaddmoreVideoUpload($event, 'goshala_video')"
+        (nzRemove)="handleaddmoreVideoRemove('goshala_video')"
+        class="custom-upload"
+      >
+        <div class="upload-box">
+          <i nz-icon nzType="cloud-upload" class="upload-icon"></i>
+          <p class="upload-text">Click or Drag video to upload</p>
+          <p class="upload-hint">Only one video allowed</p>
+        </div>
+      </nz-upload>
+
+    </div>
+  </div>
+</div>
+
+
+
+                  <!-- <div class="row mt-3">
+                    <div class="col-md-12">
+                      
+
+                        <div class="text-center">
+                          <button type="button" (click)="onSubmit()" style="border-width: 0px;background-color: rgb(241, 124, 15);border-radius:20px;color: white; padding: 15px;"> Submit </button>
+                        </div>
+                    </div>
+                  </div> -->
+                               <div class="row mt-3 pb-4">
+  <div class="col-12">
+    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+
+      <!-- Cancel Button -->
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="btn btn-secondary px-4 py-2 rounded-pill"
+      >
+        Cancel
+      </button>
+
+      <!-- Submit Button -->
+      <button
+        type="button"
+        (click)="onSubmit()"
+        class="btn px-4 py-2 rounded-pill text-white"
+        style="background-color: rgb(241, 124, 15);"
+      >
+        Submit
+      </button>
+
+    </div>
+  </div>
+</div>
+            </div>
+        </form>
+    </div>
+</div>

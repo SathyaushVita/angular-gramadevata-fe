@@ -1,0 +1,414 @@
+<div class="container-fluid px-0">
+  <div class="row g-0">
+    <div class="col-12">
+      <ngx-spinner bdOpacity="0.9" bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff"
+        type="ball-spin-clockwise"></ngx-spinner>
+
+      <section>
+        <div class="card mb-0 text-white rounded-0 position-relative mt-1"
+          style="background-image: url('../../../assets/templebackimage.webp'); background-size: cover; background-position: center;">
+          <div class="row g-0" style="background-color: rgba(0, 0, 0, 0.6); min-height: 200px;">
+            <div class="col-12 col-md-3 d-flex align-items-center justify-content-center p-3">
+              <img [src]="templeCategorydata?.[0]?.pic || 'assets/hindutemple.jpg'" alt="Temple Image"
+                class="img-fluid rounded shadow-sm" style="max-height: 200px; object-fit: fill; width: 100%;">
+            </div>
+            <div class="col-12 col-md-9 d-flex flex-column justify-content-center p-4">
+              <h4 class="card-title mb-2 fw-bold text-center"
+                style="font-size: 1.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; color: #fff; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 5px #ffc107, 0 0 10px #ffc107;">
+                <ng-container *ngIf="templeCategorydata?.length > 0; else allTemples">
+                  {{ templeCategorydata[0]?.name }} Temples
+                </ng-container>
+                <ng-template #allTemples>
+                  Hindu Temples
+                </ng-template>
+              </h4>
+              <p class="card-text text-white fs-6 fs-md-5 mb-0" style="text-align: justify;">
+                {{ templeCategorydata[0]?.desc }}
+              </p>
+            </div>
+          </div>
+          <div *ngIf="hasAnyLocationSelected()"
+            class="position-absolute bottom-0 start-50 translate-middle-x mb-2 px-3 py-1 rounded bg-warning text-dark fw-bold text-center shadow-sm"
+            style="z-index: 1;">
+            <ng-container *ngIf="validatorForm.value.country">
+              {{ getLocationLabel('country', validatorForm.value.country) }}
+            </ng-container>
+            <ng-container *ngIf="validatorForm.value.state">
+              → {{ getLocationLabel('state', validatorForm.value.state) }}
+            </ng-container>
+            <ng-container *ngIf="validatorForm.value.district">
+              → {{ getLocationLabel('district', validatorForm.value.district) }}
+            </ng-container>
+            <ng-container *ngIf="validatorForm.value.mandal">
+              → {{ getLocationLabel('mandal', validatorForm.value.mandal) }}
+            </ng-container>
+            <ng-container *ngIf="validatorForm.value.village">
+              → {{ getLocationLabel('village', validatorForm.value.village) }}
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="py-1 " style="background-color: rgba(230, 69, 11, 0.925);">
+          <nav class="navbar navbar-dark">
+            <div class="container-fluid">
+
+              <div class="row g-2 w-100">
+
+                <div class="col-12 col-xl-9">
+                  <div class="d-flex flex-wrap gap-2">
+
+                    <nz-select class="flex-fill" [(ngModel)]="selectedMainCategoryId"
+                      (ngModelChange)="onSelectMainCategory($event)" nzPlaceHolder="Select Main Category"
+                      nzShowSearch="true">
+                      <nz-option *ngFor="let cat of differentcategory" [nzValue]="cat._id"
+                        [nzLabel]="cat.name | titlecase">
+                      </nz-option>
+                    </nz-select>
+
+                    <nz-select class="flex-fill" [(ngModel)]="selectedCategoryId"
+                      (ngModelChange)="onSelectCategory($event)" nzPlaceHolder="Select Category" nzShowSearch="true">
+                      <nz-option *ngFor="let option of CategoryOptions" [nzValue]="option.value"
+                        [nzLabel]="option.label">
+                      </nz-option>
+                    </nz-select>
+
+                    <app-tree-view class="flex-fill" (categoryClick)="onSubCategoryClick($event)"
+                      [treeType]="'subreligions'">
+                    </app-tree-view>
+
+                    <form nz-form [formGroup]="validatorForm" class="d-flex flex-wrap gap-2 flex-fill">
+
+                      <nz-select class="flex-fill" formControlName="country" nzShowSearch="true" 
+                        [nzPlaceHolder]="getDynamicLabel('select country')">
+                        <nz-option *ngFor="let option of CountryOptions" [nzValue]="option.value"
+                          [nzLabel]="option.label">
+                        </nz-option>
+                      </nz-select>
+
+                      <nz-select class="flex-fill" formControlName="state" nzShowSearch="true" 
+                        [nzPlaceHolder]="getDynamicLabel('please select state')" (ngModelChange)="onStateChange($event)">
+                        <nz-option *ngFor="let option of StateOptions" [nzValue]="option.value"
+                          [nzLabel]="option.label">
+                        </nz-option>
+                      </nz-select>
+
+                      <nz-select class="flex-fill" formControlName="district" nzShowSearch="true" nzAllowClear
+                        [nzPlaceHolder]="getDynamicLabel('select district')" (ngModelChange)="onDistrictChange($event)">
+                        <nz-option *ngFor="let option of DistrictOptions" [nzValue]="option.value"
+                          [nzLabel]="option.label">
+                        </nz-option>
+                      </nz-select>
+
+                      <nz-select class="flex-fill" formControlName="mandal" nzShowSearch="true" nzAllowClear
+                        [nzPlaceHolder]="getDynamicLabel('select mandal')" (ngModelChange)="onMandalChange($event)">
+                        <nz-option *ngFor="let option of MandalOptions" [nzValue]="option.value"
+                          [nzLabel]="option.label">
+                        </nz-option>
+                      </nz-select>
+
+                      <nz-select class="flex-fill" formControlName="village" nzShowSearch="true" nzAllowClear
+                        [nzPlaceHolder]="getDynamicLabel('village')">
+                        <nz-option *ngFor="let option of VillageOptions" [nzValue]="option.value"
+                          [nzLabel]="option.label">
+                        </nz-option>
+                      </nz-select>
+
+                    </form>
+
+                  </div>
+                </div>
+
+                <div class="col-12 col-xl-3 d-flex flex-md-nowrap flex-wrap align-items-center gap-2">
+
+                  <input type="text" class="form-control form-control-sm flex-fill" [(ngModel)]="searchTerm"
+                    (ngModelChange)="onSearchChange($event)" placeholder="Search Temple...">
+
+                  <button (click)="navigateTo('addtemple')" class="btn btn-sm btn-outline-light flex-md-shrink-0">
+                    <i class="fas fa-gopuram"></i> Add Temple
+                  </button>
+
+                  <button class="btn btn-sm btn-outline-light flex-md-shrink-0" (click)="sharepage()">
+                    <i class="fas fa-share-alt"></i>
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+          </nav>
+        </div>
+
+
+
+        <div class="container-fluid mt-1  px-0">
+          <div class="row g-0">
+            <div class="col-12 col-md-10" style="height: 85vh;">
+              <div class="h-100 d-flex flex-column">
+                <div class="p-0 border border-2 border-primary  flex-fill overflow-auto" style="background-color: #f8f9fa"
+                  >
+<!-- (scroll)="onScroll($event)" -->
+                     <ng-container *ngIf="selectedLocationData">
+    <div class="card mb-2 border-primary shadow-sm">
+      <div class="row g-0 align-items-center">
+
+        <div class="col-12 col-md-4">
+          <img
+            [src]="selectedLocationData?.image_location?.[0] || 'assets/ohm.jpg'"
+            alt="location image"
+            class="img-fluid rounded-start w-100"
+            style="height: 220px; object-fit: cover;"
+            (error)="handleImageError($event)">
+        </div>
+
+        <div class="col-12 col-md-8 p-3">
+          <h5 class="fw-bold mb-2 text-primary">
+            {{ selectedLocationData?.name }}
+          </h5>
+
+          <p class="text-muted mb-3 three-line-desc" style="text-align: justify;">
+            {{ selectedLocationData?.desc || 'No description available for this location.' }}
+          </p>
+
+          <div class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-sm btn-primary"
+                    (click)="viewSelectedLocation()">
+              View {{ selectedLocationType | titlecase }}
+            </button>
+
+            <!-- <button class="btn btn-sm btn-outline-danger"
+                    (click)="clearSelectedLocation()">
+              Clear Selection
+            </button> -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+                    </ng-container>
+                 <ng-container *ngIf="globaltemples && globaltemples.length > 0; else noData">
+
+                    <div class="row g-0 mt-1">
+                      <div *ngFor="let temple of globaltemples" class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+                        <div class="image-container text-center px-1">
+                          <a [routerLink]="['/templedetailsview', temple._id]" (click)="scrollToTop()">
+                            <img [src]="temple.image_location[0] || 'assets/ohm.jpg'" alt="temple"
+                              class="img-fluid rounded shadow-sm"
+                              style="aspect-ratio: 3 / 2; width: 100%; object-fit: cover;"
+                              (error)="handleImageError($event)" />
+                          </a>
+                          <p class="my-2 text-truncate fw-bold" style="font-size: 13px;">
+                            {{ temple.name }}
+                          </p>
+                          <ng-container *ngIf="temple.object_id">
+                            <p class="my-1 text-muted" style="font-size: 13px;" 
+                              *ngIf="temple.object_id.block?.district?.state?.name && (!selectedState || (selectedCountry && !selectedDistrict))">
+                              ({{ temple.object_id.block?.district?.state?.name }})
+                            </p>
+                            <p class="my-1 text-muted" style="font-size: 13px;"
+                              *ngIf="selectedState && !selectedDistrict">
+                              ({{ temple.object_id.block?.district?.name || 'N/A' }})
+                            </p>
+                            <p class="my-1 text-muted" style="font-size: 13px;"
+                              *ngIf="selectedDistrict && !selectedBlock">
+                              ({{ temple.object_id.block?.name || 'N/A' }})
+                            </p>
+                            <p class="my-1 text-muted" style="font-size: 13px;"
+                              *ngIf="selectedBlock && !selectedVillage">
+                              ({{ temple.object_id.name || 'N/A' }})
+                            </p>
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container> 
+             
+             <!-- <ng-container *ngIf="globaltemples && globaltemples.length > 0; else noData">
+
+  <ng-container *ngIf="selectedLocationData">
+    <div class="card mb-2 border-primary shadow-sm">
+      <div class="row g-0 align-items-center">
+
+        <div class="col-12 col-md-4">
+          <img
+            [src]="selectedLocationData?.image_location?.[0] || 'assets/ohm.jpg'"
+            alt="location image"
+            class="img-fluid rounded-start w-100"
+            style="height: 220px; object-fit: cover;"
+            (error)="handleImageError($event)">
+        </div>
+
+        <div class="col-12 col-md-8 p-3">
+          <h5 class="fw-bold mb-2 text-primary">
+            {{ selectedLocationData?.name }}
+          </h5>
+
+          <p class="text-muted mb-3" style="text-align: justify;">
+            {{ selectedLocationData?.desc || 'No description available for this location.' }}
+          </p>
+
+          <div class="d-flex gap-2 flex-wrap">
+            <button class="btn btn-sm btn-primary"
+                    (click)="viewSelectedLocation()">
+              View {{ selectedLocationType | titlecase }}
+            </button>
+
+            <button class="btn btn-sm btn-outline-danger"
+                    (click)="clearSelectedLocation()">
+              Clear Selection
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="row g-0 mt-1">
+    <div *ngFor="let temple of globaltemples"
+         class="col-6 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+
+      <div class="image-container text-center px-1">
+        <a [routerLink]="['/templedetailsview', temple._id]"
+           (click)="scrollToTop()">
+          <img
+            [src]="temple.image_location[0] || 'assets/ohm.jpg'"
+            alt="temple"
+            class="img-fluid rounded shadow-sm"
+            style="aspect-ratio: 3 / 2; width: 100%; object-fit: cover;"
+            (error)="handleImageError($event)">
+        </a>
+
+        <p class="my-2 text-truncate fw-bold" style="font-size: 13px;">
+          {{ temple.name }}
+        </p>
+
+        <ng-container *ngIf="temple.object_id">
+          <p class="my-1 text-muted" style="font-size: 13px;"
+             *ngIf="temple.object_id.block?.district?.state?.name">
+            ({{ temple.object_id.block?.district?.state?.name }})
+          </p>
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+
+</ng-container> -->
+
+             
+                  <ng-template #noData>
+                    <div class="text-center my-4">
+                      <img src="../../../assets/not _found.jpg" alt="No Data" class="img-fluid mb-3"
+                        style="width: 30%;" />
+                      <p>No Data Found</p>
+                      <button (click)="navigateTo('addtemple')" nz-button class="btn text-white"
+                        style="background-color: orange; border-color: orange;">
+                        <i class="fas fa-gopuram faicon"></i> Add Temple
+                      </button>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-2 d-none d-md-block">
+              <div class="border border-2 border-primary bg-light text-center h-100 d-flex flex-column gap-2">
+                <div class="flex-fill">
+                  <img src="../../../assets/saynotoplastic.webp.jpg" alt="Ad 1" class="img-fluid w-100 h-100"
+                    style="object-fit: fill; " />
+                </div>
+                <div class="flex-fill">
+                  <img src="../../../assets/lake-6627781_640.jpg" alt="Ad 2" class="img-fluid w-100 h-100"
+                    style="object-fit: cover;" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- <ng-template #districtDetailsTemplate let-data>
+  <mat-dialog-content>
+    <h2 class="text-center"> {{ data?.name }}</h2>
+    <a (click)="viewdistrict(data._id, data.dialogRef)">
+      <img [src]="data?.image_location[0] ? data?.image_location[0] : 'assets/ohm.jpg'" alt="image"
+        class="img-fluid img-thumbnail"
+        style="height: 10vw; width: 35vw; min-width: 70px; min-height: 100px; object-fit: cover;"
+        (error)="handleImageError($event)">
+    </a>
+    <p style="text-align: justify;"><strong>Description:</strong> {{ data?.desc }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+    <ng-container *ngIf="data?.name?.includes('_City'); else showDistrict">
+      <button mat-button color="primary" (click)="viewdistrict(data._id, data.dialogRef)">
+        View City
+      </button>
+    </ng-container>
+    <ng-template #showDistrict>
+      <button mat-button color="primary" (click)="viewdistrict(data._id, data.dialogRef)">
+        View District
+      </button>
+    </ng-template>
+  </mat-dialog-actions>
+</ng-template>
+
+
+<ng-template #mandalDetailsTemplate let-data>
+  <mat-dialog-content>
+    <h2 class="text-center"> {{ data?.name }}</h2>
+    <a (click)="viewMandal(data._id,data.dialogRef)">
+      <img [src]="data?.image_location[0] ? data?.image_location[0] : 'assets/ohm.jpg'" alt="image"
+        class="img-fluid img-thumbnail"
+        style="height: 10vw; width: 35vw; min-width: 70px; min-height: 100px; object-fit: cover;"
+        (error)="handleImageError($event)">
+    </a>
+    <p><strong>Name:</strong> {{ data?.name }}</p>
+    <p style="text-align: justify;"><strong>Description:</strong> {{ data?.desc }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <ng-container *ngIf="data?.name?.includes('_Town'); else showDistrict">
+      <button mat-button color="primary" (click)="viewMandal(data._id, data.dialogRef)">
+        View Town
+      </button>
+    </ng-container>
+    <ng-template #showDistrict>
+      <button mat-button color="primary" (click)="viewMandal(data._id, data.dialogRef)">
+        View Mandal/Block
+      </button>
+    </ng-template>
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</ng-template>
+
+
+
+<ng-template #stateDetailsTemplate let-data>
+  <mat-dialog-content>
+    <h2 class="text-center"> {{ data?.name }}</h2>
+    <a (click)="viewdistrict(data._id, data.dialogRef)">
+      <img [src]="data?.image_location[0] ? data?.image_location[0] : 'assets/ohm.jpg'" alt="image"
+        class="img-fluid img-thumbnail"
+        style="height: 10vw; width: 35vw; min-width: 70px; min-height: 100px; object-fit: cover;"
+        (error)="handleImageError($event)">
+    </a>
+    <p style="text-align: justify;"><strong>Description:</strong> {{ data?.desc }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-button color="primary" (click)="viewstate(data._id, data.dialogRef)">
+      View State
+    </button>
+  </mat-dialog-actions>
+</ng-template> -->
+

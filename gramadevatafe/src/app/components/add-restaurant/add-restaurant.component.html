@@ -1,0 +1,368 @@
+  <!-- <ng-template #restaurantDialog> -->
+     <!-- <div style="max-height: 80vh;overflow-y: auto;"> -->
+                          <div class=""
+     style="max-height: calc(80vh - 10px);
+            overflow-y: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;">
+        <!-- <h5 class="mb-3 text-center mt-4">Register Restaurant</h5>         -->
+                                       <!-- <h5 class="mb-3 text-center mt-4">
+  {{ isEditMode ? 'Update Restaurant' : 'Register Restaurant' }}
+</h5> -->
+
+        <form [formGroup]="restaurantForm"  class="px-4">
+                                                <div class="row align-items-center">
+            <div class="col-10">
+<h5 class="mb-3 mt-4 text-center">
+  {{ isEditMode ? 'Update Restaurant' : 'Register Restaurant' }}
+</h5>            </div>
+            <div class="col-2 text-end">
+                <button type="button" (click)="dialogRef.close()"style="
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 32px;
+                        height: 32px;
+                        border: none;
+                        background: transparent;
+                        font-size: 26px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        line-height: 32px;
+                        text-align: center;"
+                    title="Cancel"> × </button>
+                </div>
+            </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="name">Restaurant Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter the  Restaurant Name" [class.is-invalid]="restaurantForm.get('name')?.touched && restaurantForm.get('name')?.invalid" (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="owner_name">Restaurant Owner Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="owner_name" formControlName="owner_name" placeholder="Enter the  Restaurant Owner Name" [class.is-invalid]="restaurantForm.get('owner_name')?.touched && restaurantForm.get('owner_name')?.invalid" (keydown)="preventLeadingSpace($event)" (keydown)="validatenumberInput($event)" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="contact_number">Contact Number <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="contact_number" formControlName="contact_number" maxlength="10" inputmode="numeric" (input)="onlyNumbers($event)" placeholder="Enter the  Contact Number" [class.is-invalid]="restaurantForm.get('contact_number')?.touched && restaurantForm.get('contact_number')?.invalid" (keydown)="preventLeadingSpace($event)" />
+              </div>
+                            <div
+                        *ngIf="
+                          restaurantForm.get('contact_number')?.invalid &&
+                          (restaurantForm.get('contact_number')?.dirty || restaurantForm.get('contact_number')?.touched)
+                        "
+                        class="text-danger"
+                      >
+
+                        <div *ngIf="restaurantForm.get('contact_number')?.errors?.['pattern']">
+                          Contact Number must be a 10-digit number
+                        </div>
+                      </div>
+            </div>
+          </div>
+         
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="address">Address <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter the  Address" [class.is-invalid]="restaurantForm.get('address')?.touched && restaurantForm.get('address')?.invalid" (keydown)="preventLeadingSpace($event)" (keydown)="validateNameInput($event)"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="email_id">Email <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="email_id" formControlName="email_id" placeholder="Enter the  Email" [class.is-invalid]="restaurantForm.get('email_id')?.touched && restaurantForm.get('email_id')?.invalid" (keydown)="preventLeadingSpace($event)" />
+              </div>
+            </div>
+          </div> -->
+                  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group mb-3">
+
+        <label>Email <span class="text-danger">*</span></label>
+
+        <input
+          type="text"
+          class="form-control"
+          formControlName="email_id"
+          placeholder="Enter Email"
+          (blur)="restaurantForm.get('email_id')?.markAsTouched()"
+          [class.is-invalid]="
+            restaurantForm.get('email_id')?.invalid &&
+            restaurantForm.get('email_id')?.touched
+          "
+        />
+
+        <!-- Error Message -->
+        <div *ngIf="restaurantForm.get('email_id')?.invalid && restaurantForm.get('email_id')?.touched">
+
+          <small class="text-danger"
+            *ngIf="restaurantForm.get('email_id')?.errors?.['required']">
+            Email is required
+          </small>
+
+          <small class="text-danger"
+            *ngIf="restaurantForm.get('email_id')?.errors?.['pattern']">
+            Enter valid email format example&#64;gmail.com
+          </small>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="website">Website</label>
+                <input type="text" class="form-control" id="website" formControlName="website" placeholder="Enter the  Website"  (keydown)="preventLeadingSpace($event)" />
+<div *ngIf="restaurantForm.get('website')?.invalid 
+            && restaurantForm.get('website')?.touched"
+     class="text-danger">
+
+  <div *ngIf="restaurantForm.get('website')?.errors?.['pattern']">
+    Please enter a valid URL starting with http:// or https://
+  </div>
+
+</div>
+
+              </div>
+            </div>
+          </div>
+         
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="map_location"> Map Location (URL) <span class="text-danger">*</span></label>
+                <div class="input-group d-flex align-items-center gap-2">
+                  <input
+                  type="url"
+                  class="form-control"
+                  id="map_location"
+                  formControlName="map_location"
+                  placeholder="https://example.com/map"
+                  [class.is-invalid]="restaurantForm.get('map_location')?.touched && restaurantForm.get('map_location')?.invalid" (keydown)="preventLeadingSpace($event)"
+                />
+               
+                  <div class="input-group-append">
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      (click)="getrestruntantLocation()"
+                      title="Fetch Current Location"
+                    >
+                      📍 Get Location
+                    </button>
+                  </div>
+                </div>
+                <small class="form-text text-muted">
+                  Please provide a valid URL for the temple's map location.
+                </small>
+                                                                     <div
+  *ngIf="restaurantForm.get('map_location')?.invalid 
+         && (restaurantForm.get('map_location')?.dirty 
+         || restaurantForm.get('map_location')?.touched)"
+  class="text-danger"
+>
+  <div *ngIf="restaurantForm.get('map_location')?.errors?.['required']">
+    Map Location is required.
+  </div>
+
+  <div *ngIf="restaurantForm.get('map_location')?.errors?.['pattern']">
+    Please enter valid URL starting with http:// or https://
+  </div>
+</div>
+              </div>
+            </div>
+          </div>
+         
+
+
+            <div class="row" *ngIf="!InVillage && !isEditMode">
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please select a country">
+                <label for="country">Country <span class="text-danger">*</span></label>
+                <nz-select 
+                  formControlName="country" 
+                  nzPlaceHolder="Select country" 
+                  [nzShowSearch]="true"
+                  nzNotFoundContent="No data found"
+                  >
+                  <nz-option *ngFor="let option of templeCountryOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-control >
+                <label for="state">State</label>
+                
+                <nz-select 
+                  formControlName="state" 
+                  nzPlaceHolder="Select state" 
+                  [nzShowSearch]="true" 
+                  nzNotFoundContent="No data found">
+                  <nz-option 
+                    *ngFor="let option of templeStateOptions" 
+                    [nzValue]="option.value" 
+                    [nzLabel]="option.label">
+                  </nz-option>
+                </nz-select>
+
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-control >
+                <label for="district">District</label>
+                <nz-select formControlName="district" nzPlaceHolder="Select district" 
+                          [nzShowSearch]="true" nzNotFoundContent="No data found"
+                          >
+                  <nz-option *ngFor="let option of templeDistrictOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-control >
+                <label for="mandal">Town/Mandal</label>
+                <nz-select formControlName="mandal" nzPlaceHolder="Select mandal" 
+                          [nzShowSearch]="true" nzNotFoundContent="No data found"
+                          >
+                  <nz-option *ngFor="let option of templeMandalOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-4">
+            <nz-form-item>
+              <nz-form-control >
+                <label for="village">Area/Village</label>
+                <nz-select formControlName="village_id" nzPlaceHolder="Select Village" 
+                          [nzShowSearch]="true" nzNotFoundContent="No data found"
+                         >
+                  <nz-option *ngFor="let option of templeVillageOptions" 
+                            [nzValue]="option.value" 
+                            [nzLabel]="option.label">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>  
+         
+          <div >
+            <div class="row mt-2" >
+              <label>Restaurant Image <span class="text-danger">*</span></label>
+              <div>
+                <nz-upload
+                  nzListType="picture-card"
+                  [(nzFileList)]="bannerFileList"
+                  [nzMultiple]="true"
+                  [nzShowButton]="bannerFileList.length < 10"
+                  (nzChange)="Uploadrestaurantimage($event)"
+                  [nzAccept]="'image/*'"
+                  (nzRemove)="handleimageRemove()"
+                  [nzPreview]="handlePreview"
+                >
+                  <div >
+                    <i nz-icon nzType="plus"></i>
+                    Add Restaurant Images
+                  </div>
+                </nz-upload>                  
+              </div>
+              <div *ngIf="restaurantForm.get('image_location')?.touched && restaurantForm.get('image_location')?.invalid" class="text-danger">
+                Please upload at least one restaurant image.
+              </div>
+                                             <nz-modal
+  [(nzVisible)]="previewVisible"
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+>
+  <ng-container *nzModalContent>
+    <img
+      *ngIf="previewImage"
+      [src]="previewImage"
+      style="width: 100%; max-height: 70vh; object-fit: fill;"
+    />
+  </ng-container>
+</nz-modal>
+            </div>
+          </div>
+         
+         
+         
+         
+         
+          <!-- <div class="text-center mb-3">
+                                                  <button
+  type="button"
+  (click)="Addrestaurant()"
+  style="border-width: 0px;background-color: rgb(241, 124, 15);
+  border-radius:20px;color: white; padding: 10px;">
+
+  {{ isEditMode ? 'Update Restaurant' : 'Add Restaurant' }}
+</button>
+           
+          </div> -->
+                                                      <div class="row mt-3 pb-4">
+  <div class="col-12">
+    <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+
+      <!-- Cancel Button -->
+      <button
+        type="button"
+        (click)="dialogRef.close()"
+        class="btn btn-secondary px-4 py-2 rounded-pill"
+      >
+        Cancel
+      </button>
+
+      <!-- Submit Button -->
+      <button
+        type="button"
+        (click)="Addrestaurant()"
+        class="btn px-4 py-2 rounded-pill text-white"
+        style="background-color: rgb(241, 124, 15);"
+      >
+        {{ isEditMode ? 'Update Restaurant' : 'Add Restaurant' }}
+      </button>
+
+    </div>
+  </div>
+</div>
+          </form>  
+     </div>      
+      <!-- </ng-template> -->

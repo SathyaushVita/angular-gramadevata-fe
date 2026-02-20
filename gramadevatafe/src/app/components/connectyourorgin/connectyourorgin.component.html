@@ -1,0 +1,173 @@
+
+<form nz-form [formGroup]="validatorForm" class="connect-your-village-form" >
+	<div class="container p-4">
+		<div class="row">
+			<div class="col-md-6">
+				<nz-form-item>
+					<nz-form-control nzErrorTip="Please select a state">
+						<label>State</label>
+						<nz-select #stateSelect formControlName="state" [nzPlaceHolder]="getplaceholder('state')" [nzShowSearch]="true" nzNotFoundContent="No data found"
+							>
+							<nz-option *ngFor="let option of StateOptions" [nzValue]="option.value" [nzKey] = "option.id"
+								[nzLabel]="option.label"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+			<div class="col-md-6">
+				<nz-form-item>
+					<nz-form-control nzErrorTip="Please select a district">
+						<label>{{ getDynamicLabel('district') }}</label>
+						
+						<nz-select #districtSelect formControlName="district" [nzPlaceHolder]="getplaceholder('district')" [nzShowSearch]="true" nzNotFoundContent="No data found"
+							>
+							<nz-option *ngFor="let option of DistrictOptions" [nzValue]="option.value" [nzKey] = "option.id"
+								[nzLabel]="option.label"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<nz-form-item>
+					<nz-form-control nzErrorTip="Please select a mandal">
+						<label>{{ getDynamicLabel('mandal') }}</label>
+						<nz-select #mandalSelect formControlName="mandal" [nzPlaceHolder]="getplaceholder('mandal')" [nzShowSearch]="true" nzNotFoundContent="No data found"
+							>
+							<nz-option *ngFor="let option of MandalOptions" [nzValue]="option.value" [nzKey] = "option.id"
+								[nzLabel]="option.label"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+
+
+			<div class="col-md-6">
+				<nz-form-item>
+					<nz-form-control nzErrorTip="Please select a village">
+						<label>{{ getDynamicLabel('village') }}</label>
+						<nz-select #villageSelect formControlName="village" [nzPlaceHolder]="getplaceholder('village')" [nzShowSearch]="true" nzNotFoundContent="No data found">
+							<nz-option *ngFor="let option of VillageOptions" [nzValue]="option.value" [nzKey] = "option.id"
+								[nzLabel]="option.label"></nz-option>
+						</nz-select>
+					</nz-form-control>
+				</nz-form-item>
+			</div>
+
+
+		</div>
+
+
+		<div class="text-center">
+			<button (click)="OnSubmit()" nz-button class="login-form-button login-form-margin" 
+				[nzType]="'primary'" style="background-color: orange; border-color: orange;">
+				Submit
+			</button>
+		</div>
+		
+
+		<div class="row pt-3">
+			<div class="col-md-8 text-end">
+				<a>Missing your village from the list ?</a>
+			</div>
+			<div class="col-md-4">
+				<button (click)="navigate()"><i class="fa-solid fa-house"></i>Add your village</button>
+			</div>
+
+		</div>
+	</div>
+</form>
+<ngx-spinner bdOpacity=0.9 bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff" type="ball-spin-clockwise">
+</ngx-spinner>
+
+
+
+<ng-template #districtDetailsTemplate let-data>
+	<mat-dialog-content>
+		<h2 class="text-center"> {{ data?.name }}</h2>
+		<a (click)="viewdistrict(data._id, data.dialogRef)">  		
+			<img [src]="data?.image_location[0] ? data?.image_location[0] : 'assets/ohm.jpg'"
+			alt="image"
+			class="img-fluid img-thumbnail"
+			style="height: 10vw; width: 35vw; min-width: 70px; min-height: 100px; object-fit: cover;"
+			(error)="handleImageError($event)">
+		</a>
+
+	  <p style="text-align: justify;"><strong>Description:</strong> {{ data?.desc }}</p>
+	</mat-dialog-content>
+	<mat-dialog-actions align="end">
+		<button mat-button mat-dialog-close>Close</button>
+		<!-- <button mat-button color="primary" (click)="viewdistrict(data._id, data.dialogRef)">
+		  View City
+		</button> -->
+		      <ng-container *ngIf="data?.name?.includes('_City'); else showDistrict">
+  <button mat-button color="primary" (click)="viewdistrict(data._id, data.dialogRef)">
+    View City
+  </button>
+</ng-container>
+<ng-template #showDistrict>
+  <button mat-button color="primary" (click)="viewdistrict(data._id, data.dialogRef)">
+    View District
+  </button>
+</ng-template>
+	  </mat-dialog-actions>
+	  
+  </ng-template>
+
+  
+  <ng-template #mandalDetailsTemplate let-data>
+	<mat-dialog-content>
+		<h2 class="text-center"> {{ data?.name }}</h2>
+		<a  (click)="viewMandal(data._id,data.dialogRef)">
+			<img [src]="data?.image_location[0] ? data?.image_location[0] : 'assets/ohm.jpg'"
+			alt="image"
+			class="img-fluid img-thumbnail"
+			style="height: 10vw; width: 35vw; min-width: 70px; min-height: 100px; object-fit: cover;"
+			(error)="handleImageError($event)">
+		</a>
+
+	  <p ><strong>Name:</strong> {{ data?.name }}</p>
+	  <p style="text-align: justify;"><strong>Description:</strong> {{ data?.desc }}</p>
+	</mat-dialog-content>
+	<mat-dialog-actions align="end">
+<ng-container *ngIf="data?.name?.includes('_Town'); else showDistrict">
+  <button mat-button color="primary" (click)="viewMandal(data._id, data.dialogRef)">
+    View Town
+  </button>
+</ng-container>
+<ng-template #showDistrict>
+  <button mat-button color="primary" (click)="viewMandal(data._id, data.dialogRef)">
+    View Mandal/Block
+  </button>
+</ng-template>
+
+	  <button mat-button mat-dialog-close>Close</button>
+	</mat-dialog-actions>
+  </ng-template>
+
+
+
+  <ng-template #stateDetailsTemplate let-data>
+	<mat-dialog-content>
+		<h2 class="text-center"> {{ data?.name }}</h2>
+		<a (click)="viewdistrict(data._id, data.dialogRef)">  		
+			<img [src]="data?.image_location[0] ? data?.image_location[0] : 'assets/ohm.jpg'"
+			alt="image"
+			class="img-fluid img-thumbnail"
+			style="height: 10vw; width: 35vw; min-width: 70px; min-height: 100px; object-fit: cover;"
+			(error)="handleImageError($event)">
+		</a>
+
+	  <p style="text-align: justify;"><strong>Description:</strong> {{ data?.desc }}</p>
+	</mat-dialog-content>
+	<mat-dialog-actions align="end">
+		<button mat-button mat-dialog-close>Close</button>
+		<button mat-button color="primary" (click)="viewstate(data._id, data.dialogRef)">
+		  View State
+		</button>
+
+	  </mat-dialog-actions>
+	  
+  </ng-template>
+  

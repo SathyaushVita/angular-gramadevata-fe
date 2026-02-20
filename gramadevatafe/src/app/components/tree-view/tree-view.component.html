@@ -1,0 +1,264 @@
+<!-- <section>
+  
+  <div class="d-none d-lg-block">
+    <nz-input-group [nzSuffix]="suffixIcon">
+        <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue"   />
+      </nz-input-group>
+      <ng-template #suffixIcon>
+        <span nz-icon nzType="search"></span>
+      </ng-template>
+    <nz-tree
+    [nzData]="nodes"
+    [nzSearchValue]="searchValue"
+    (nzClick)="nzEvent($event)"
+    (nzExpandChange)="nzEvent($event)"
+    (nzSearchValueChange)="nzEvent($event)"
+    nzBlockNode
+    nzVirtualHeight="70vh"
+
+    ></nz-tree>
+  </div>
+
+  <div class="d-block d-lg-none">
+
+   ' <div class="d-flex justify-content-center p-1">
+      <button class="btn btn-primary text-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        Filters
+      </button>
+    </div>'
+    <div class="d-block d-lg-none" *ngIf="treeType !== 'india'">
+      <button class="btn btn-primary text-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        Filters
+      </button>
+    </div>
+
+    <div class="d-block d-lg-none" *ngIf="treeType === 'india'">
+      <button class="btn btn-primary text-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#locationOffcanvas" aria-controls="locationOffcanvas">
+        Location Filter
+      </button>
+    </div>
+
+
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filters</h5>
+      </div>
+      <div class="offcanvas-body">
+        <div>
+          <nz-input-group [nzSuffix]="suffixIcon">
+            <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
+          </nz-input-group>
+          <ng-template #suffixIcon>
+            <span nz-icon nzType="search"></span>
+          </ng-template>
+        </div>
+        <div>
+          <nz-tree
+          [nzData]="nodes"
+          [nzSearchValue]="searchValue"
+          (nzClick)="nzEvent($event)"
+          (nzExpandChange)="nzEvent($event)"
+          (nzSearchValueChange)="nzEvent($event)"
+          nzBlockNode
+          nzVirtualHeight="70vh"
+          ></nz-tree>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-primary float-right" data-bs-dismiss="offcanvas" aria-label="Close">Apply</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<section> -->
+
+
+
+  <section>
+    <div class=" d-lg-block hide-scrollbar" style="overflow-y: scroll;">
+    
+  
+      <ng-container *ngIf="treeType == 'templecategory'">
+        <!-- <nz-input-group nzSearch>
+          <input
+            nz-input
+            [(ngModel)]="searchValue"
+            (ngModelChange)="onSearch($event)"
+            placeholder="Search categories"
+            class="custom-search"
+          />
+        </nz-input-group>
+      
+        <nz-tree
+          class="hide-scrollbar"
+          [nzData]="filteredNodes"
+          [nzSearchValue]="searchValue"
+          (nzClick)="nzEvent($event)"
+          (nzExpandChange)="nzEvent($event)"
+          (nzSearchValueChange)="nzEvent($event)"
+          nzBlockNode
+          nzVirtualHeight="26vh"
+        ></nz-tree> -->
+
+   <nz-tree-select
+  style="width: 100%"
+  [nzNodes]="filteredNodes"
+  [nzShowSearch]="true"
+  nzPlaceHolder="Select a category"
+  [(ngModel)]="selectedValue"
+  (ngModelChange)="onSelectChange($event)">
+</nz-tree-select>
+
+
+
+ </ng-container>
+      
+      
+      
+      
+
+      <ng-container *ngIf="treeType == 'subreligions'">
+        <div class="mb-2 text-center" *ngFor="let node of nodes">
+          <button class="btn btn-orange btn-sm btn-block responsive-btn"   (click)="onCategoryClick(node.key)">
+            {{ node.title }}
+          </button>
+        </div>
+      </ng-container>
+      
+      
+        
+          
+
+
+
+ 
+
+      <ng-container *ngIf="treeType == 'eventcategory'">
+        <nz-tree
+          [nzData]="nodes"
+          [nzSearchValue]="searchValue"
+          (nzClick)="nzEvent($event)"
+          (nzExpandChange)="nzEvent($event)"
+          (nzSearchValueChange)="nzEvent($event)"
+          nzBlockNode
+          nzVirtualHeight="30vh"
+        ></nz-tree>
+      </ng-container>
+      
+      <ng-container *ngIf="treeType == 'goshalacategory'">
+        <nz-tree
+          [nzData]="nodes"
+          [nzSearchValue]="searchValue"
+          (nzClick)="nzEvent($event)"
+          (nzExpandChange)="nzEvent($event)"
+          (nzSearchValueChange)="nzEvent($event)"
+          nzBlockNode
+          nzVirtualHeight="26vh"
+        ></nz-tree>
+      </ng-container>
+  
+   
+
+      <ng-container *ngIf="treeType == 'india'">
+        <nz-tree
+          [nzData]="locationNodes"
+          [nzSearchValue]="searchValue"
+          (nzClick)="nzEvent($event)"
+          nzBlockNode
+          nzVirtualHeight="70vh"
+        ></nz-tree>
+      </ng-container>
+      <ng-container *ngIf="treeType == 'global'">
+        <nz-tree
+          [nzData]="nodes"
+          [nzSearchValue]="searchValue"
+          (nzClick)="nzEvent($event)"
+          nzBlockNode
+          nzVirtualHeight="70vh"
+        ></nz-tree>
+      </ng-container>
+      
+      
+    </div>
+
+
+    
+    
+  
+    <!-- <div class="d-block d-lg-none">
+      <div *ngIf="treeType == 'templecategory'">
+        <button
+          class="btn btn-primary text-center"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasExample"
+          aria-controls="offcanvasExample"
+          (click)="onTreeTypeChange('templecategory')"
+        >
+          Filters
+        </button>
+      </div>
+  
+      <div *ngIf="treeType == 'india'">
+        <button
+          class="btn btn-primary text-center"
+          type="button"
+          (click)="onTreeTypeChange('india')"
+          aria-controls="locationOffcanvas"
+        >
+          Location Filter
+        </button>
+      </div>
+  
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filters</h5>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            <nz-input-group [nzSuffix]="suffixIcon">
+              <input type="text" nz-input placeholder="Search" [(ngModel)]="searchValue" />
+            </nz-input-group>
+            <ng-template #suffixIcon>
+              <span nz-icon nzType="search"></span>
+            </ng-template>
+          </div>
+          <div>
+            <ng-container *ngIf="treeType == 'templecategory'">
+              <nz-tree
+                [nzData]="nodes"
+                [nzSearchValue]="searchValue"
+                (nzClick)="nzEvent($event)"
+                (nzExpandChange)="nzEvent($event)"
+                (nzSearchValueChange)="nzEvent($event)"
+                nzBlockNode
+                nzVirtualHeight="70vh"
+              ></nz-tree>
+            </ng-container>
+  
+            <ng-container *ngIf="treeType == 'india'">
+              <nz-tree
+                [nzData]="locationNodes"
+                [nzSearchValue]="searchValue"
+                (nzClick)="nzEvent($event)"
+                (nzExpandChange)="nzEvent($event)"
+                (nzSearchValueChange)="nzEvent($event)"
+                nzBlockNode
+                nzVirtualHeight="70vh"
+              ></nz-tree>
+            </ng-container>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary float-right" data-bs-dismiss="offcanvas" aria-label="Close">
+              Apply
+            </button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </section>
+  

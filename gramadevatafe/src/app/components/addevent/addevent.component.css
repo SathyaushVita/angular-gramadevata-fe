@@ -1,0 +1,70 @@
+.upload-area {
+  border: 2px dashed #ff7a00;
+  background-color: #fff7ed;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.upload-area:hover {
+  background-color: #ffe6cc;
+  transform: scale(1.02);
+}
+
+.upload-icon {
+  font-size: 40px;
+  color: #ff7a00;
+  margin-bottom: 10px;
+}
+
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+.video-upload-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
+}
+
+.upload-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.custom-upload .upload-box {
+  border: 2px dashed #1890ff;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: #fafcff;
+}
+
+.custom-upload .upload-box:hover {
+  background: #e6f7ff;
+  border-color: #40a9ff;
+}
+
+.upload-icon {
+  font-size: 32px;
+  color: #1890ff;
+  margin-bottom: 10px;
+}
+
+.upload-text {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.upload-hint {
+  font-size: 12px;
+  color: #888;
+}
